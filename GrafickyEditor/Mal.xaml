@@ -1,0 +1,62 @@
+﻿<Window x:Class="GrafickyEditor.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GrafickyEditor"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800" WindowState="Maximized">
+    <Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Border x:Name="WorkFacilities" Background="#FF3B4046">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.RowSpan="1" Margin="2" Content="T" x:Name="Paint" Click="Paint_Click"></Button>
+                    <Button Grid.Row="2" Content="M" x:Name="MouseBack" Click="MouseBack_Click" Margin="2"></Button>
+                    <Slider x:Name="SliderTl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="10" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
+                    <Button Grid.Column="1" Content="Picture" Margin="2" x:Name="BackPic" Click="BackPic_Click"></Button>
+                    <Button Content="Save" x:Name="Save" Grid.Column="3" Margin="2" Click="Save_Click"></Button>
+                    <Button Content="Load" x:Name="Load" Grid.Column="4" Margin="2" Click="Load_Click"></Button>
+                    <Button x:Name="Clear" Content="Clear" Grid.Column="5" Margin="2" Click="Clear_Click"></Button>
+                    <Button x:Name="BackStep" Content="Back" Grid.Column="6" Margin="2" Click="BackStep_Click"></Button>
+                    <Slider ValueChanged="DeleteHalf_ValueChanged" x:Name="DeleteHalf" Grid.Column="7" Grid.ColumnSpan="2" Margin="2" Minimum="5" Maximum="100" SmallChange="1" Value="1"></Slider>
+                    <Button Content="Barva" Margin="2" Grid.Column="9" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click"></Button>
+                    <Button Content="Delete" Grid.Column="2" Margin="2" x:Name="Guma" Click="Guma_Click"></Button>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Visibility="Hidden" Panel.ZIndex="1" x:Name="nameOfFile" Grid.Column="0" Margin="350,300,350,560"></TextBox>
+                    <Button FontSize="50" x:Name="SaveSubmit" Panel.ZIndex="1" Margin="400,380,400,460" Content="Submit" Click="SaveSubmit_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"></Button>
+                    <Canvas Margin="5" x:Name="WorkStation" Grid.Column="0" MouseDown="WorkStation_MouseDown" MouseUp="WorkStation_MouseUp" MouseMove="WorkStation_MouseMove" Background="LightGray"></Canvas>
+                    <ListBox x:Name="lblHistory" Grid.Column="1" Background="#FF00A6CC"></ListBox>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>
