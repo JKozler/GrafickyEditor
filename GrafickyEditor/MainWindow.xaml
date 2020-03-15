@@ -33,7 +33,8 @@
             </Ellipse>
             <Button FontSize="30" x:Name="newProj" Content="New" Grid.Row="1" Margin="40,10" Foreground="White" Background="Black" Click="newProj_Click"></Button>
             <Button FontSize="30" x:Name="loadProj" Content="Load Project" Grid.Row="2" Margin="40,10" Foreground="White" Background="Black" Click="loadProj_Click"></Button>
-            <ListBox x:Name="LastprojectLB" Opacity="0" Grid.Row="4" Grid.RowSpan="3"></ListBox>
+            <Label Grid.Row="3" Content="Here is your projects:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30" x:Name="loadInfo" FontWeight="Bold"></Label>
+            <ListBox FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" x:Name="LastprojectLB" Opacity="1" Grid.Row="4" Grid.RowSpan="3" Background="#FF75F3FF" BorderBrush="Black" FontWeight="Bold"></ListBox>
         </Grid>
         
     </Border>

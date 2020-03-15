@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -23,6 +24,21 @@ namespace GrafickyEditor
         public MainWindow()
         {
             InitializeComponent();
+            if (File.Exists("saves.txt"))
+            {
+                using (StreamReader sr = new StreamReader("saves.txt"))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        LastprojectLB.Items.Add(line + ".obr");
+                    }
+                }
+            }
+            else
+            {
+                loadInfo.Content = "You don't have any projects.";
+            }
         }
 
         private void newProj_Click(object sender, RoutedEventArgs e)

@@ -30,6 +30,7 @@ namespace GrafickyEditor
         int hod = 2;
         int index = 0;
         int backDelet;
+        bool darkEff = false;
         Line[] cary = new Line[10000000];
         public Window1()
         {
@@ -38,6 +39,7 @@ namespace GrafickyEditor
 
         private void WorkStation_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            efectPanel.Visibility = Visibility.Hidden;
             if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand)
             {
                 mal = true;
@@ -52,7 +54,7 @@ namespace GrafickyEditor
 
         private void WorkStation_MouseMove(object sender, MouseEventArgs e)
         {
-            if (mal == true && WorkStation.Cursor == Cursors.Pen)
+            if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == false)
             {
                 Line line = new Line();
 
@@ -62,6 +64,22 @@ namespace GrafickyEditor
                 line.X2 = p2.X;
                 line.Y2 = p2.Y;
                 p1 = p2;
+                line.Stroke = brush;
+                line.StrokeThickness = hod;
+                WorkStation.Children.Add(line);
+                cary[index] = line;
+                index++;
+            }
+            if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == true)
+            {
+                Line line = new Line();
+
+                p2 = e.GetPosition(WorkStation);
+                line.X1 = p1.X;
+                line.Y1 = p1.Y;
+                line.X2 = p2.X;
+                line.Y2 = p2.Y;
+                //p1 = p2;
                 line.Stroke = brush;
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
@@ -125,7 +143,6 @@ namespace GrafickyEditor
         {
             SaveSubmit.Visibility = Visibility.Visible;
             nameOfFile.Visibility = Visibility.Visible;
-           
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -186,6 +203,11 @@ namespace GrafickyEditor
                 fs.Close();
                 SaveSubmit.Visibility = Visibility.Hidden;
                 nameOfFile.Visibility = Visibility.Hidden;
+                Stream stream = new FileStream("saves.txt", FileMode.Append);
+                using (StreamWriter sw = new StreamWriter(stream))
+                {
+                    sw.WriteLine(nameOfFile.Text);
+                }
             }
             else
             {
@@ -200,6 +222,16 @@ namespace GrafickyEditor
             {
                 brush = new SolidColorBrush(Color.FromRgb(color.Color.R, color.Color.G, color.Color.B));
             }
+        }
+
+        private void Efect_Click(object sender, RoutedEventArgs e)
+        {
+            efectPanel.Visibility = Visibility.Visible;
+        }
+
+        private void FlavorPen_Click(object sender, RoutedEventArgs e)
+        {
+            darkEff = true;
         }
     }
     class Cara
