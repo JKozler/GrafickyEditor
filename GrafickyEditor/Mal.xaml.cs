@@ -32,9 +32,36 @@ namespace GrafickyEditor
         int backDelet;
         bool darkEff = false;
         Line[] cary = new Line[10000000];
-        public Window1()
+        string jmeno = "";
+        public Window1(string load)
         {
             InitializeComponent();
+            
+            if (load != "")
+            {
+                if (load.Length >= 25)
+                {
+                    Image image = new Image();
+                    image.Source = new BitmapImage(new Uri(load));
+                    image.Width = WorkStation.Width;
+                    image.Height = WorkStation.Height;
+                    WorkStation.Children.Add(image);
+                }
+                else
+                {
+                    string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug" + @"\" + load;
+                    if (File.Exists(path))
+                    {
+                        jmeno = load;
+                        Image image = new Image();
+                        image.Source = new BitmapImage(new Uri(path));
+                        image.Width = WorkStation.Width;
+                        image.Height = WorkStation.Height;
+                        WorkStation.Children.Add(image);
+                        infoProj.Content = "You are editing" + jmeno;
+                    }
+                }
+            }
         }
 
         private void WorkStation_MouseDown(object sender, MouseButtonEventArgs e)
@@ -143,6 +170,7 @@ namespace GrafickyEditor
         {
             SaveSubmit.Visibility = Visibility.Visible;
             nameOfFile.Visibility = Visibility.Visible;
+            efectPanel.Visibility = Visibility.Hidden;
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -193,6 +221,10 @@ namespace GrafickyEditor
             if (nameOfFile.Text != null)
             {
                 string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + nameOfFile.Text + ".obr";
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
                 FileStream fs = new FileStream(path, FileMode.Create);
                 RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
                     (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
@@ -232,6 +264,7 @@ namespace GrafickyEditor
         private void FlavorPen_Click(object sender, RoutedEventArgs e)
         {
             darkEff = true;
+            WorkStation.Cursor = Cursors.Pen;
         }
     }
     class Cara

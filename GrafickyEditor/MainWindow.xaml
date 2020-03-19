@@ -22,6 +22,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="0.4*"/>
             </Grid.RowDefinitions>
             <Ellipse Grid.Row="0" Grid.RowSpan="4" Margin="10">
                 <Ellipse.Fill>
@@ -35,6 +36,7 @@
             <Button FontSize="30" x:Name="loadProj" Content="Load Project" Grid.Row="2" Margin="40,10" Foreground="White" Background="Black" Click="loadProj_Click"></Button>
             <Label Grid.Row="3" Content="Here is your projects:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30" x:Name="loadInfo" FontWeight="Bold"></Label>
             <ListBox FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" x:Name="LastprojectLB" Opacity="1" Grid.Row="4" Grid.RowSpan="3" Background="#FF75F3FF" BorderBrush="Black" FontWeight="Bold"></ListBox>
+            <Button x:Name="LoadProject" Content="Load" Background="#FF10EAFF" Grid.Row="7" Click="LoadProject_Click"></Button>
         </Grid>
         
     </Border>

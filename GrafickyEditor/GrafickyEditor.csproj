@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Load.cs" />
     <Compile Include="Mal.xaml.cs">
       <DependentUpon>Mal.xaml</DependentUpon>
     </Compile>

@@ -47,14 +47,14 @@
                     </Border>
                     <Button Grid.RowSpan="1" Margin="2" Content="Pen" x:Name="Paint" Click="Paint_Click"></Button>
                     <Button Grid.Row="2" Content="Mouse" x:Name="MouseBack" Click="MouseBack_Click" Margin="2"></Button>
-                    <Slider x:Name="SliderTl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="10" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
-                    <Button Grid.Column="1" Content="Picture" Margin="2" x:Name="BackPic" Click="BackPic_Click"></Button>
+                    <Slider x:Name="SliderTl" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="9" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
+                    <Button Grid.Column="2" Content="Picture" Margin="2" x:Name="BackPic" Click="BackPic_Click"></Button>
                     <Button Content="Save" x:Name="Save" Grid.Column="3" Margin="2" Click="Save_Click"></Button>
                     <Button Content="Load" x:Name="Load" Grid.Column="4" Margin="2" Click="Load_Click"></Button>
                     <Button x:Name="Clear" Content="Clear" Grid.Column="5" Margin="2" Click="Clear_Click"></Button>
                     <Button Content="Color" Margin="2" Grid.Column="9" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click"></Button>
-                    <Button Content="Effect" Margin="2" Grid.Column="10" x:Name="Efect" Click="Efect_Click"></Button>
-                    <Button Content="Delete" Grid.Column="2" Margin="2" x:Name="Guma" Click="Guma_Click"></Button>
+                    <Button Content="Effect" Grid.Row="1" Margin="0,2,9,2" Grid.Column="1" x:Name="Efect" Click="Efect_Click"></Button>
+                    <Button Content="Rubber" Grid.Column="1" Margin="0,2,9,2" x:Name="Guma" Click="Guma_Click"></Button>
                 </Grid>
             </Border>
             <Border Grid.Row="1">
@@ -91,7 +91,7 @@
                                     <Button x:Name="FlavorPen" Content="Dark Pen" Margin="5" Click="FlavorPen_Click"></Button>
                                 </Grid>
                             </Border>
-                            <Label Grid.Row="0" Content="Name of save file:" Foreground="Black" FontSize="9"></Label>
+                            <Label x:Name="infoProj" Grid.Row="0" Content="Name of save file:" Foreground="Black" FontSize="9"></Label>
                             <TextBox Grid.Row="1" Visibility="Hidden" x:Name="nameOfFile" Grid.Column="0" Margin="2"></TextBox>
                             <Button Grid.Row="2" Margin="5" x:Name="SaveSubmit"  Content="Submit" Click="SaveSubmit_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"/>
                             <ListBox x:Name="lblHistory" Background="#FF00A6CC" Grid.Row="3"/>
