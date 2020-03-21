@@ -58,7 +58,11 @@ namespace GrafickyEditor
                         image.Width = WorkStation.Width;
                         image.Height = WorkStation.Height;
                         WorkStation.Children.Add(image);
-                        infoProj.Content = "You are editing" + jmeno;
+                        infoProj.Content = "You are editing " + jmeno;
+                    }
+                    else 
+                    {
+                        MessageBox.Show("Mising file.", "Your file is not inside debug file or you delete your file.", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -134,6 +138,7 @@ namespace GrafickyEditor
         {
             WorkStation.Cursor = Cursors.Pen;
             SliderTl.Maximum = 10;
+            darkEff = false;
         }
 
         private void OnSliderValuChange(object sender, RoutedPropertyChangedEventArgs<double> e)

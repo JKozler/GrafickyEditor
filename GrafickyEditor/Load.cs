@@ -13,6 +13,7 @@ namespace GrafickyEditor
     class Load : INazev
     {
         public string Nazev { get; set; }
+        public DateTime Zmena { get; set; }
         public Load(string Nazev)
         {
             this.Nazev = Nazev;
