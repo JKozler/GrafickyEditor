@@ -42,7 +42,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Button x:Name="BackStep" Content="Back" Grid.Column="0" Margin="2" Click="BackStep_Click"></Button>
-                            <Slider ValueChanged="DeleteHalf_ValueChanged" x:Name="DeleteHalf" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Minimum="5" Maximum="100" SmallChange="1" Value="1"></Slider>
+                            <Slider ValueChanged="DeleteHalf_ValueChanged" x:Name="DeleteHalf" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Minimum="1" Maximum="100" SmallChange="1" Value="1"></Slider>
                         </Grid>
                     </Border>
                     
@@ -95,6 +95,7 @@
                     <Button Content="Save" x:Name="Save" Grid.Column="3" Margin="2" Click="Save_Click"></Button>
                     <Button Content="Load" x:Name="Load" Grid.Column="4" Margin="2" Click="Load_Click"></Button>
                     <Button x:Name="Clear" Content="Clear" Grid.Column="5" Margin="2" Click="Clear_Click"></Button>
+                    <Button Grid.Column="10" Margin="2" Content="Text" x:Name="TextBTN" Click="TextBTN_Click"></Button>
                     <Button Content="Color" Margin="2" Grid.Column="9" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click"></Button>
                     <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="1" x:Name="Efect" Click="Efect_Click" BorderBrush="{x:Null}">
                         <Button.Style>

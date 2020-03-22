@@ -31,8 +31,9 @@ namespace GrafickyEditor
         int index = 0;
         int backDelet;
         bool darkEff = false;
-        Line[] cary = new Line[10000000];
+        UIElement[] elements = new UIElement[10000000];
         string jmeno = "";
+        int p = 0;
         public Window1(string load)
         {
             InitializeComponent();
@@ -59,10 +60,12 @@ namespace GrafickyEditor
                         image.Height = WorkStation.Height;
                         WorkStation.Children.Add(image);
                         infoProj.Content = "You are editing " + jmeno;
+                        lblHistory.Items.Add("You save it!");
                     }
                     else 
                     {
                         MessageBox.Show("Mising file.", "Your file is not inside debug file or you delete your file.", MessageBoxButton.OK, MessageBoxImage.Error);
+                        lblHistory.Items.Add("Missing file.");
                     }
                 }
             }
@@ -71,7 +74,23 @@ namespace GrafickyEditor
         private void WorkStation_MouseDown(object sender, MouseButtonEventArgs e)
         {
             efectPanel.Visibility = Visibility.Hidden;
-            if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand)
+            if (WorkStation.Cursor == Cursors.IBeam)
+            {
+                Point pa = e.GetPosition(WorkStation);
+                TextBox tb = new TextBox();
+                tb.Name = "tb" + p;
+                tb.Height = 30;
+                tb.FontSize = 20;
+                tb.VerticalAlignment = VerticalAlignment.Center;
+                tb.Background = new SolidColorBrush(Colors.LightGray);
+                tb.Text = "TEXT";
+                tb.Margin = new Thickness(Convert.ToDouble(pa.X), Convert.ToDouble(pa.Y), 0.0, 0.0);
+                WorkStation.Children.Add(tb);
+                elements[index] = tb;
+                index++;
+                lblHistory.Items.Add("Textbox was added.");
+            }
+            else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand)
             {
                 mal = true;
                 p1 = e.GetPosition(WorkStation);
@@ -80,6 +99,11 @@ namespace GrafickyEditor
 
         private void WorkStation_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (WorkStation.Cursor == Cursors.Hand)
+            {
+                lblHistory.Items.Add("Element was deleted.");
+            }
+            lblHistory.Items.Add("Element was cerated.");
             mal = false;
         }
 
@@ -98,10 +122,10 @@ namespace GrafickyEditor
                 line.Stroke = brush;
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
-                cary[index] = line;
+                elements[index] = line;
                 index++;
             }
-            if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == true)
+            else if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == true)
             {
                 Line line = new Line();
 
@@ -114,10 +138,10 @@ namespace GrafickyEditor
                 line.Stroke = brush;
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
-                cary[index] = line;
+                elements[index] = line;
                 index++;
             }
-            if (mal == true && WorkStation.Cursor == Cursors.Hand)
+            else if (mal == true && WorkStation.Cursor == Cursors.Hand)
             {
                 Line line = new Line();
 
@@ -158,17 +182,20 @@ namespace GrafickyEditor
                 image.Height = WorkStation.Height;
                 WorkStation.Children.Add(image);
             }
+            lblHistory.Items.Add("Uploading image...");
         }
 
         private void MouseBack_Click(object sender, RoutedEventArgs e)
         {
             WorkStation.Cursor = Cursors.Arrow;
+            lblHistory.Items.Add("Normal mouse is using.");
         }
 
         private void Guma_Click(object sender, RoutedEventArgs e)
         {
             WorkStation.Cursor = Cursors.Hand;
             SliderTl.Maximum = 100;
+            lblHistory.Items.Add("Using rubber");
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -176,6 +203,7 @@ namespace GrafickyEditor
             SaveSubmit.Visibility = Visibility.Visible;
             nameOfFile.Visibility = Visibility.Visible;
             efectPanel.Visibility = Visibility.Hidden;
+            lblHistory.Items.Add("Save file...");
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -190,6 +218,7 @@ namespace GrafickyEditor
                 image.Height = WorkStation.Height;
                 WorkStation.Children.Add(image);
             }
+            lblHistory.Items.Add("project was loaded.");
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
@@ -197,6 +226,7 @@ namespace GrafickyEditor
             WorkStation.Children.Clear();
             index = 0;
             lblHistory.Items.Add("Clear All Items");
+            lblHistory.Items.Add("Work station is clear.");
         }
 
         private void BackStep_Click(object sender, RoutedEventArgs e)
@@ -210,10 +240,11 @@ namespace GrafickyEditor
                 WorkStation.Children.Clear();
                 for (int i = 0; i < index - backDelet; i++)
                 {
-                    WorkStation.Children.Add(cary[i]);
+                    WorkStation.Children.Add(elements[i]);
                 }
                 index = index - backDelet;
             }
+            lblHistory.Items.Add("Removing elments.");
         }
 
         private void DeleteHalf_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -245,6 +276,7 @@ namespace GrafickyEditor
                 {
                     sw.WriteLine(nameOfFile.Text);
                 }
+                lblHistory.Items.Add("File was saved.");
             }
             else
             {
@@ -259,6 +291,7 @@ namespace GrafickyEditor
             {
                 brush = new SolidColorBrush(Color.FromRgb(color.Color.R, color.Color.G, color.Color.B));
             }
+            lblHistory.Items.Add("Color was changed.");
         }
 
         private void Efect_Click(object sender, RoutedEventArgs e)
@@ -270,6 +303,14 @@ namespace GrafickyEditor
         {
             darkEff = true;
             WorkStation.Cursor = Cursors.Pen;
+            lblHistory.Items.Add("Dark pen activated.");
+        }
+
+        private void TextBTN_Click(object sender, RoutedEventArgs e)
+        {
+            WorkStation.Cursor = Cursors.IBeam;
+            p++;
+            lblHistory.Items.Add("Adding text box.");
         }
     }
     class Cara
