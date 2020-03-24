@@ -159,7 +159,8 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="11*" />
                             </Grid.RowDefinitions>
-                            <Border x:Name="efectPanel" Visibility="Hidden" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="4" Background="#FF3B4046" >
+                            <!-- Skrytá část -->
+                            <Border x:Name="efectPanel" Opacity="0.9" Visibility="Hidden" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="4" Background="#FF3B4046" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -175,6 +176,28 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Button x:Name="FlavorPen" Content="Dark Pen" Margin="10" Click="FlavorPen_Click" BorderBrush="{x:Null}">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Border Background="{TemplateBinding Background}">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <Button x:Name="fogEff" Content="Fog scene" Grid.Row="1" Margin="10" Click="fogEff_Click">
                                         <Button.Style>
                                             <Style TargetType="{x:Type Button}">
                                                 <Setter Property="Background" Value="White"/>

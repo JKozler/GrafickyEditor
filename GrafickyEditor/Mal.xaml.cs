@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
 
 
 namespace GrafickyEditor
@@ -34,10 +36,15 @@ namespace GrafickyEditor
         UIElement[] elements = new UIElement[10000000];
         string jmeno = "";
         int p = 0;
+        byte onoff = 0;
+        BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
+        
         public Window1(string load)
         {
             InitializeComponent();
-            
+            blur.Radius = 0;
+            WorkStation.Effect = blur;
+            WorkStation.Cursor = Cursors.Arrow;
             if (load != "")
             {
                 if (load.Length >= 25)
@@ -79,7 +86,6 @@ namespace GrafickyEditor
                 Point pa = e.GetPosition(WorkStation);
                 TextBox tb = new TextBox();
                 tb.Name = "tb" + p;
-                tb.Height = 30;
                 tb.FontSize = 20;
                 tb.VerticalAlignment = VerticalAlignment.Center;
                 tb.Background = new SolidColorBrush(Colors.LightGray);
@@ -102,9 +108,13 @@ namespace GrafickyEditor
             if (WorkStation.Cursor == Cursors.Hand)
             {
                 lblHistory.Items.Add("Element was deleted.");
+                mal = false;
             }
-            lblHistory.Items.Add("Element was cerated.");
-            mal = false;
+            else if (WorkStation.Cursor != Cursors.Arrow)
+            {
+                lblHistory.Items.Add("Element was cerated.");
+                mal = false;
+            }
         }
 
         private void WorkStation_MouseMove(object sender, MouseEventArgs e)
@@ -154,7 +164,8 @@ namespace GrafickyEditor
                 line.Stroke = new SolidColorBrush(Colors.LightGray);
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
-
+                elements[index] = line;
+                index++;
             }
         }
 
@@ -194,7 +205,6 @@ namespace GrafickyEditor
         private void Guma_Click(object sender, RoutedEventArgs e)
         {
             WorkStation.Cursor = Cursors.Hand;
-            SliderTl.Maximum = 100;
             lblHistory.Items.Add("Using rubber");
         }
 
@@ -311,6 +321,24 @@ namespace GrafickyEditor
             WorkStation.Cursor = Cursors.IBeam;
             p++;
             lblHistory.Items.Add("Adding text box.");
+        }
+
+        private void fogEff_Click(object sender, RoutedEventArgs e)
+        {
+            if (onoff == 0)
+            {
+                DoubleAnimation blurEnable = new DoubleAnimation(0, 10, new Duration(new TimeSpan(2000000)));
+                blur.BeginAnimation(BlurEffect.RadiusProperty, blurEnable);
+                fogEff.Background = new SolidColorBrush(Colors.Green);
+                onoff++;
+            }
+            else if (onoff == 1)
+            {
+                onoff = 0;
+                fogEff.Background = new SolidColorBrush(Colors.DarkRed);
+                DoubleAnimation blurDisable = new DoubleAnimation(10, Convert.ToDouble(0), new Duration(new TimeSpan(2000000)));
+                blur.BeginAnimation(BlurEffect.RadiusProperty, blurDisable);
+            }
         }
     }
     class Cara
