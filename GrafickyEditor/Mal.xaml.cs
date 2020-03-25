@@ -71,7 +71,7 @@ namespace GrafickyEditor
                     }
                     else 
                     {
-                        MessageBox.Show("Mising file.", "Your file is not inside debug file or you delete your file.", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Mising file.", "Your file is not inside debug file or you delete your file.", MessageBoxButton.YesNo, MessageBoxImage.Error);
                         lblHistory.Items.Add("Missing file.");
                     }
                 }
@@ -96,6 +96,10 @@ namespace GrafickyEditor
                 index++;
                 lblHistory.Items.Add("Textbox was added.");
             }
+            else if (WorkStation.Cursor == Cursors.Cross)
+            {
+                p1 = e.GetPosition(WorkStation);
+            }
             else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand)
             {
                 mal = true;
@@ -109,6 +113,31 @@ namespace GrafickyEditor
             {
                 lblHistory.Items.Add("Element was deleted.");
                 mal = false;
+            }
+            else if (WorkStation.Cursor == Cursors.Cross)
+            {
+                Rectangle rec = new Rectangle();
+                p2 = e.GetPosition(WorkStation);
+                rec.Width = Math.Abs(p2.X - p1.X);
+                rec.Height = Math.Abs(p2.Y - p1.Y);
+                rec.Stroke = brush;
+                rec.StrokeThickness = SliderTl.Value;
+                if (p1.X > p2.X)
+                {
+                    rec.Margin = new Thickness(p2.X, p1.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else
+                {
+                    rec.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
             }
             else if (WorkStation.Cursor != Cursors.Arrow)
             {
@@ -339,6 +368,12 @@ namespace GrafickyEditor
                 DoubleAnimation blurDisable = new DoubleAnimation(10, Convert.ToDouble(0), new Duration(new TimeSpan(2000000)));
                 blur.BeginAnimation(BlurEffect.RadiusProperty, blurDisable);
             }
+        }
+
+        private void RectCreate_Click(object sender, RoutedEventArgs e)
+        {
+            WorkStation.Cursor = Cursors.Cross;
+            lblHistory.Items.Add("Rectangle choose activated.");
         }
     }
     class Cara

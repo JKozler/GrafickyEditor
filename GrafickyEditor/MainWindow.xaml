@@ -36,7 +36,17 @@
             <Button FontSize="30" x:Name="loadProj" Content="Load Project" Grid.Row="2" Margin="40,10" Foreground="White" Background="Black" Click="loadProj_Click"></Button>
             <Label Grid.Row="3" Content="Here is your projects:" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30" x:Name="loadInfo" FontWeight="Bold"></Label>
             <ListBox FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" x:Name="LastprojectLB" Opacity="1" Grid.Row="4" Grid.RowSpan="3" Background="#FF75F3FF" BorderBrush="Black" FontWeight="Bold"></ListBox>
-            <Button x:Name="LoadProject" Content="Load" Background="#FF10EAFF" Grid.Row="7" Click="LoadProject_Click"></Button>
+            <Border Grid.Row="7" Background="#FF75F3FF">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="LoadProject" Margin="0,0,8,0" Content="Load" Background="#FF10EAFF" Grid.Column="0" Click="LoadProject_Click"></Button>
+                    <Button x:Name="RemoveProject" Content="Remove" Grid.Column="2" Background="#FF10EAFF" Click="RemoveProject_Click"></Button>
+                </Grid>
+            </Border>
+           
         </Grid>
         
     </Border>

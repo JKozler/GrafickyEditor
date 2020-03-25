@@ -70,5 +70,40 @@ namespace GrafickyEditor
                 window1.Show();
             }
         }
+
+        private void RemoveProject_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> projects = new List<string>();
+            if (LastprojectLB.SelectedItem.ToString() != null)
+            {
+                if (File.Exists("saves.txt"))
+                {
+                    using (StreamReader sr = new StreamReader("saves.txt"))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            string s = line + ".obr";
+                            if (s == LastprojectLB.SelectedItem.ToString())
+                            {}
+                            else
+                            {
+                                projects.Add(line);
+                            }
+                        }
+                    }
+                }
+            }
+            Stream stream = new FileStream("saves.txt", FileMode.Create);
+            LastprojectLB.Items.Clear();
+            using (StreamWriter sw = new StreamWriter(stream))
+            {
+                foreach (string item in projects)
+                {
+                    LastprojectLB.Items.Add(item + ".obr");
+                    sw.WriteLine(item);
+                }
+            }
+        }
     }
 }
