@@ -25,7 +25,11 @@ namespace GrafickyEditor
     /// </summary>
     public partial class Window1 : Window
     {
+        Ellipse helpEllipse = new Ellipse();
+        Rectangle helpRectangle = new Rectangle();
         bool mal;
+        bool el = false;
+        bool re = false;
         Point p1;
         Point p2;
         Brush brush = new SolidColorBrush(Colors.Black);
@@ -36,6 +40,8 @@ namespace GrafickyEditor
         UIElement[] elements = new UIElement[10000000];
         string jmeno = "";
         int p = 0;
+        bool recta = false;
+        bool ellep = false;
         byte onoff = 0;
         BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -101,6 +107,14 @@ namespace GrafickyEditor
             else if (WorkStation.Cursor == Cursors.Cross)
             {
                 p1 = e.GetPosition(WorkStation);
+                if (ellep == true)
+                {
+                    el = true;
+                }
+                else
+                {
+                    re = true;
+                }
             }
             else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand)
             {
@@ -116,8 +130,9 @@ namespace GrafickyEditor
                 lblHistory.Items.Add("Element was deleted.");
                 mal = false;
             }
-            else if (WorkStation.Cursor == Cursors.Cross)
+            else if (WorkStation.Cursor == Cursors.Cross && re == true)
             {
+                WorkStation.Children.Remove(helpRectangle);
                 Rectangle rec = new Rectangle();
                 p2 = e.GetPosition(WorkStation);
                 rec.Width = Math.Abs(p2.X - p1.X);
@@ -156,11 +171,32 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     index++;
                 }
+                re = false;
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && el == true)
+            {
+                WorkStation.Children.Remove(helpEllipse);
+                Ellipse ellipse = new Ellipse();
+                p2 = e.GetPosition(WorkStation);
+                ellipse.StrokeThickness = SliderTl.Value;
+                ellipse.Stroke = brush;
+                ellipse.Width = Math.Abs(p2.X - p1.X) * 2;
+                ellipse.Height = Math.Abs(p2.Y - p1.Y) * 2;
+                ellipse.Margin = new Thickness(p1.X  - ellipse.Width/2, p1.Y - ellipse.Height/2, p1.X - ellipse.Width/2, p1.Y - ellipse.Height/2);
+                WorkStation.Children.Add(ellipse);
+                el = false;
+                lblHistory.Items.Add("Ellispe was created.");
+                elements[index] = ellipse;
+                index++;
             }
             else if (WorkStation.Cursor != Cursors.Arrow)
             {
                 lblHistory.Items.Add("Element was cerated.");
                 mal = false;
+                ellep = false;
+                recta = false;
+                el = false;
+                re = false;
             }
         }
 
@@ -181,6 +217,46 @@ namespace GrafickyEditor
                 WorkStation.Children.Add(line);
                 elements[index] = line;
                 index++;
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && el == true)
+            {
+                WorkStation.Children.Remove(helpEllipse);
+                p2 = e.GetPosition(WorkStation);
+                helpEllipse.Width = Math.Abs(p2.X - p1.X) * 2;
+                helpEllipse.Height = Math.Abs(p2.Y - p1.Y) * 2;
+                helpEllipse.Margin = new Thickness(p1.X - helpEllipse.Width / 2, p1.Y - helpEllipse.Height / 2, p1.X - helpEllipse.Width / 2, p1.Y - helpEllipse.Height / 2);
+                helpEllipse.Stroke = new SolidColorBrush(Colors.Gray);
+                helpEllipse.StrokeThickness = 2;
+                WorkStation.Children.Add(helpEllipse);
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && re == true)
+            {
+                WorkStation.Children.Remove(helpRectangle);
+                p2 = e.GetPosition(WorkStation);
+                helpRectangle.Width = Math.Abs(p2.X - p1.X);
+                helpRectangle.Height = Math.Abs(p2.Y - p1.Y);
+                helpRectangle.Stroke = new SolidColorBrush(Colors.Gray);
+                helpRectangle.StrokeThickness = 2;
+                if (p1.X > p2.X && p1.Y > p2.Y)
+                {
+                    helpRectangle.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(helpRectangle);;
+                }
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    helpRectangle.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(helpRectangle);
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
+                {
+                    helpRectangle.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(helpRectangle);
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    helpRectangle.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
+                    WorkStation.Children.Add(helpRectangle);
+                }
             }
             else if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == true)
             {
@@ -392,6 +468,18 @@ namespace GrafickyEditor
         {
             WorkStation.Cursor = Cursors.Cross;
             lblHistory.Items.Add("Rectangle choose activated.");
+            recta = true;
+            ellep = false;
+            el = false;
+        }
+
+        private void EllipseEff_Click(object sender, RoutedEventArgs e)
+        {
+            WorkStation.Cursor = Cursors.Cross;
+            lblHistory.Items.Add("Ellipse choose activated.");
+            ellep = true;
+            recta = false;
+            re = false;
         }
     }
 }
