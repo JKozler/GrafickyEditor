@@ -41,7 +41,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="BackStep" Content="Back" Grid.Column="0" Margin="2" Click="BackStep_Click"></Button>
+                            <Button x:Name="BackStep" Content="Step Back" Grid.Column="0" Margin="2" Click="BackStep_Click"></Button>
                             <Slider ValueChanged="DeleteHalf_ValueChanged" x:Name="DeleteHalf" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Minimum="1" Maximum="100" SmallChange="1" Value="1"></Slider>
                         </Grid>
                     </Border>

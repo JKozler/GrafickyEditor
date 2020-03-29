@@ -38,7 +38,8 @@ namespace GrafickyEditor
         int p = 0;
         byte onoff = 0;
         BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
-        
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+
         public Window1(string load)
         {
             InitializeComponent();
@@ -95,6 +96,7 @@ namespace GrafickyEditor
                 elements[index] = tb;
                 index++;
                 lblHistory.Items.Add("Textbox was added.");
+                DeleteHalf.Value = 1;
             }
             else if (WorkStation.Cursor == Cursors.Cross)
             {
@@ -106,9 +108,9 @@ namespace GrafickyEditor
                 p1 = e.GetPosition(WorkStation);
             }
         }
-
         private void WorkStation_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            dispatcherTimer.Stop();
             if (WorkStation.Cursor == Cursors.Hand)
             {
                 lblHistory.Items.Add("Element was deleted.");
@@ -122,17 +124,33 @@ namespace GrafickyEditor
                 rec.Height = Math.Abs(p2.Y - p1.Y);
                 rec.Stroke = brush;
                 rec.StrokeThickness = SliderTl.Value;
-                if (p1.X > p2.X)
+                if (p1.X > p2.X && p1.Y > p2.Y)
                 {
-                    rec.Margin = new Thickness(p2.X, p1.Y, p2.X, p1.Y);
+                    rec.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
                     index++;
                 }
-                else
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    rec.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
                 {
                     rec.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    rec.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
@@ -374,14 +392,6 @@ namespace GrafickyEditor
         {
             WorkStation.Cursor = Cursors.Cross;
             lblHistory.Items.Add("Rectangle choose activated.");
-        }
-    }
-    class Cara
-    {
-        public Line line { get; set; }
-        public Cara(Line line)
-        {
-            this.line = line;
         }
     }
 }
