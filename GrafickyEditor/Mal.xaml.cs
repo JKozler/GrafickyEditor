@@ -78,7 +78,7 @@ namespace GrafickyEditor
                     }
                     else 
                     {
-                        MessageBox.Show("Mising file.", "Your file is not inside debug file or you delete your file.", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                        MessageBox.Show("Mising file.", "Your file is not inside debug file or you delete your file.", MessageBoxButton.OK, MessageBoxImage.Error);
                         lblHistory.Items.Add("Missing file.");
                     }
                 }
