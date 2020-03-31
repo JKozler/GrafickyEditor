@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GrafickyEditor
 {
+    //slouží pro předávání informací mezi okny
     interface INazev
     {
         string Nazev { get; set; }

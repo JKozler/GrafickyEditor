@@ -25,9 +25,12 @@ namespace GrafickyEditor
     /// </summary>
     public partial class Window1 : Window
     {
+        //Zíkladní proměnné, které program využívá
         Ellipse helpEllipse = new Ellipse();
         Rectangle helpRectangle = new Rectangle();
+        Line helpLine = new Line();
         bool mal;
+        bool li = false;
         bool el = false;
         bool re = false;
         Point p1;
@@ -40,6 +43,7 @@ namespace GrafickyEditor
         UIElement[] elements = new UIElement[10000000];
         string jmeno = "";
         int p = 0;
+        bool line = false;
         bool recta = false;
         bool ellep = false;
         byte onoff = 0;
@@ -49,9 +53,11 @@ namespace GrafickyEditor
         public Window1(string load)
         {
             InitializeComponent();
+            //set pro fog scene, když se zapne, tak default vypnout
             blur.Radius = 0;
             WorkStation.Effect = blur;
             WorkStation.Cursor = Cursors.Arrow;
+            //jestliže si uživatel načítá projekt z 1. okna
             if (load != "")
             {
                 if (load.Length >= 25)
@@ -61,6 +67,8 @@ namespace GrafickyEditor
                     image.Width = WorkStation.Width;
                     image.Height = WorkStation.Height;
                     WorkStation.Children.Add(image);
+                    elements[index] = image;
+                    index++;
                 }
                 else
                 {
@@ -73,6 +81,8 @@ namespace GrafickyEditor
                         image.Width = WorkStation.Width;
                         image.Height = WorkStation.Height;
                         WorkStation.Children.Add(image);
+                        elements[index] = image;
+                        index++;
                         infoProj.Content = "You are editing " + jmeno;
                         lblHistory.Items.Add("You save it!");
                     }
@@ -84,7 +94,7 @@ namespace GrafickyEditor
                 }
             }
         }
-
+        //Pokud uživatel stiskne tlačítko myši dolů na WorkStation, tak......
         private void WorkStation_MouseDown(object sender, MouseButtonEventArgs e)
         {
             efectPanel.Visibility = Visibility.Hidden;
@@ -111,9 +121,13 @@ namespace GrafickyEditor
                 {
                     el = true;
                 }
-                else
+                else if (recta == true)
                 {
                     re = true;
+                }
+                else
+                {
+                    li = true;
                 }
             }
             else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand)
@@ -122,6 +136,7 @@ namespace GrafickyEditor
                 p1 = e.GetPosition(WorkStation);
             }
         }
+        //Pokud uživatel pustí tlačítko myši nahoru, tak.....
         private void WorkStation_MouseUp(object sender, MouseButtonEventArgs e)
         {
             dispatcherTimer.Stop();
@@ -189,6 +204,23 @@ namespace GrafickyEditor
                 elements[index] = ellipse;
                 index++;
             }
+            else if (WorkStation.Cursor == Cursors.Cross && li == true)
+            {
+                WorkStation.Children.Remove(helpLine);
+                Line line = new Line();
+                p2 = e.GetPosition(WorkStation);
+                line.X1 = p1.X;
+                line.Y1 = p1.Y;
+                line.X2 = p2.X;
+                line.Y2 = p2.Y;
+                line.StrokeThickness = SliderTl.Value;
+                line.Stroke = brush;
+                WorkStation.Children.Add(line);
+                lblHistory.Items.Add("Line was created.");
+                elements[index] = line;
+                index++;
+                li = false;
+            }
             else if (WorkStation.Cursor != Cursors.Arrow)
             {
                 lblHistory.Items.Add("Element was cerated.");
@@ -197,9 +229,11 @@ namespace GrafickyEditor
                 recta = false;
                 el = false;
                 re = false;
+                line = false;
+                li = false;
             }
         }
-
+        //Když uživatel hýbe myší na WorkStation tak...
         private void WorkStation_MouseMove(object sender, MouseEventArgs e)
         {
             if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == false)
@@ -228,6 +262,18 @@ namespace GrafickyEditor
                 helpEllipse.Stroke = new SolidColorBrush(Colors.Gray);
                 helpEllipse.StrokeThickness = 2;
                 WorkStation.Children.Add(helpEllipse);
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && li == true)
+            {
+                WorkStation.Children.Remove(helpLine);
+                p2 = e.GetPosition(WorkStation);
+                helpLine.X1 = p1.X;
+                helpLine.X2 = p2.X;
+                helpLine.Y1 = p1.Y;
+                helpLine.Y2 = p2.Y;
+                helpLine.Stroke = new SolidColorBrush(Colors.Gray);
+                helpLine.StrokeThickness = 2;
+                WorkStation.Children.Add(helpLine);
             }
             else if (WorkStation.Cursor == Cursors.Cross && re == true)
             {
@@ -376,8 +422,8 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(elements[i]);
                 }
                 index = index - backDelet;
+                lblHistory.Items.Add("Removing elments.");
             }
-            lblHistory.Items.Add("Removing elments.");
         }
 
         private void DeleteHalf_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -469,8 +515,10 @@ namespace GrafickyEditor
             WorkStation.Cursor = Cursors.Cross;
             lblHistory.Items.Add("Rectangle choose activated.");
             recta = true;
+            line = false;
             ellep = false;
             el = false;
+            li = false;
         }
 
         private void EllipseEff_Click(object sender, RoutedEventArgs e)
@@ -479,7 +527,20 @@ namespace GrafickyEditor
             lblHistory.Items.Add("Ellipse choose activated.");
             ellep = true;
             recta = false;
+            line = false;
             re = false;
+            li = false;
+        }
+
+        private void LineEff_Click(object sender, RoutedEventArgs e)
+        {
+            WorkStation.Cursor = Cursors.Cross;
+            lblHistory.Items.Add("Line choose activated.");
+            ellep = false;
+            recta = false;
+            re = false;
+            el = false;
+            line = true;
         }
     }
 }
