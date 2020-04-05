@@ -11,13 +11,14 @@ namespace GrafickyEditor
     {
         string Nazev { get; set; }
     }
-    class Load : INazev
+    public class Load : INazev
     {
         public string Nazev { get; set; }
         public DateTime Zmena { get; set; }
-        public Load(string Nazev)
+        public Load(string Nazev, DateTime Zmena)
         {
             this.Nazev = Nazev;
+            this.Zmena = Zmena;
         }
     }
 }

@@ -29,6 +29,9 @@ namespace GrafickyEditor
         Ellipse helpEllipse = new Ellipse();
         Rectangle helpRectangle = new Rectangle();
         Line helpLine = new Line();
+        bool line = false;
+        bool recta = false;
+        bool ellep = false;
         bool mal;
         bool li = false;
         bool el = false;
@@ -43,27 +46,23 @@ namespace GrafickyEditor
         UIElement[] elements = new UIElement[10000000];
         string jmeno = "";
         int p = 0;
-        bool line = false;
-        bool recta = false;
-        bool ellep = false;
         byte onoff = 0;
         BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
-        public Window1(string load)
+        public Window1(Load load)
         {
-            InitializeComponent();
-            //set pro fog scene, když se zapne, tak default vypnout
+            InitializeComponent();            //set pro fog scene, když se zapne, tak default vypnout
             blur.Radius = 0;
             WorkStation.Effect = blur;
             WorkStation.Cursor = Cursors.Arrow;
             //jestliže si uživatel načítá projekt z 1. okna
-            if (load != "")
+            if (load.Nazev != "")
             {
-                if (load.Length >= 25)
+                if (load.Nazev.Length >= 25)
                 {
                     Image image = new Image();
-                    image.Source = new BitmapImage(new Uri(load));
+                    image.Source = new BitmapImage(new Uri(load.Nazev));
                     image.Width = WorkStation.Width;
                     image.Height = WorkStation.Height;
                     WorkStation.Children.Add(image);
@@ -72,10 +71,10 @@ namespace GrafickyEditor
                 }
                 else
                 {
-                    string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug" + @"\" + load;
+                    string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug" + @"\" + load.Nazev;
                     if (File.Exists(path))
                     {
-                        jmeno = load;
+                        jmeno = load.Nazev;
                         Image image = new Image();
                         image.Source = new BitmapImage(new Uri(path));
                         image.Width = WorkStation.Width;
@@ -84,7 +83,7 @@ namespace GrafickyEditor
                         elements[index] = image;
                         index++;
                         infoProj.Content = "You are editing " + jmeno;
-                        lblHistory.Items.Add("You save it!");
+                        lblHistory.Items.Add("You load it!");
                     }
                     else 
                     {
@@ -358,8 +357,8 @@ namespace GrafickyEditor
             {
                 Image image = new Image();
                 image.Source = new BitmapImage(new Uri(open.FileName));
-                image.Width = WorkStation.Width;
-                image.Height = WorkStation.Height;
+                image.Width = 1920;
+                image.Height = 1080;
                 WorkStation.Children.Add(image);
             }
             lblHistory.Items.Add("Uploading image...");

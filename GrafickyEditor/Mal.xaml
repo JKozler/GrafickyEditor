@@ -151,7 +151,7 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Canvas Panel.ZIndex="-1" Margin="0" x:Name="WorkStation" Grid.Column="0" MouseDown="WorkStation_MouseDown" MouseUp="WorkStation_MouseUp" MouseMove="WorkStation_MouseMove" Background="LightGray"></Canvas>
+                    <Canvas Panel.ZIndex="-1" Margin="0" x:Name="WorkStation" Grid.Column="0" MouseDown="WorkStation_MouseDown" MouseUp="WorkStation_MouseUp" MouseMove="WorkStation_MouseMove" Background="LightGray"/>
                     <Border Grid.Column="2">
                         <Grid>
                             <Grid.RowDefinitions>

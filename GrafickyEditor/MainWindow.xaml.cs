@@ -22,6 +22,7 @@ namespace GrafickyEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        DateTime y;
         public MainWindow()
         {
             InitializeComponent();
@@ -45,7 +46,8 @@ namespace GrafickyEditor
         private void newProj_Click(object sender, RoutedEventArgs e)
         {
             string s = "";
-            Window1 window1 = new Window1(s);
+            Load load = new Load(s, y);
+            Window1 window1 = new Window1(load);
             window1.Show();
         }
 
@@ -55,8 +57,8 @@ namespace GrafickyEditor
             open.Filter = "Image obr(*.obr)|*.obr";
             if (open.ShowDialog() == true)
             {
-                Load load = new Load(open.FileName);
-                Window1 window1 = new Window1(load.Nazev);
+                Load load = new Load(open.FileName, DateTime.Now);
+                Window1 window1 = new Window1(load);
                 window1.Show();
             }
         }
@@ -65,8 +67,8 @@ namespace GrafickyEditor
         {
             if (LastprojectLB.SelectedItem != null)
             {
-                Load load = new Load(LastprojectLB.SelectedItem.ToString());
-                Window1 window1 = new Window1(load.Nazev);
+                Load load = new Load(LastprojectLB.SelectedItem.ToString(), y);
+                Window1 window1 = new Window1(load);
                 window1.Show();
             }
         }
