@@ -84,6 +84,7 @@ namespace GrafickyEditor
                         index++;
                         infoProj.Content = "You are editing " + jmeno;
                         lblHistory.Items.Add("You load it!");
+                        this.Title = load.Nazev;
                     }
                     else 
                     {
@@ -540,6 +541,30 @@ namespace GrafickyEditor
             re = false;
             el = false;
             line = true;
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void LoadFirstwinBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Close();
+        }
+
+        private void MinNorBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+            }
         }
     }
 }

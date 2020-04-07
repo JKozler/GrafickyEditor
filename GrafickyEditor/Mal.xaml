@@ -4,19 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GrafickyEditor"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800" WindowState="Maximized">
+        Title="GPB" Height="450" Width="800" WindowState="Maximized" ResizeMode="NoResize" Icon="text5.ico" WindowStyle="None">
     <Window.Effect>
         <DropShadowEffect/>
     </Window.Effect>
     <Border>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="0.3*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
-            <Border Panel.ZIndex="1" x:Name="WorkFacilities" Background="#FF3B4046">
-                <Grid>
+            <Border x:Name="BMouseDown" Grid.Row="0" Background="#FF363941">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="MinNorBtn" Click="MinNorBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                        <materialDesign:PackIcon Kind="CollapseAllOutline" Width="30" Height="30"/>
+                    </Button>
+                    <Button x:Name="LoadFirstwinBtn" Click="LoadFirstwinBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                        <materialDesign:PackIcon Kind="Account" Width="30" Height="30"/>
+                    </Button>
+                    <Button x:Name="CloseBtn" Click="CloseBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Margin="10,0">
+                        <materialDesign:PackIcon Kind="Power" Width="30" Height="30"/>
+                    </Button>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Panel.ZIndex="1" x:Name="WorkFacilities" Background="#FF363941">
+                <Grid Background="#FFACACAC">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -45,29 +60,9 @@
                             <Slider ValueChanged="DeleteHalf_ValueChanged" x:Name="DeleteHalf" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Minimum="1" Maximum="100" SmallChange="1" Value="1"></Slider>
                         </Grid>
                     </Border>
-                    
-                    <Button Grid.RowSpan="1" Margin="5" Content="Pen" x:Name="Paint" Click="Paint_Click" BorderBrush="White" FontWeight="Bold">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="#FF3B4046"/>
-                                <Setter Property="BorderBrush" Value="White"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="Black"/>
-                                        <Setter Property="Foreground" Value="LightGray"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
+
+                    <Button Grid.RowSpan="1" Margin="5" x:Name="Paint" Click="Paint_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Kind="Pencil"/>
                     </Button>
                     <Button Grid.Row="2" Content="Mouse" x:Name="MouseBack" Click="MouseBack_Click" Margin="5" BorderBrush="White" FontWeight="Bold">
                         <Button.Style>
@@ -144,7 +139,7 @@
                     </Button>
                 </Grid>
             </Border>
-            <Border Grid.Row="1">
+            <Border Grid.Row="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="7*"/>

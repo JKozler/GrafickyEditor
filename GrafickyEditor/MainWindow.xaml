@@ -1,11 +1,11 @@
-﻿<Window x:Class="GrafickyEditor.MainWindow"
+﻿<Window x:Name="Projects" x:Class="GrafickyEditor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GrafickyEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="400">
+        Title="Projects" Height="550" Width="400" Icon="text5.ico" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Border>
         <Border.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

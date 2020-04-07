@@ -49,6 +49,7 @@ namespace GrafickyEditor
             Load load = new Load(s, y);
             Window1 window1 = new Window1(load);
             window1.Show();
+            this.Close();
         }
 
         private void loadProj_Click(object sender, RoutedEventArgs e)
