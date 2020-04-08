@@ -47,6 +47,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -136,6 +137,13 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="0.12*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="DPUp" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <materialDesign:PackIcon Kind="ArrowUpBoldBox" Width="20" Height="40" Foreground="White"/>
+                                    </Button>
                                     <Button x:Name="FlavorPen" Content="Dark Pen" Margin="10" Click="FlavorPen_Click" BorderBrush="{x:Null}">
                                         <Button.Style>
                                             <Style TargetType="{x:Type Button}">

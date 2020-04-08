@@ -20,5 +20,9 @@ namespace GrafickyEditor
             this.Nazev = Nazev;
             this.Zmena = Zmena;
         }
+        public Load()
+        {
+
+        }
     }
 }
