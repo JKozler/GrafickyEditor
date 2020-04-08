@@ -19,8 +19,9 @@
             </Grid.RowDefinitions>
             <Border x:Name="BMouseDown" Grid.Row="0" Background="#FF363941">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="*Untiteld - GPB" x:Name="TitleProject" Foreground="White" FontSize="15" Margin="0,0,1640,0" Background="{x:Null}"></Label>
                     <Button x:Name="MinNorBtn" Click="MinNorBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
-                        <materialDesign:PackIcon Kind="CollapseAllOutline" Width="30" Height="30"/>
+                        <materialDesign:PackIcon Kind="WindowMinimize" Width="30" Height="30"/>
                     </Button>
                     <Button x:Name="LoadFirstwinBtn" Click="LoadFirstwinBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                         <materialDesign:PackIcon Kind="Account" Width="30" Height="30"/>
@@ -28,13 +29,15 @@
                     <Button x:Name="CloseBtn" Click="CloseBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Margin="10,0">
                         <materialDesign:PackIcon Kind="Power" Width="30" Height="30"/>
                     </Button>
+                    <Grid>
+                    </Grid>
                 </StackPanel>
             </Border>
             <Border Grid.Row="1" Panel.ZIndex="1" x:Name="WorkFacilities" Background="#FF363941">
                 <Grid Background="#FFACACAC">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -62,29 +65,10 @@
                     </Border>
 
                     <Button Grid.RowSpan="1" Margin="5" x:Name="Paint" Click="Paint_Click" Background="{x:Null}" BorderBrush="{x:Null}">
-                        <materialDesign:PackIcon Kind="Pencil"/>
+                        <materialDesign:PackIcon Kind="Pencil" />
                     </Button>
-                    <Button Grid.Row="2" Content="Mouse" x:Name="MouseBack" Click="MouseBack_Click" Margin="5" BorderBrush="White" FontWeight="Bold">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="#FF3B4046"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="Black"/>
-                                        <Setter Property="Foreground" Value="White"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
+                    <Button Grid.Row="2" x:Name="MouseBack" Click="MouseBack_Click" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Kind="ArrowUpRight"/>
                     </Button>
                     <Slider x:Name="SliderTl" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="9" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
                     <Button Grid.Column="2" Content="Picture" Margin="2" x:Name="BackPic" Click="BackPic_Click"></Button>
@@ -115,27 +99,8 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Content="Rubber" Grid.Column="1" Margin="0,5,9,5" x:Name="Guma" Click="Guma_Click" BorderBrush="White" FontWeight="Bold">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="#FF3B4046"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="Black"/>
-                                        <Setter Property="Foreground" Value="White"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
+                    <Button Grid.Column="1" Margin="0,5,9,5" x:Name="Guma" Click="Guma_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Kind="Eraser" Width="50"/>
                     </Button>
                 </Grid>
             </Border>
@@ -286,7 +251,7 @@
                             <Label x:Name="infoProj" Grid.Row="0" Content="Name of save file:" Foreground="Black" FontSize="9"></Label>
                             <TextBox Grid.Row="1" Visibility="Hidden" x:Name="nameOfFile" Grid.Column="0" Margin="2"></TextBox>
                             <Button Grid.Row="2" Margin="5" x:Name="SaveSubmit"  Content="Submit" Click="SaveSubmit_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"/>
-                            <ListBox x:Name="lblHistory" Background="#FF00A6CC" Grid.Row="3"/>
+                            <ListBox x:Name="lblHistory" Background="Black" Grid.Row="3" Foreground="White" BorderBrush="{x:Null}"/>
                         </Grid>
                     </Border>
                 </Grid>

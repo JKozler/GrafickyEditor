@@ -84,7 +84,7 @@ namespace GrafickyEditor
                         index++;
                         infoProj.Content = "You are editing " + jmeno;
                         lblHistory.Items.Add("You load it!");
-                        this.Title = load.Nazev;
+                        TitleProject.Content = load.Nazev + " - GPB";
                     }
                     else 
                     {
@@ -456,6 +456,7 @@ namespace GrafickyEditor
                     sw.WriteLine(nameOfFile.Text);
                 }
                 lblHistory.Items.Add("File was saved.");
+                TitleProject.Content = nameOfFile.Text + " - GPB";
             }
             else
             {
@@ -557,14 +558,7 @@ namespace GrafickyEditor
 
         private void MinNorBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.WindowState = WindowState.Normal;
-            }
-            else
-            {
-                this.WindowState = WindowState.Maximized;
-            }
+            this.WindowState = WindowState.Minimized;
         }
     }
 }
