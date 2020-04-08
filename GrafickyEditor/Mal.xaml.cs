@@ -358,8 +358,8 @@ namespace GrafickyEditor
             {
                 Image image = new Image();
                 image.Source = new BitmapImage(new Uri(open.FileName));
-                image.Width = 1920;
-                image.Height = 1080;
+                image.Width = 1680;
+                image.Height = 995;
                 WorkStation.Children.Add(image);
             }
             lblHistory.Items.Add("Uploading image...");
