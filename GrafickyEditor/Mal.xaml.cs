@@ -31,6 +31,7 @@ namespace GrafickyEditor
         Line helpLine = new Line();
         bool line = false;
         bool recta = false;
+        bool movePic = false;
         bool ellep = false;
         bool mal;
         bool li = false;
@@ -38,6 +39,8 @@ namespace GrafickyEditor
         bool re = false;
         Point p1;
         Point p2;
+        Point pic1;
+        Point pic2;
         Brush brush = new SolidColorBrush(Colors.Black);
         int hod = 2;
         int index = 0;
@@ -47,6 +50,7 @@ namespace GrafickyEditor
         string jmeno = "";
         int p = 0;
         byte onoff = 0;
+        byte addableBtn = 0;
         BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
@@ -360,11 +364,36 @@ namespace GrafickyEditor
                 image.Source = new BitmapImage(new Uri(open.FileName));
                 image.Width = 1680;
                 image.Height = 995;
+                image.MouseDown += new MouseButtonEventHandler(DynamicPic_MouseDown);
+                image.MouseMove += new MouseEventHandler(DynamicPic_MouseMove);
+                image.MouseUp += new MouseButtonEventHandler(DynamicPic_MouseUp);
                 WorkStation.Children.Add(image);
             }
             lblHistory.Items.Add("Uploading image...");
         }
-
+        private void DynamicPic_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            pic1 = e.GetPosition(WorkStation);
+            movePic = true;
+        }
+        private void DynamicPic_MouseMove(object sender, MouseEventArgs e)
+        {
+            Image i = (Image)sender;
+            if (movePic == true)
+            {
+                WorkStation.Children.Remove(i);
+                pic2 = e.GetPosition(WorkStation);
+                i.Opacity = 0.5;
+                i.Margin = new Thickness(pic1.X, pic2.Y, 0.0, 0.0);
+                WorkStation.Children.Add(i);
+                
+            }
+        }
+        private void DynamicPic_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            pic2 = e.GetPosition(WorkStation);
+            movePic = false;
+        }
         private void MouseBack_Click(object sender, RoutedEventArgs e)
         {
             WorkStation.Cursor = Cursors.Arrow;
@@ -559,6 +588,112 @@ namespace GrafickyEditor
         private void MinNorBtn_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        private void DPUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (addableBtn == 0)
+            {
+                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
+                AddableOne.Content = "Dark Pen";
+                AddableOne.Opacity = 1;
+                AddableOne.Click += new RoutedEventHandler(FlavorPen_Click);
+                lblHistory.Items.Add("Dark Pen was added to main bar.");
+                addableBtn++;
+            }
+            else if(addableBtn == 1)
+            {
+                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
+                AddableTwo.Content = "Dark Pen";
+                AddableTwo.Opacity = 1;
+                AddableTwo.Click += new RoutedEventHandler(FlavorPen_Click);
+                lblHistory.Items.Add("Dark Pen was added to main bar.");
+                addableBtn--;
+            }
+        }
+
+        private void FGUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (addableBtn == 0)
+            {
+                AddableOne.Content = "Fog scene";
+                AddableOne.Opacity = 1;
+                AddableOne.Click += new RoutedEventHandler(fogEff_Click);
+                lblHistory.Items.Add("Fog scene was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 1)
+            {
+                AddableTwo.Content = "Fog scene";
+                AddableTwo.Opacity = 1;
+                AddableTwo.Click += new RoutedEventHandler(fogEff_Click);
+                lblHistory.Items.Add("Fog scene was added to main bar.");
+                addableBtn--;
+            }
+        }
+
+        private void ReUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (addableBtn == 0)
+            {
+                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
+                AddableOne.Content = "Rectangle";
+                AddableOne.Opacity = 1;
+                AddableOne.Click += new RoutedEventHandler(RectCreate_Click);
+                lblHistory.Items.Add("Rectangle was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 1)
+            {
+                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
+                AddableTwo.Content = "Rectangle";
+                AddableTwo.Opacity = 1;
+                AddableTwo.Click += new RoutedEventHandler(RectCreate_Click);
+                lblHistory.Items.Add("Rectangle was added to main bar.");
+                addableBtn--;
+            }
+        }
+
+        private void ElUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (addableBtn == 0)
+            {
+                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
+                AddableOne.Content = "Ellipse";
+                AddableOne.Opacity = 1;
+                AddableOne.Click += new RoutedEventHandler(EllipseEff_Click);
+                lblHistory.Items.Add("Ellipse was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 1)
+            {
+                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
+                AddableTwo.Content = "Ellipse";
+                AddableTwo.Opacity = 1;
+                AddableTwo.Click += new RoutedEventHandler(EllipseEff_Click);
+                lblHistory.Items.Add("Ellipse was added to main bar.");
+                addableBtn--;
+            }
+        }
+
+        private void LiUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (addableBtn == 0)
+            {
+                AddableOne.Content = "Line";
+                AddableOne.Opacity = 1;
+                AddableOne.Click += new RoutedEventHandler(LineEff_Click);
+                lblHistory.Items.Add("Line was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 1)
+            {
+                AddableTwo.Content = "Line";
+                AddableTwo.Opacity = 1;
+                AddableTwo.Click += new RoutedEventHandler(LineEff_Click);
+                lblHistory.Items.Add("Line was added to main bar.");
+                addableBtn--;
+            }
         }
     }
 }

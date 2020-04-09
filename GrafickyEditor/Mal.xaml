@@ -78,6 +78,8 @@
                     <Button x:Name="Clear" Content="Clear" Grid.Column="5" Margin="2" Click="Clear_Click"></Button>
                     <Button Grid.Column="10" Margin="2" Content="Text" x:Name="TextBTN" Click="TextBTN_Click"></Button>
                     <Button Content="Color" Margin="2" Grid.Column="9" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click"></Button>
+                    <Button Grid.Column="11" Margin="1" Opacity="0" x:Name="AddableOne"></Button>
+                    <Button Grid.Column="11" Margin="1" Opacity="0" x:Name="AddableTwo" Grid.Row="1"></Button>
                     <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="1" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
@@ -141,7 +143,19 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="0.12*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button x:Name="DPUp" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}">
+                                    <Button x:Name="DPUp" Click="DPUp_Click" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <materialDesign:PackIcon Kind="ArrowUpBoldBox" Width="20" Height="40" Foreground="White"/>
+                                    </Button>
+                                    <Button x:Name="FGUp" Click="FGUp_Click" Grid.Column="1" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <materialDesign:PackIcon Kind="ArrowUpBoldBox" Width="20" Height="40" Foreground="White"/>
+                                    </Button>
+                                    <Button x:Name="ReUp" Click="ReUp_Click" Grid.Column="1" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <materialDesign:PackIcon Kind="ArrowUpBoldBox" Width="20" Height="40" Foreground="White"/>
+                                    </Button>
+                                    <Button x:Name="ElUp" Click="ElUp_Click" Grid.Column="1" Grid.Row="3" Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <materialDesign:PackIcon Kind="ArrowUpBoldBox" Width="20" Height="40" Foreground="White"/>
+                                    </Button>
+                                    <Button x:Name="LiUp" Click="LiUp_Click" Grid.Column="1" Grid.Row="4" Background="{x:Null}" BorderBrush="{x:Null}">
                                         <materialDesign:PackIcon Kind="ArrowUpBoldBox" Width="20" Height="40" Foreground="White"/>
                                     </Button>
                                     <Button x:Name="FlavorPen" Content="Dark Pen" Margin="10" Click="FlavorPen_Click" BorderBrush="{x:Null}">
