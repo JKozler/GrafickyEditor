@@ -28,15 +28,19 @@ namespace GrafickyEditor
         //Zíkladní proměnné, které program využívá
         Ellipse helpEllipse = new Ellipse();
         Rectangle helpRectangle = new Rectangle();
+        Rectangle helpRoundedRectangle = new Rectangle();
         Line helpLine = new Line();
         bool line = false;
         bool recta = false;
+        bool roundedRe = false;
+        bool roRe = false;
         bool movePic = false;
         bool ellep = false;
         bool mal;
         bool li = false;
         bool el = false;
         bool re = false;
+        bool fullel = false;
         Point p1;
         Point p2;
         Point pic1;
@@ -47,7 +51,7 @@ namespace GrafickyEditor
         int backDelet;
         bool darkEff = false;
         UIElement[] elements = new UIElement[10000000];
-        string jmeno = "";
+        string jmeno = "*Untiteld - GPB";
         int p = 0;
         byte onoff = 0;
         byte addableBtn = 0;
@@ -129,9 +133,13 @@ namespace GrafickyEditor
                 {
                     re = true;
                 }
-                else
+                else if(line == true)
                 {
                     li = true;
+                }
+                else
+                {
+                    roRe = true;
                 }
             }
             else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand)
@@ -192,6 +200,67 @@ namespace GrafickyEditor
                 }
                 re = false;
             }
+            else if (WorkStation.Cursor == Cursors.Cross && roRe == true)
+            {
+                WorkStation.Children.Remove(helpRoundedRectangle);
+                Rectangle rec = new Rectangle();
+                p2 = e.GetPosition(WorkStation);
+                rec.Width = Math.Abs(p2.X - p1.X);
+                rec.RadiusX = 40;
+                rec.RadiusY = 40;
+                rec.Height = Math.Abs(p2.Y - p1.Y);
+                rec.Stroke = brush;
+                rec.StrokeThickness = SliderTl.Value;
+                if (p1.X > p2.X && p1.Y > p2.Y)
+                {
+                    rec.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rounded rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    rec.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rounded rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
+                {
+                    rec.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rounded rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    rec.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rounded rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                roRe = false;
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && el == true && fullel == true)
+            {
+                WorkStation.Children.Remove(helpEllipse);
+                Ellipse ellipse = new Ellipse();
+                p2 = e.GetPosition(WorkStation);
+                ellipse.StrokeThickness = SliderTl.Value;
+                ellipse.Stroke = brush;
+                ellipse.Width = Math.Abs(p2.X - p1.X) * 2;
+                ellipse.Height = ellipse.Width;
+                ellipse.Margin = new Thickness(p1.X - ellipse.Width / 2, p1.Y - ellipse.Height / 2, p1.X - ellipse.Width / 2, p1.Y - ellipse.Height / 2);
+                WorkStation.Children.Add(ellipse);
+                el = false;
+                lblHistory.Items.Add("Ellispe was created.");
+                elements[index] = ellipse;
+                index++;
+            }
             else if (WorkStation.Cursor == Cursors.Cross && el == true)
             {
                 WorkStation.Children.Remove(helpEllipse);
@@ -235,6 +304,8 @@ namespace GrafickyEditor
                 re = false;
                 line = false;
                 li = false;
+                roundedRe = false;
+                roRe = false;
             }
         }
         //Když uživatel hýbe myší na WorkStation tak...
@@ -255,6 +326,17 @@ namespace GrafickyEditor
                 WorkStation.Children.Add(line);
                 elements[index] = line;
                 index++;
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && el == true && fullel == true)
+            {
+                WorkStation.Children.Remove(helpEllipse);
+                p2 = e.GetPosition(WorkStation);
+                helpEllipse.Width = Math.Abs(p2.X - p1.X) * 2;
+                helpEllipse.Height = helpEllipse.Width;
+                helpEllipse.Margin = new Thickness(p1.X - helpEllipse.Width / 2, p1.Y - helpEllipse.Height / 2, p1.X - helpEllipse.Width / 2, p1.Y - helpEllipse.Height / 2);
+                helpEllipse.Stroke = new SolidColorBrush(Colors.Gray);
+                helpEllipse.StrokeThickness = 2;
+                WorkStation.Children.Add(helpEllipse);
             }
             else if (WorkStation.Cursor == Cursors.Cross && el == true)
             {
@@ -306,6 +388,37 @@ namespace GrafickyEditor
                 {
                     helpRectangle.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
                     WorkStation.Children.Add(helpRectangle);
+                }
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && roRe == true)
+            {
+                WorkStation.Children.Remove(helpRoundedRectangle);
+                p2 = e.GetPosition(WorkStation);
+                helpRoundedRectangle.Width = Math.Abs(p2.X - p1.X);
+                helpRoundedRectangle.RadiusX = 40;
+                helpRoundedRectangle.RadiusY = 40;
+                helpRoundedRectangle.Height = Math.Abs(p2.Y - p1.Y);
+                helpRoundedRectangle.Stroke = new SolidColorBrush(Colors.Gray);
+                helpRoundedRectangle.StrokeThickness = 2;
+                if (p1.X > p2.X && p1.Y > p2.Y)
+                {
+                    helpRoundedRectangle.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(helpRoundedRectangle); ;
+                }
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    helpRoundedRectangle.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(helpRoundedRectangle);
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
+                {
+                    helpRoundedRectangle.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(helpRoundedRectangle);
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    helpRoundedRectangle.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
+                    WorkStation.Children.Add(helpRoundedRectangle);
                 }
             }
             else if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == true)
@@ -549,6 +662,8 @@ namespace GrafickyEditor
             ellep = false;
             el = false;
             li = false;
+            roundedRe = false;
+            roRe = false;
         }
 
         private void EllipseEff_Click(object sender, RoutedEventArgs e)
@@ -560,6 +675,8 @@ namespace GrafickyEditor
             line = false;
             re = false;
             li = false;
+            roundedRe = false;
+            roRe = false;
         }
 
         private void LineEff_Click(object sender, RoutedEventArgs e)
@@ -571,6 +688,20 @@ namespace GrafickyEditor
             re = false;
             el = false;
             line = true;
+            roundedRe = false;
+            roRe = false;
+        }
+        private void roundedRect_Click(object sender, RoutedEventArgs e)
+        {
+            WorkStation.Cursor = Cursors.Cross;
+            lblHistory.Items.Add("Rounded rect choose activated.");
+            roundedRe = true;
+            ellep = false;
+            recta = false;
+            re = false;
+            el = false;
+            line = false;
+            roRe = false;
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
@@ -594,7 +725,6 @@ namespace GrafickyEditor
         {
             if (addableBtn == 0)
             {
-                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
                 AddableOne.Content = "Dark Pen";
                 AddableOne.Opacity = 1;
                 AddableOne.Click += new RoutedEventHandler(FlavorPen_Click);
@@ -603,40 +733,54 @@ namespace GrafickyEditor
             }
             else if(addableBtn == 1)
             {
-                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
                 AddableTwo.Content = "Dark Pen";
                 AddableTwo.Opacity = 1;
                 AddableTwo.Click += new RoutedEventHandler(FlavorPen_Click);
                 lblHistory.Items.Add("Dark Pen was added to main bar.");
                 addableBtn--;
             }
+            else if (addableBtn == 2)
+            {
+                AddableThree.Content = "Dark Pen";
+                AddableThree.Opacity = 1;
+                AddableThree.Click += new RoutedEventHandler(FlavorPen_Click);
+                lblHistory.Items.Add("Dark Pen was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 3)
+            {
+                AddableFour.Content = "Dark Pen";
+                AddableFour.Opacity = 1;
+                AddableFour.Click += new RoutedEventHandler(FlavorPen_Click);
+                lblHistory.Items.Add("Dark Pen was added to main bar.");
+                addableBtn = 0;
+            }
         }
 
         private void FGUp_Click(object sender, RoutedEventArgs e)
         {
-            if (addableBtn == 0)
-            {
-                AddableOne.Content = "Fog scene";
-                AddableOne.Opacity = 1;
-                AddableOne.Click += new RoutedEventHandler(fogEff_Click);
-                lblHistory.Items.Add("Fog scene was added to main bar.");
-                addableBtn++;
-            }
-            else if (addableBtn == 1)
-            {
-                AddableTwo.Content = "Fog scene";
-                AddableTwo.Opacity = 1;
-                AddableTwo.Click += new RoutedEventHandler(fogEff_Click);
-                lblHistory.Items.Add("Fog scene was added to main bar.");
-                addableBtn--;
-            }
+            //if (addableBtn == 0)
+            //{
+            //    AddableOne.Content = "Fog scene";
+            //    AddableOne.Opacity = 1;
+            //    AddableOne.Click += new RoutedEventHandler(fogEff_Click);
+            //    lblHistory.Items.Add("Fog scene was added to main bar.");
+            //    addableBtn++;
+            //}
+            //else if (addableBtn == 1)
+            //{
+            //    AddableTwo.Content = "Fog scene";
+            //    AddableTwo.Opacity = 1;
+            //    AddableTwo.Click += new RoutedEventHandler(fogEff_Click);
+            //    lblHistory.Items.Add("Fog scene was added to main bar.");
+            //    addableBtn--;
+            //}
         }
 
         private void ReUp_Click(object sender, RoutedEventArgs e)
         {
             if (addableBtn == 0)
             {
-                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
                 AddableOne.Content = "Rectangle";
                 AddableOne.Opacity = 1;
                 AddableOne.Click += new RoutedEventHandler(RectCreate_Click);
@@ -645,12 +789,27 @@ namespace GrafickyEditor
             }
             else if (addableBtn == 1)
             {
-                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
                 AddableTwo.Content = "Rectangle";
                 AddableTwo.Opacity = 1;
                 AddableTwo.Click += new RoutedEventHandler(RectCreate_Click);
                 lblHistory.Items.Add("Rectangle was added to main bar.");
                 addableBtn--;
+            }
+            else if (addableBtn == 2)
+            {
+                AddableThree.Content = "Rectangle";
+                AddableThree.Opacity = 1;
+                AddableThree.Click += new RoutedEventHandler(RectCreate_Click);
+                lblHistory.Items.Add("Rectangle was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 3)
+            {
+                AddableFour.Content = "Rectangle";
+                AddableFour.Opacity = 1;
+                AddableFour.Click += new RoutedEventHandler(RectCreate_Click);
+                lblHistory.Items.Add("Rectangle was added to main bar.");
+                addableBtn = 0;
             }
         }
 
@@ -658,7 +817,6 @@ namespace GrafickyEditor
         {
             if (addableBtn == 0)
             {
-                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
                 AddableOne.Content = "Ellipse";
                 AddableOne.Opacity = 1;
                 AddableOne.Click += new RoutedEventHandler(EllipseEff_Click);
@@ -667,12 +825,27 @@ namespace GrafickyEditor
             }
             else if (addableBtn == 1)
             {
-                AddableOne.Click -= new RoutedEventHandler(fogEff_Click);
                 AddableTwo.Content = "Ellipse";
                 AddableTwo.Opacity = 1;
                 AddableTwo.Click += new RoutedEventHandler(EllipseEff_Click);
                 lblHistory.Items.Add("Ellipse was added to main bar.");
                 addableBtn--;
+            }
+            else if (addableBtn == 2)
+            {
+                AddableThree.Content = "Ellipse";
+                AddableThree.Opacity = 1;
+                AddableThree.Click += new RoutedEventHandler(EllipseEff_Click);
+                lblHistory.Items.Add("Ellipse was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 3)
+            {
+                AddableFour.Content = "Ellipse";
+                AddableFour.Opacity = 1;
+                AddableFour.Click += new RoutedEventHandler(EllipseEff_Click);
+                lblHistory.Items.Add("Ellipse was added to main bar.");
+                addableBtn = 0;
             }
         }
 
@@ -692,7 +865,77 @@ namespace GrafickyEditor
                 AddableTwo.Opacity = 1;
                 AddableTwo.Click += new RoutedEventHandler(LineEff_Click);
                 lblHistory.Items.Add("Line was added to main bar.");
-                addableBtn--;
+                addableBtn++;
+            }
+            else if (addableBtn == 2)
+            {
+                AddableThree.Content = "Line";
+                AddableThree.Opacity = 1;
+                AddableThree.Click += new RoutedEventHandler(LineEff_Click);
+                lblHistory.Items.Add("Line was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 3)
+            {
+                AddableFour.Content = "Line";
+                AddableFour.Opacity = 1;
+                AddableFour.Click += new RoutedEventHandler(LineEff_Click);
+                lblHistory.Items.Add("Line was added to main bar.");
+                addableBtn = 0;
+            }
+        }
+
+        private void RoReUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (addableBtn == 0)
+            {
+                AddableOne.Content = "Rounded rect";
+                AddableOne.Opacity = 1;
+                AddableOne.Click += new RoutedEventHandler(roundedRect_Click);
+                lblHistory.Items.Add("Rounded rect was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 1)
+            {
+                AddableTwo.Content = "Rounded rect";
+                AddableTwo.Opacity = 1;
+                AddableTwo.Click += new RoutedEventHandler(roundedRect_Click);
+                lblHistory.Items.Add("Rounded rect was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 2)
+            {
+                AddableThree.Content = "Rounded rect";
+                AddableThree.Opacity = 1;
+                AddableThree.Click += new RoutedEventHandler(roundedRect_Click);
+                lblHistory.Items.Add("Rounded rect was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 3)
+            {
+                AddableFour.Content = "Rounded rect";
+                AddableFour.Opacity = 1;
+                AddableFour.Click += new RoutedEventHandler(roundedRect_Click);
+                lblHistory.Items.Add("Rounded rect was added to main bar.");
+                addableBtn = 0;
+            }
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl)
+            {
+                fullel = true;
+                TitleProject.Content = "Circle activated.";
+            }
+        }
+
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl)
+            {
+                fullel = false;
+                TitleProject.Content = jmeno;
             }
         }
     }
