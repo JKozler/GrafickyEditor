@@ -40,6 +40,8 @@ namespace GrafickyEditor
         bool li = false;
         bool el = false;
         bool re = false;
+        bool movingTxt = false;
+        bool dark = false;
         bool fullel = false;
         Point p1;
         Point p2;
@@ -110,6 +112,8 @@ namespace GrafickyEditor
             {
                 Point pa = e.GetPosition(WorkStation);
                 TextBox tb = new TextBox();
+                tb.BorderThickness = new Thickness(0);
+                tb.MouseDoubleClick += new MouseButtonEventHandler(DynamicTb_DoubleClick);
                 tb.Name = "tb" + p;
                 tb.FontSize = 20;
                 tb.VerticalAlignment = VerticalAlignment.Center;
@@ -121,6 +125,7 @@ namespace GrafickyEditor
                 index++;
                 lblHistory.Items.Add("Textbox was added.");
                 DeleteHalf.Value = 1;
+                WorkStation.Cursor = Cursors.Arrow;
             }
             else if (WorkStation.Cursor == Cursors.Cross)
             {
@@ -721,6 +726,30 @@ namespace GrafickyEditor
             this.WindowState = WindowState.Minimized;
         }
 
+        private void DynamicTb_DoubleClick(object sender, EventArgs e)
+        {
+            lblHistory.Items.Add("Editing text....");
+            TextBox tb = (TextBox)sender;
+            System.Windows.Forms.FontDialog fd = new System.Windows.Forms.FontDialog();
+            System.Windows.Forms.DialogResult res = fd.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK)
+            {
+                tb.FontFamily = new FontFamily(fd.Font.Name);
+                tb.FontSize = fd.Font.Size * 96.0 / 72.0;
+                tb.FontWeight = fd.Font.Bold ? FontWeights.Bold : FontWeights.Regular;
+                tb.FontStyle = fd.Font.Italic ? FontStyles.Italic : FontStyles.Normal;
+                TextDecorationCollection tdc = new TextDecorationCollection();
+                if (fd.Font.Underline) tdc.Add(TextDecorations.Underline);
+                if (fd.Font.Strikeout) tdc.Add(TextDecorations.Strikethrough);
+                tb.TextDecorations = tdc;
+                lblHistory.Items.Add("Text was Edited.");
+            }
+            else
+            {
+                lblHistory.Items.Add("Text was not edited.");
+            }
+        }
+
         private void DPUp_Click(object sender, RoutedEventArgs e)
         {
             if (addableBtn == 0)
@@ -936,6 +965,15 @@ namespace GrafickyEditor
             {
                 fullel = false;
                 TitleProject.Content = jmeno;
+            }
+        }
+
+        private void DarkBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (dark == false)
+            {
+                dark = true;
+                DarkBtn.Background = new SolidColorBrush(Colors.Black);
             }
         }
     }
