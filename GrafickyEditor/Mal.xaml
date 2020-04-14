@@ -139,17 +139,15 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Canvas Panel.ZIndex="-1" Margin="0" x:Name="WorkStation" Grid.Column="0" MouseDown="WorkStation_MouseDown" MouseUp="WorkStation_MouseUp" MouseMove="WorkStation_MouseMove" Background="LightGray"/>
+                    <Canvas Panel.ZIndex="-1" Margin="0" x:Name="WorkStation" Grid.Column="0" MouseDown="WorkStation_MouseDown" MouseUp="WorkStation_MouseUp" MouseMove="WorkStation_MouseMove" Background="White"/>
                     <Border Grid.Column="2">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="0.8*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="2.8*" />
                                 <RowDefinition Height="11*" />
                             </Grid.RowDefinitions>
                             <!-- Skrytá část -->
-                            <Border Grid.ColumnSpan="2" x:Name="efectPanel" Opacity="0.9" Visibility="Hidden" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="4" Background="#FF3B4046" >
+                            <Border x:Name="efectPanel" Opacity="0.9" Visibility="Hidden" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="2" Background="#FF3B4046" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -345,10 +343,19 @@
                                     </Button>
                                 </Grid>
                             </Border>
-                            <Label x:Name="infoProj" Grid.Row="0" Content="Name of save file:" Foreground="Black" FontSize="9"></Label>
-                            <TextBox Grid.Row="1" Visibility="Hidden" x:Name="nameOfFile" Grid.Column="0" Margin="2"></TextBox>
-                            <Button Grid.Row="2" Margin="5" x:Name="SaveSubmit"  Content="Submit" Click="SaveSubmit_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"/>
-                            <ListBox x:Name="lblHistory" Background="#FF292828" Grid.Row="3" Foreground="White" BorderBrush="{x:Null}"/>
+                            <Border Grid.Row="0" Background="#FFACACAC" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Panel.ZIndex="1" x:Name="infoProj" Grid.Row="0" Content="Name of save file:" Foreground="Black" FontSize="9"></Label>
+                                    <TextBox Grid.Row="1" Visibility="Hidden" x:Name="nameOfFile" Margin="2"></TextBox>
+                                    <Button Grid.Row="2" Margin="5" x:Name="SaveSubmit"  Content="Submit" Click="SaveSubmit_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"/>
+                                </Grid>
+                            </Border>
+                            <ListBox x:Name="lblHistory" Background="#FF292828" Grid.Row="1" Foreground="White" BorderBrush="{x:Null}"/>
                         </Grid>
                     </Border>
                 </Grid>
