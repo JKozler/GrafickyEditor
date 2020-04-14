@@ -26,6 +26,7 @@ namespace GrafickyEditor
     public partial class Window1 : Window
     {
         //Zíkladní proměnné, které program využívá
+        Polygon helpPol = new Polygon();
         Ellipse helpEllipse = new Ellipse();
         Rectangle helpRectangle = new Rectangle();
         Rectangle helpRoundedRectangle = new Rectangle();
@@ -43,6 +44,8 @@ namespace GrafickyEditor
         bool movingTxt = false;
         bool dark = false;
         bool fullel = false;
+        bool triangle = false;
+        bool tr = false;
         Point p1;
         Point p2;
         Point pic1;
@@ -142,6 +145,10 @@ namespace GrafickyEditor
                 {
                     li = true;
                 }
+                else if (triangle == true)
+                {
+                    tr = true;
+                }
                 else
                 {
                     roRe = true;
@@ -161,6 +168,24 @@ namespace GrafickyEditor
             {
                 lblHistory.Items.Add("Element was deleted.");
                 mal = false;
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && tr == true)
+            {
+                WorkStation.Children.Remove(helpPol);
+                Polygon pol = new Polygon();
+                PointCollection pts = new PointCollection();
+                p2 = e.GetPosition(WorkStation);
+                pts.Add(new Point(p1.X, p2.Y));
+                pts.Add(new Point(p2.X, p2.Y));
+                pts.Add(new Point(p1.X + (p2.X - p1.X), p1.Y));
+                pol.Points = pts;
+                pol.Stroke = brush;
+                pol.StrokeThickness = SliderTl.Value;
+                elements[index] = pol;
+                index++;
+                WorkStation.Children.Add(pol);
+                lblHistory.Items.Add("Triangle was created.");
+                tr = false;
             }
             else if (WorkStation.Cursor == Cursors.Cross && re == true)
             {
@@ -272,6 +297,8 @@ namespace GrafickyEditor
                 Ellipse ellipse = new Ellipse();
                 p2 = e.GetPosition(WorkStation);
                 ellipse.StrokeThickness = SliderTl.Value;
+                ellipse.Name = "EL" + index;
+                ellipse.MouseDown += new MouseButtonEventHandler(Ellipse_MouseDown);
                 ellipse.Stroke = brush;
                 ellipse.Width = Math.Abs(p2.X - p1.X) * 2;
                 ellipse.Height = Math.Abs(p2.Y - p1.Y) * 2;
@@ -331,6 +358,19 @@ namespace GrafickyEditor
                 WorkStation.Children.Add(line);
                 elements[index] = line;
                 index++;
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && tr == true)
+            {
+                WorkStation.Children.Remove(helpPol);
+                PointCollection pts = new PointCollection();
+                p2 = e.GetPosition(WorkStation);
+                pts.Add(new Point(p1.X, p2.Y));
+                pts.Add(new Point(p2.X, p2.Y));
+                pts.Add(new Point(p1.X + (p2.X - p1.X), p1.Y));
+                helpPol.Points = pts;
+                helpPol.Stroke = new SolidColorBrush(Colors.Gray);
+                helpPol.StrokeThickness = 2;
+                WorkStation.Children.Add(helpPol);
             }
             else if (WorkStation.Cursor == Cursors.Cross && el == true && fullel == true)
             {
@@ -482,35 +522,21 @@ namespace GrafickyEditor
                 image.Source = new BitmapImage(new Uri(open.FileName));
                 image.Width = 1680;
                 image.Height = 995;
-                image.MouseDown += new MouseButtonEventHandler(DynamicPic_MouseDown);
-                image.MouseMove += new MouseEventHandler(DynamicPic_MouseMove);
-                image.MouseUp += new MouseButtonEventHandler(DynamicPic_MouseUp);
                 WorkStation.Children.Add(image);
             }
             lblHistory.Items.Add("Uploading image...");
         }
-        private void DynamicPic_MouseDown(object sender, MouseButtonEventArgs e)
+        
+        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            pic1 = e.GetPosition(WorkStation);
-            movePic = true;
-        }
-        private void DynamicPic_MouseMove(object sender, MouseEventArgs e)
-        {
-            Image i = (Image)sender;
-            if (movePic == true)
+            Ellipse el = (Ellipse)sender;
+            System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
+            System.Windows.Forms.DialogResult res = cd.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK)
             {
-                WorkStation.Children.Remove(i);
-                pic2 = e.GetPosition(WorkStation);
-                i.Opacity = 0.5;
-                i.Margin = new Thickness(pic1.X, pic2.Y, 0.0, 0.0);
-                WorkStation.Children.Add(i);
-                
+                el.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
             }
-        }
-        private void DynamicPic_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            pic2 = e.GetPosition(WorkStation);
-            movePic = false;
+
         }
         private void MouseBack_Click(object sender, RoutedEventArgs e)
         {
@@ -669,6 +695,8 @@ namespace GrafickyEditor
             li = false;
             roundedRe = false;
             roRe = false;
+            tr = false;
+            triangle = false;
         }
 
         private void EllipseEff_Click(object sender, RoutedEventArgs e)
@@ -682,6 +710,8 @@ namespace GrafickyEditor
             li = false;
             roundedRe = false;
             roRe = false;
+            tr = false;
+            triangle = false;
         }
 
         private void LineEff_Click(object sender, RoutedEventArgs e)
@@ -695,6 +725,8 @@ namespace GrafickyEditor
             line = true;
             roundedRe = false;
             roRe = false;
+            tr = false;
+            triangle = false;
         }
         private void roundedRect_Click(object sender, RoutedEventArgs e)
         {
@@ -707,6 +739,23 @@ namespace GrafickyEditor
             el = false;
             line = false;
             roRe = false;
+            tr = false;
+            triangle = false;
+        }
+
+        private void PolygonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WorkStation.Cursor = Cursors.Cross;
+            lblHistory.Items.Add("Triangle choose activated.");
+            roundedRe = false;
+            ellep = false;
+            recta = false;
+            re = false;
+            el = false;
+            line = false;
+            roRe = false;
+            tr = false;
+            triangle = true;
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
@@ -725,7 +774,7 @@ namespace GrafickyEditor
         {
             this.WindowState = WindowState.Minimized;
         }
-
+        //2x kliknutí na text
         private void DynamicTb_DoubleClick(object sender, EventArgs e)
         {
             lblHistory.Items.Add("Editing text....");
@@ -766,7 +815,7 @@ namespace GrafickyEditor
                 AddableTwo.Opacity = 1;
                 AddableTwo.Click += new RoutedEventHandler(FlavorPen_Click);
                 lblHistory.Items.Add("Dark Pen was added to main bar.");
-                addableBtn--;
+                addableBtn++;
             }
             else if (addableBtn == 2)
             {
@@ -822,7 +871,7 @@ namespace GrafickyEditor
                 AddableTwo.Opacity = 1;
                 AddableTwo.Click += new RoutedEventHandler(RectCreate_Click);
                 lblHistory.Items.Add("Rectangle was added to main bar.");
-                addableBtn--;
+                addableBtn++;
             }
             else if (addableBtn == 2)
             {
@@ -858,7 +907,7 @@ namespace GrafickyEditor
                 AddableTwo.Opacity = 1;
                 AddableTwo.Click += new RoutedEventHandler(EllipseEff_Click);
                 lblHistory.Items.Add("Ellipse was added to main bar.");
-                addableBtn--;
+                addableBtn++;
             }
             else if (addableBtn == 2)
             {
@@ -968,12 +1017,39 @@ namespace GrafickyEditor
             }
         }
 
-        private void DarkBtn_Click(object sender, RoutedEventArgs e)
+        private void TrUp_Click(object sender, RoutedEventArgs e)
         {
-            if (dark == false)
+            if (addableBtn == 0)
             {
-                dark = true;
-                DarkBtn.Background = new SolidColorBrush(Colors.Black);
+                AddableOne.Content = "Triangle";
+                AddableOne.Opacity = 1;
+                AddableOne.Click += new RoutedEventHandler(PolygonBtn_Click);
+                lblHistory.Items.Add("Line was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 1)
+            {
+                AddableTwo.Content = "Triangle";
+                AddableTwo.Opacity = 1;
+                AddableTwo.Click += new RoutedEventHandler(PolygonBtn_Click);
+                lblHistory.Items.Add("Triangle was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 2)
+            {
+                AddableThree.Content = "Triangle";
+                AddableThree.Opacity = 1;
+                AddableThree.Click += new RoutedEventHandler(PolygonBtn_Click);
+                lblHistory.Items.Add("Line was added to main bar.");
+                addableBtn++;
+            }
+            else if (addableBtn == 3)
+            {
+                AddableFour.Content = "Triangle";
+                AddableFour.Opacity = 1;
+                AddableFour.Click += new RoutedEventHandler(PolygonBtn_Click);
+                lblHistory.Items.Add("Triangle was added to main bar.");
+                addableBtn = 0;
             }
         }
     }
