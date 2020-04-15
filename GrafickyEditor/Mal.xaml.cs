@@ -35,28 +35,28 @@ namespace GrafickyEditor
         bool recta = false;
         bool roundedRe = false;
         bool roRe = false;
-        bool movePic = false;
         bool ellep = false;
+        bool fullRect = false;
         bool mal;
         bool li = false;
         bool el = false;
         bool re = false;
-        bool movingTxt = false;
         bool dark = false;
         bool fullel = false;
         bool triangle = false;
         bool tr = false;
+        bool loadPr = false;
         Point p1;
         Point p2;
-        Point pic1;
-        Point pic2;
         Brush brush = new SolidColorBrush(Colors.Black);
+        Brush fill = null;
         int hod = 2;
         int index = 0;
         int backDelet;
         bool darkEff = false;
         UIElement[] elements = new UIElement[10000000];
         string jmeno = "*Untiteld - GPB";
+        string nazev;
         int p = 0;
         byte onoff = 0;
         byte addableBtn = 0;
@@ -81,6 +81,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(image);
                     elements[index] = image;
                     index++;
+                    loadPr = true;
                 }
                 else
                 {
@@ -88,6 +89,7 @@ namespace GrafickyEditor
                     if (File.Exists(path))
                     {
                         jmeno = load.Nazev;
+                        nazev = load.Nazev;
                         Image image = new Image();
                         image.Source = new BitmapImage(new Uri(path));
                         image.Width = WorkStation.Width;
@@ -98,6 +100,7 @@ namespace GrafickyEditor
                         infoProj.Content = "You are editing " + jmeno;
                         lblHistory.Items.Add("You load it!");
                         TitleProject.Content = load.Nazev + " - GPB";
+                        loadPr = true;
                     }
                     else 
                     {
@@ -180,6 +183,7 @@ namespace GrafickyEditor
                 pts.Add(new Point(p1.X + (p2.X - p1.X), p1.Y));
                 pol.Points = pts;
                 pol.Stroke = brush;
+                pol.Fill = fill;
                 pol.StrokeThickness = SliderTl.Value;
                 elements[index] = pol;
                 index++;
@@ -187,14 +191,15 @@ namespace GrafickyEditor
                 lblHistory.Items.Add("Triangle was created.");
                 tr = false;
             }
-            else if (WorkStation.Cursor == Cursors.Cross && re == true)
+            else if (WorkStation.Cursor == Cursors.Cross && re == true && fullRect == true)
             {
                 WorkStation.Children.Remove(helpRectangle);
                 Rectangle rec = new Rectangle();
                 p2 = e.GetPosition(WorkStation);
                 rec.Width = Math.Abs(p2.X - p1.X);
-                rec.Height = Math.Abs(p2.Y - p1.Y);
+                rec.Height = rec.Width;
                 rec.Stroke = brush;
+                rec.Fill = fill;
                 rec.StrokeThickness = SliderTl.Value;
                 if (p1.X > p2.X && p1.Y > p2.Y)
                 {
@@ -230,6 +235,96 @@ namespace GrafickyEditor
                 }
                 re = false;
             }
+            else if (WorkStation.Cursor == Cursors.Cross && re == true)
+            {
+                WorkStation.Children.Remove(helpRectangle);
+                Rectangle rec = new Rectangle();
+                p2 = e.GetPosition(WorkStation);
+                rec.Width = Math.Abs(p2.X - p1.X);
+                rec.Height = Math.Abs(p2.Y - p1.Y);
+                rec.Stroke = brush;
+                rec.Fill = fill;
+                rec.StrokeThickness = SliderTl.Value;
+                if (p1.X > p2.X && p1.Y > p2.Y)
+                {
+                    rec.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    rec.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
+                {
+                    rec.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    rec.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                re = false;
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && roRe == true && fullRect == true)
+            {
+                WorkStation.Children.Remove(helpRoundedRectangle);
+                Rectangle rec = new Rectangle();
+                p2 = e.GetPosition(WorkStation);
+                rec.Width = Math.Abs(p2.X - p1.X);
+                rec.RadiusX = 40;
+                rec.RadiusY = 40;
+                rec.Height = rec.Width;
+                rec.Stroke = brush;
+                rec.Fill = fill;
+                rec.StrokeThickness = SliderTl.Value;
+                if (p1.X > p2.X && p1.Y > p2.Y)
+                {
+                    rec.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rounded rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    rec.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rounded rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
+                {
+                    rec.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rounded rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    rec.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
+                    WorkStation.Children.Add(rec);
+                    lblHistory.Items.Add("Rounded rect. was created");
+                    elements[index] = rec;
+                    index++;
+                }
+                roRe = false;
+            }
             else if (WorkStation.Cursor == Cursors.Cross && roRe == true)
             {
                 WorkStation.Children.Remove(helpRoundedRectangle);
@@ -240,6 +335,7 @@ namespace GrafickyEditor
                 rec.RadiusY = 40;
                 rec.Height = Math.Abs(p2.Y - p1.Y);
                 rec.Stroke = brush;
+                rec.Fill = fill;
                 rec.StrokeThickness = SliderTl.Value;
                 if (p1.X > p2.X && p1.Y > p2.Y)
                 {
@@ -284,6 +380,7 @@ namespace GrafickyEditor
                 ellipse.Stroke = brush;
                 ellipse.Width = Math.Abs(p2.X - p1.X) * 2;
                 ellipse.Height = ellipse.Width;
+                ellipse.Fill = fill;
                 ellipse.Margin = new Thickness(p1.X - ellipse.Width / 2, p1.Y - ellipse.Height / 2, p1.X - ellipse.Width / 2, p1.Y - ellipse.Height / 2);
                 WorkStation.Children.Add(ellipse);
                 el = false;
@@ -298,6 +395,7 @@ namespace GrafickyEditor
                 p2 = e.GetPosition(WorkStation);
                 ellipse.StrokeThickness = SliderTl.Value;
                 ellipse.Name = "EL" + index;
+                ellipse.Fill = fill;
                 ellipse.MouseDown += new MouseButtonEventHandler(Ellipse_MouseDown);
                 ellipse.Stroke = brush;
                 ellipse.Width = Math.Abs(p2.X - p1.X) * 2;
@@ -406,6 +504,35 @@ namespace GrafickyEditor
                 helpLine.StrokeThickness = 2;
                 WorkStation.Children.Add(helpLine);
             }
+            else if (WorkStation.Cursor == Cursors.Cross && re == true && fullRect == true)
+            {
+                WorkStation.Children.Remove(helpRectangle);
+                p2 = e.GetPosition(WorkStation);
+                helpRectangle.Width = Math.Abs(p2.X - p1.X);
+                helpRectangle.Height = helpRectangle.Width;
+                helpRectangle.Stroke = new SolidColorBrush(Colors.Gray);
+                helpRectangle.StrokeThickness = 2;
+                if (p1.X > p2.X && p1.Y > p2.Y)
+                {
+                    helpRectangle.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(helpRectangle); ;
+                }
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    helpRectangle.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(helpRectangle);
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
+                {
+                    helpRectangle.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(helpRectangle);
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    helpRectangle.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
+                    WorkStation.Children.Add(helpRectangle);
+                }
+            }
             else if (WorkStation.Cursor == Cursors.Cross && re == true)
             {
                 WorkStation.Children.Remove(helpRectangle);
@@ -433,6 +560,37 @@ namespace GrafickyEditor
                 {
                     helpRectangle.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
                     WorkStation.Children.Add(helpRectangle);
+                }
+            }
+            else if (WorkStation.Cursor == Cursors.Cross && roRe == true && fullRect == true)
+            {
+                WorkStation.Children.Remove(helpRoundedRectangle);
+                p2 = e.GetPosition(WorkStation);
+                helpRoundedRectangle.Width = Math.Abs(p2.X - p1.X);
+                helpRoundedRectangle.RadiusX = 40;
+                helpRoundedRectangle.RadiusY = 40;
+                helpRoundedRectangle.Height = helpRoundedRectangle.Width;
+                helpRoundedRectangle.Stroke = new SolidColorBrush(Colors.Gray);
+                helpRoundedRectangle.StrokeThickness = 2;
+                if (p1.X > p2.X && p1.Y > p2.Y)
+                {
+                    helpRoundedRectangle.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(helpRoundedRectangle); ;
+                }
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    helpRoundedRectangle.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(helpRoundedRectangle);
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
+                {
+                    helpRoundedRectangle.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(helpRoundedRectangle);
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    helpRoundedRectangle.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
+                    WorkStation.Children.Add(helpRoundedRectangle);
                 }
             }
             else if (WorkStation.Cursor == Cursors.Cross && roRe == true)
@@ -552,10 +710,33 @@ namespace GrafickyEditor
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            //dodělat
+            if (loadPr == true)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
+                save.Filter = "Image obr(*.obr)|*.obr|PNG(*.png)|*.png|JPG(*.jpg)|*.jpg";
+                save.FileName = nazev;
+                if (save.ShowDialog() == true)
+                {
+                    FileStream fs = new FileStream(save.FileName, FileMode.Create);
+                    RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
+                        (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
+                    bmp.Render(WorkStation);
+                    BitmapEncoder encoder = new TiffBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(bmp));
+                    encoder.Save(fs);
+                    fs.Close();
+                }
+            }
+            else
+            {
             SaveSubmit.Visibility = Visibility.Visible;
             nameOfFile.Visibility = Visibility.Visible;
+            SaveDifferentWay.Visibility = Visibility.Visible;
             efectPanel.Visibility = Visibility.Hidden;
             lblHistory.Items.Add("Save file...");
+            }
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -999,24 +1180,6 @@ namespace GrafickyEditor
             }
         }
 
-        private void OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.LeftCtrl)
-            {
-                fullel = true;
-                TitleProject.Content = "Circle activated.";
-            }
-        }
-
-        private void OnKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.LeftCtrl)
-            {
-                fullel = false;
-                TitleProject.Content = jmeno;
-            }
-        }
-
         private void TrUp_Click(object sender, RoutedEventArgs e)
         {
             if (addableBtn == 0)
@@ -1050,6 +1213,58 @@ namespace GrafickyEditor
                 AddableFour.Click += new RoutedEventHandler(PolygonBtn_Click);
                 lblHistory.Items.Add("Triangle was added to main bar.");
                 addableBtn = 0;
+            }
+        }
+        private void Fill_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
+            System.Windows.Forms.DialogResult res = cd.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK)
+            {
+                fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
+            }
+        }
+        //Ukládání do jiného složky/dokončení projektu
+        private void SaveDifferentWay_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
+            save.Filter = "Image obr(*.obr)|*.obr|PNG(*.png)|*.png|JPG(*.jpg)|*.jpg";
+            save.FileName = "name.obr";
+            if (save.ShowDialog() == true)
+            {
+                FileStream fs = new FileStream(save.FileName, FileMode.Create);
+                RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
+                    (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
+                bmp.Render(WorkStation);
+                BitmapEncoder encoder = new TiffBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bmp));
+                encoder.Save(fs);
+                fs.Close();
+            }
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl && ellep == true)
+            {
+                fullel = true;
+                TitleProject.Content = "Circle activated.";
+            }
+            else
+            {
+                fullRect = true;
+                TitleProject.Content = "CTRL activated.";
+            }
+        }
+
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl)
+            {
+                fullel = false;
+                fullRect = false;
+                TitleProject.Content = jmeno;
             }
         }
     }

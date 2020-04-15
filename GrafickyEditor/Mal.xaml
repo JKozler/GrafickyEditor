@@ -51,6 +51,7 @@
                         <ColumnDefinition Width="67*"/>
                         <ColumnDefinition Width="67*"/>
                         <ColumnDefinition Width="67*"/>
+                        <ColumnDefinition Width="67*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -68,7 +69,7 @@
                         </Grid>
                     </Border>
                     <!-- Přidávací buttony -->
-                    <Border Grid.Column="13" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black">
+                    <Border Grid.Column="14" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black">
                         <Grid Background="#FF292828">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -90,7 +91,7 @@
                     <Button ToolTip="Mouse arrow for changing properities" Grid.Row="1" x:Name="MouseBack" Click="MouseBack_Click" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}" Grid.ColumnSpan="3">
                         <materialDesign:PackIcon Kind="ArrowUpRight" Width="20" Height="20"/>
                     </Button>
-                    <Slider x:Name="SliderTl" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="9" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
+                    <Slider x:Name="SliderTl" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="10" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
                     <Button ToolTip="Upload image" Grid.Column="4" Margin="2" x:Name="BackPic" Background="{x:Null}" BorderBrush="{x:Null}" Click="BackPic_Click">
                         <materialDesign:PackIcon Kind="PictureInPictureTopRight" Width="30" Height="30"/>
                     </Button>
@@ -104,6 +105,9 @@
                         <materialDesign:PackIcon Kind="Clear" Width="30" Height="30"/>
                     </Button>
                     <Button Grid.Column="12" Margin="2" Content="Text" x:Name="TextBTN" Click="TextBTN_Click"></Button>
+                    <Button x:Name="Fill" Click="Fill_Click" Grid.Column="13" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Kind="PaintBucket" Width="30" Height="30"/>
+                    </Button>
                     <Button Content="Color" Margin="2" Grid.Column="11" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click"></Button>
                     <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="3" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
                         <Button.Style>
@@ -349,10 +353,12 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Label Panel.ZIndex="1" x:Name="infoProj" Grid.Row="0" Content="Name of save file:" Foreground="Black" FontSize="9"></Label>
                                     <TextBox Grid.Row="1" Visibility="Hidden" x:Name="nameOfFile" Margin="2"></TextBox>
                                     <Button Grid.Row="2" Margin="5" x:Name="SaveSubmit"  Content="Submit" Click="SaveSubmit_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"/>
+                                    <Button Grid.Row="3" Margin="5" x:Name="SaveDifferentWay"  Content="Another path? / Project is done?" Click="SaveDifferentWay_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"/>
                                 </Grid>
                             </Border>
                             <ListBox x:Name="lblHistory" Background="#FF292828" Grid.Row="1" Foreground="White" BorderBrush="{x:Null}"/>
