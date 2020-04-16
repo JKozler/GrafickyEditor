@@ -802,7 +802,14 @@ namespace GrafickyEditor
                 WorkStation.Children.Clear();
                 for (int i = 0; i < index - backDelet; i++)
                 {
-                    WorkStation.Children.Add(elements[i]);
+                    if (elements[i] == null)
+                    {
+
+                    }
+                    else
+                    {
+                        WorkStation.Children.Add(elements[i]);
+                    }
                 }
                 index = index - backDelet;
                 lblHistory.Items.Add("Removing elments.");
@@ -827,7 +834,14 @@ namespace GrafickyEditor
                 index = helpInd;
                 for (int i = 0; i < index; i++)
                 {
-                    WorkStation.Children.Add(elements[i]);
+                    if (elements[i] == null)
+                    {
+
+                    }
+                    else
+                    {
+                        WorkStation.Children.Add(elements[i]);
+                    }                    
                 }
             }
             else
@@ -835,7 +849,14 @@ namespace GrafickyEditor
                 WorkStation.Children.Clear();
                 for (int i = 0; i < index + forwBack; i++)
                 {
-                    WorkStation.Children.Add(elements[i]);
+                    if (elements[i] == null)
+                    {
+
+                    }
+                    else
+                    {
+                        WorkStation.Children.Add(elements[i]);
+                    }
                 }
                 index = index + forwBack;
                 lblHistory.Items.Add("Adding elments.");

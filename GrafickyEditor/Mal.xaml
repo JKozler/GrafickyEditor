@@ -67,18 +67,22 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="BackStep" Content="Step Back" Grid.Column="0" Margin="2" Click="BackStep_Click"></Button>
-                            <Slider ValueChanged="DeleteHalf_ValueChanged" x:Name="DeleteHalf" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Minimum="1" Maximum="100" SmallChange="1" Value="1"></Slider>
+                            <Button x:Name="BackStep" Grid.Column="2" Margin="2" Click="BackStep_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                                <materialDesign:PackIcon Kind="StepBackward" Width="30" Height="30"/>
+                            </Button>
+                            <Slider ValueChanged="DeleteHalf_ValueChanged" x:Name="DeleteHalf" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Minimum="1" Maximum="100" SmallChange="1" Value="1"></Slider>
                         </Grid>
                     </Border>
-                    <Border Grid.Column="11" Grid.ColumnSpan="3" Background="#FF3A0000" >
+                    <Border Grid.Column="11" Grid.ColumnSpan="3" Background="#FF548F00" >
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="ForwStep" Content="Forward step" Grid.Column="0" Margin="2" Click="ForwStep_Click"></Button>
+                            <Button x:Name="ForwStep" Grid.Column="0" Margin="2" Click="ForwStep_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <materialDesign:PackIcon Kind="StepForward" Width="30" Height="30"/>
+                            </Button>
                             <Slider ValueChanged="ForwaBack_ValueChanged" x:Name="ForwaBack" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Minimum="1" Maximum="100" SmallChange="1" Value="1"></Slider>
                         </Grid>
                     </Border>
