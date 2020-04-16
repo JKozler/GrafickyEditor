@@ -52,7 +52,9 @@ namespace GrafickyEditor
         Brush fill = null;
         int hod = 2;
         int index = 0;
+        int helpInd = 0;
         int backDelet;
+        int forwBack;
         bool darkEff = false;
         UIElement[] elements = new UIElement[10000000];
         string jmeno = "*Untiteld - GPB";
@@ -80,6 +82,7 @@ namespace GrafickyEditor
                     image.Height = WorkStation.Height;
                     WorkStation.Children.Add(image);
                     elements[index] = image;
+                    helpInd++;
                     index++;
                     loadPr = true;
                 }
@@ -96,6 +99,7 @@ namespace GrafickyEditor
                         image.Height = WorkStation.Height;
                         WorkStation.Children.Add(image);
                         elements[index] = image;
+                        helpInd++;
                         index++;
                         infoProj.Content = "You are editing " + jmeno;
                         lblHistory.Items.Add("You load it!");
@@ -128,6 +132,7 @@ namespace GrafickyEditor
                 tb.Margin = new Thickness(Convert.ToDouble(pa.X), Convert.ToDouble(pa.Y), 0.0, 0.0);
                 WorkStation.Children.Add(tb);
                 elements[index] = tb;
+                helpInd++;
                 index++;
                 lblHistory.Items.Add("Textbox was added.");
                 DeleteHalf.Value = 1;
@@ -186,6 +191,7 @@ namespace GrafickyEditor
                 pol.Fill = fill;
                 pol.StrokeThickness = SliderTl.Value;
                 elements[index] = pol;
+                helpInd++;
                 index++;
                 WorkStation.Children.Add(pol);
                 lblHistory.Items.Add("Triangle was created.");
@@ -207,6 +213,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
@@ -215,6 +222,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.Y < p2.Y && p1.X < p2.X)
@@ -223,6 +231,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.Y < p2.Y && p1.X > p2.X)
@@ -231,6 +240,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 re = false;
@@ -251,6 +261,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
@@ -259,6 +270,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.Y < p2.Y && p1.X < p2.X)
@@ -267,6 +279,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.Y < p2.Y && p1.X > p2.X)
@@ -275,6 +288,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 re = false;
@@ -297,6 +311,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rounded rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
@@ -305,6 +320,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rounded rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.Y < p2.Y && p1.X < p2.X)
@@ -313,6 +329,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rounded rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.Y < p2.Y && p1.X > p2.X)
@@ -321,6 +338,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rounded rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 roRe = false;
@@ -343,6 +361,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rounded rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
@@ -351,6 +370,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rounded rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.Y < p2.Y && p1.X < p2.X)
@@ -359,6 +379,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rounded rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 else if (p1.Y < p2.Y && p1.X > p2.X)
@@ -367,6 +388,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(rec);
                     lblHistory.Items.Add("Rounded rect. was created");
                     elements[index] = rec;
+                    helpInd++;
                     index++;
                 }
                 roRe = false;
@@ -386,6 +408,7 @@ namespace GrafickyEditor
                 el = false;
                 lblHistory.Items.Add("Ellispe was created.");
                 elements[index] = ellipse;
+                helpInd++;
                 index++;
             }
             else if (WorkStation.Cursor == Cursors.Cross && el == true)
@@ -394,7 +417,7 @@ namespace GrafickyEditor
                 Ellipse ellipse = new Ellipse();
                 p2 = e.GetPosition(WorkStation);
                 ellipse.StrokeThickness = SliderTl.Value;
-                ellipse.Name = "EL" + index;
+                ellipse.Name = "EL" + helpInd;
                 ellipse.Fill = fill;
                 ellipse.MouseDown += new MouseButtonEventHandler(Ellipse_MouseDown);
                 ellipse.Stroke = brush;
@@ -405,6 +428,7 @@ namespace GrafickyEditor
                 el = false;
                 lblHistory.Items.Add("Ellispe was created.");
                 elements[index] = ellipse;
+                helpInd++;
                 index++;
             }
             else if (WorkStation.Cursor == Cursors.Cross && li == true)
@@ -421,6 +445,7 @@ namespace GrafickyEditor
                 WorkStation.Children.Add(line);
                 lblHistory.Items.Add("Line was created.");
                 elements[index] = line;
+                helpInd++;
                 index++;
                 li = false;
             }
@@ -455,6 +480,7 @@ namespace GrafickyEditor
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
                 elements[index] = line;
+                helpInd++;
                 index++;
             }
             else if (WorkStation.Cursor == Cursors.Cross && tr == true)
@@ -638,6 +664,7 @@ namespace GrafickyEditor
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
                 elements[index] = line;
+                helpInd++;
                 index++;
             }
             else if (mal == true && WorkStation.Cursor == Cursors.Hand)
@@ -654,6 +681,7 @@ namespace GrafickyEditor
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
                 elements[index] = line;
+                helpInd++;
                 index++;
             }
         }
@@ -757,11 +785,12 @@ namespace GrafickyEditor
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
             WorkStation.Children.Clear();
+            helpInd++;
             index = 0;
             lblHistory.Items.Add("Clear All Items");
             lblHistory.Items.Add("Work station is clear.");
         }
-
+        //Krok zpět
         private void BackStep_Click(object sender, RoutedEventArgs e)
         {
             if ((index - backDelet) <= 0){
@@ -783,6 +812,34 @@ namespace GrafickyEditor
         private void DeleteHalf_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             backDelet = Convert.ToInt32(DeleteHalf.Value);
+        }
+        //Krok dopředu
+        private void ForwaBack_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            forwBack = Convert.ToInt32(ForwaBack.Value);
+        }
+
+        private void ForwStep_Click(object sender, RoutedEventArgs e)
+        {
+            if ((index + forwBack) >= helpInd)
+            {
+                WorkStation.Children.Clear();
+                index = helpInd;
+                for (int i = 0; i < index; i++)
+                {
+                    WorkStation.Children.Add(elements[i]);
+                }
+            }
+            else
+            {
+                WorkStation.Children.Clear();
+                for (int i = 0; i < index + forwBack; i++)
+                {
+                    WorkStation.Children.Add(elements[i]);
+                }
+                index = index + forwBack;
+                lblHistory.Items.Add("Adding elments.");
+            }
         }
 
         private void SaveSubmit_Click(object sender, RoutedEventArgs e)
