@@ -46,10 +46,11 @@ namespace GrafickyEditor
         bool triangle = false;
         bool tr = false;
         bool loadPr = false;
+        bool fillBool = false;
         Point p1;
         Point p2;
         Brush brush = new SolidColorBrush(Colors.Black);
-        Brush fill = null;
+        Brush fill = new SolidColorBrush(Colors.White);
         int hod = 2;
         int index = 0;
         int helpInd = 0;
@@ -68,6 +69,7 @@ namespace GrafickyEditor
         public Window1(Load load)
         {
             InitializeComponent();            //set pro fog scene, když se zapne, tak default vypnout
+            fill.Opacity = 0;
             blur.Radius = 0;
             WorkStation.Effect = blur;
             WorkStation.Cursor = Cursors.Arrow;
@@ -203,6 +205,8 @@ namespace GrafickyEditor
                 Rectangle rec = new Rectangle();
                 p2 = e.GetPosition(WorkStation);
                 rec.Width = Math.Abs(p2.X - p1.X);
+                rec.Name = "rec" + helpInd;
+                rec.MouseDown += new MouseButtonEventHandler(Rec_MouseDown);
                 rec.Height = rec.Width;
                 rec.Stroke = brush;
                 rec.Fill = fill;
@@ -249,6 +253,8 @@ namespace GrafickyEditor
             {
                 WorkStation.Children.Remove(helpRectangle);
                 Rectangle rec = new Rectangle();
+                rec.Name = "rec" + helpInd;
+                rec.MouseDown += new MouseButtonEventHandler(Rec_MouseDown);
                 p2 = e.GetPosition(WorkStation);
                 rec.Width = Math.Abs(p2.X - p1.X);
                 rec.Height = Math.Abs(p2.Y - p1.Y);
@@ -299,6 +305,8 @@ namespace GrafickyEditor
                 Rectangle rec = new Rectangle();
                 p2 = e.GetPosition(WorkStation);
                 rec.Width = Math.Abs(p2.X - p1.X);
+                rec.Name = "rec" + helpInd;
+                rec.MouseDown += new MouseButtonEventHandler(Rec_MouseDown);
                 rec.RadiusX = 40;
                 rec.RadiusY = 40;
                 rec.Height = rec.Width;
@@ -348,6 +356,8 @@ namespace GrafickyEditor
                 WorkStation.Children.Remove(helpRoundedRectangle);
                 Rectangle rec = new Rectangle();
                 p2 = e.GetPosition(WorkStation);
+                rec.Name = "rec" + helpInd;
+                rec.MouseDown += new MouseButtonEventHandler(Rec_MouseDown);
                 rec.Width = Math.Abs(p2.X - p1.X);
                 rec.RadiusX = 40;
                 rec.RadiusY = 40;
@@ -716,17 +726,33 @@ namespace GrafickyEditor
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Ellipse el = (Ellipse)sender;
-            System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
-            System.Windows.Forms.DialogResult res = cd.ShowDialog();
-            if (res == System.Windows.Forms.DialogResult.OK)
+            if (WorkStation.Cursor == Cursors.Arrow && fillBool == true)
             {
-                el.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
+                System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
+                System.Windows.Forms.DialogResult res = cd.ShowDialog();
+                if (res == System.Windows.Forms.DialogResult.OK)
+                {
+                    el.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
+                }
             }
-
+        }
+        private void Rec_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Rectangle rec = (Rectangle)sender;
+            if (WorkStation.Cursor == Cursors.Arrow && fillBool == true)
+            {
+                System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
+                System.Windows.Forms.DialogResult res = cd.ShowDialog();
+                if (res == System.Windows.Forms.DialogResult.OK)
+                {
+                    rec.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
+                }
+            }
         }
         private void MouseBack_Click(object sender, RoutedEventArgs e)
         {
             WorkStation.Cursor = Cursors.Arrow;
+            fillBool = false;
             lblHistory.Items.Add("Normal mouse is using.");
         }
 
@@ -770,7 +796,7 @@ namespace GrafickyEditor
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Image obr(*.obr)|*.obr";
+            open.Filter = "Image obr(*.obr) | *.obr | Image jpeg(*.jpg) | *.jpg | Image png(*.png) | *.png | Image PNG(*PNG) | *PNG";
             if (open.ShowDialog() == true)
             {
                 Image image = new Image();
@@ -882,6 +908,7 @@ namespace GrafickyEditor
                 fs.Close();
                 SaveSubmit.Visibility = Visibility.Hidden;
                 nameOfFile.Visibility = Visibility.Hidden;
+                SaveDifferentWay.Visibility = Visibility.Hidden;
                 Stream stream = new FileStream("saves.txt", FileMode.Append);
                 using (StreamWriter sw = new StreamWriter(stream))
                 {
@@ -1295,20 +1322,23 @@ namespace GrafickyEditor
         }
         private void Fill_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
-            System.Windows.Forms.DialogResult res = cd.ShowDialog();
-            if (res == System.Windows.Forms.DialogResult.OK)
-            {
-                fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
-            }
+            WorkStation.Cursor = Cursors.Arrow;
+            fillBool = true;
         }
         //Ukládání do jiného složky/dokončení projektu
         private void SaveDifferentWay_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog save = new SaveFileDialog();
             save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
-            save.Filter = "Image obr(*.obr)|*.obr|PNG(*.png)|*.png|JPG(*.jpg)|*.jpg";
-            save.FileName = "name.obr";
+            save.Filter = "Image obr(*.obr) | *.obr | Image jpeg(*.jpg) | *.jpg | Image png(*.png) | *.png | Image PNG(*PNG) | *PNG";
+            if (nameOfFile != null)
+            {
+                save.FileName = nameOfFile.Text;
+            }
+            else
+            {
+                save.FileName = "name.obr";
+            }
             if (save.ShowDialog() == true)
             {
                 FileStream fs = new FileStream(save.FileName, FileMode.Create);
@@ -1320,6 +1350,10 @@ namespace GrafickyEditor
                 encoder.Save(fs);
                 fs.Close();
             }
+            SaveSubmit.Visibility = Visibility.Hidden;
+            SaveDifferentWay.Visibility = Visibility.Hidden;
+            nameOfFile.Visibility = Visibility.Hidden;
+            lblHistory.Items.Add("File was saved by " + nameOfFile.Text + ".");
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
