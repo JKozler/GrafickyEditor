@@ -27,9 +27,12 @@ namespace GrafickyEditor
     {
         //Zíkladní proměnné, které program využívá
         Polygon helpPol = new Polygon();
+        Polygon movedPolygon = new Polygon();
         Ellipse helpEllipse = new Ellipse();
+        Ellipse movedEllipse = new Ellipse();
         Rectangle helpRectangle = new Rectangle();
         Rectangle helpRoundedRectangle = new Rectangle();
+        Rectangle movedRect = new Rectangle();
         Line helpLine = new Line();
         bool line = false;
         bool recta = false;
@@ -47,10 +50,16 @@ namespace GrafickyEditor
         bool tr = false;
         bool loadPr = false;
         bool fillBool = false;
+        bool blReBool = false;
+        bool blElBool = false;
+        bool blPoBool = false;
         Point p1;
         Point p2;
         Brush brush = new SolidColorBrush(Colors.Black);
         Brush fill = new SolidColorBrush(Colors.White);
+        Brush externalFill = null;
+        Brush ExternalBrush = null;
+        int externalTl = 0;
         int hod = 2;
         int index = 0;
         int helpInd = 0;
@@ -173,8 +182,64 @@ namespace GrafickyEditor
         //Pokud uživatel pustí tlačítko myši nahoru, tak.....
         private void WorkStation_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            dispatcherTimer.Stop();
-            if (WorkStation.Cursor == Cursors.Hand)
+            if (WorkStation.Cursor == Cursors.Arrow && blReBool == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(movedRect);
+                movedRect.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                movedRect.Stroke = brush;
+                movedRect.Opacity = 1;
+                movedRect.Name = "blRe" + helpInd;
+                movedRect.Fill = externalFill;
+                movedRect.Stroke = ExternalBrush;
+                movedRect.StrokeThickness = externalTl;
+                movedRect.MouseDown += new MouseButtonEventHandler(Rec_MouseDown);
+                WorkStation.Children.Add(movedRect);
+                blReBool = false;
+                elements[index] = movedRect;
+                index++;
+                helpInd++;
+                lblHistory.Items.Add("Rectangle was successfully inherit.");
+            }
+            else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(movedEllipse);
+                movedEllipse.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                movedEllipse.Stroke = brush;
+                movedEllipse.Opacity = 1;
+                movedEllipse.Name = "blEl" + helpInd;
+                movedEllipse.Fill = externalFill;
+                movedEllipse.Stroke = ExternalBrush;
+                movedEllipse.MouseDown += new MouseButtonEventHandler(Ellipse_MouseDown);
+                movedEllipse.StrokeThickness = externalTl;
+                WorkStation.Children.Add(movedEllipse);
+                blElBool = false;
+                elements[index] = movedEllipse;
+                index++;
+                helpInd++;
+                lblHistory.Items.Add("Ellipse was successfully inherit.");
+            }
+            else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(movedPolygon);
+                movedPolygon.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                movedPolygon.Stroke = brush;
+                movedPolygon.Opacity = 1;
+                movedPolygon.Name = "blPo" + helpInd;
+                movedPolygon.Fill = externalFill;
+                movedPolygon.Stroke = ExternalBrush;
+                movedPolygon.MouseDown += new MouseButtonEventHandler(Pol_MouseDown);
+                movedPolygon.StrokeThickness = externalTl;
+                WorkStation.Children.Add(movedPolygon);
+                blPoBool = false;
+                elements[index] = movedPolygon;
+                index++;
+                helpInd++;
+                lblHistory.Items.Add("Triangle was successfully inherit.");
+            }
+            else if (WorkStation.Cursor == Cursors.Hand)
             {
                 lblHistory.Items.Add("Element was deleted.");
                 mal = false;
@@ -183,6 +248,7 @@ namespace GrafickyEditor
             {
                 WorkStation.Children.Remove(helpPol);
                 Polygon pol = new Polygon();
+                pol.MouseDown += new MouseButtonEventHandler(Pol_MouseDown);
                 PointCollection pts = new PointCollection();
                 p2 = e.GetPosition(WorkStation);
                 pts.Add(new Point(p1.X, p2.Y));
@@ -409,6 +475,7 @@ namespace GrafickyEditor
                 Ellipse ellipse = new Ellipse();
                 p2 = e.GetPosition(WorkStation);
                 ellipse.StrokeThickness = SliderTl.Value;
+                ellipse.MouseDown += new MouseButtonEventHandler(Ellipse_MouseDown);
                 ellipse.Stroke = brush;
                 ellipse.Width = Math.Abs(p2.X - p1.X) * 2;
                 ellipse.Height = ellipse.Width;
@@ -476,7 +543,28 @@ namespace GrafickyEditor
         //Když uživatel hýbe myší na WorkStation tak...
         private void WorkStation_MouseMove(object sender, MouseEventArgs e)
         {
-            if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == false)
+            if (WorkStation.Cursor == Cursors.Arrow && blReBool == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(movedRect);
+                movedRect.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                WorkStation.Children.Add(movedRect);
+            }
+            else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(movedEllipse);
+                movedEllipse.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                WorkStation.Children.Add(movedEllipse);
+            }
+            else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(movedPolygon);
+                movedPolygon.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                WorkStation.Children.Add(movedPolygon);
+            }
+            else if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == false)
             {
                 Line line = new Line();
 
@@ -687,7 +775,7 @@ namespace GrafickyEditor
                 line.X2 = p2.X;
                 line.Y2 = p2.Y;
                 p1 = p2;
-                line.Stroke = new SolidColorBrush(Colors.LightGray);
+                line.Stroke = new SolidColorBrush(Colors.White);
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
                 elements[index] = line;
@@ -735,6 +823,23 @@ namespace GrafickyEditor
                     el.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
                 }
             }
+            else if (WorkStation.Cursor == Cursors.Arrow)
+            {
+                Ellipse blRe = new Ellipse();
+                blRe.Stroke = new SolidColorBrush(Colors.LightBlue);
+                blRe.StrokeThickness = 2;
+                blRe.Height = el.Height;
+                blRe.Width = el.Width;
+                blRe.Margin = el.Margin;
+                blRe.Opacity = 0.5;
+                blElBool = true;
+                externalFill = el.Fill;
+                ExternalBrush = el.Stroke;
+                externalTl = Convert.ToInt32(el.StrokeThickness);
+                lblHistory.Items.Add("Inherit ellipse.");
+                movedEllipse = blRe;
+                WorkStation.Children.Add(movedEllipse);
+            }
         }
         private void Rec_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -747,6 +852,55 @@ namespace GrafickyEditor
                 {
                     rec.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
                 }
+            }
+            else if (WorkStation.Cursor == Cursors.Arrow)
+            {
+                Rectangle blRe = new Rectangle();
+                blRe.Stroke = new SolidColorBrush(Colors.LightBlue);
+                blRe.StrokeThickness = 2;
+                blRe.Height = rec.Height;
+                blRe.RadiusX = rec.RadiusX;
+                blRe.RadiusY = rec.RadiusY;
+                blRe.Width = rec.Width;
+                blRe.Margin = rec.Margin;
+                blRe.Opacity = 0.5;
+                blReBool = true;
+                externalFill = rec.Fill;
+                ExternalBrush = rec.Stroke;
+                externalTl = Convert.ToInt32(rec.StrokeThickness);
+                lblHistory.Items.Add("Inherit rectangle.");
+                movedRect = blRe;
+                WorkStation.Children.Add(movedRect);
+            }
+        }
+        private void Pol_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Polygon pol = (Polygon)sender;
+            if (WorkStation.Cursor == Cursors.Arrow && fillBool == true)
+            {
+                System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
+                System.Windows.Forms.DialogResult res = cd.ShowDialog();
+                if (res == System.Windows.Forms.DialogResult.OK)
+                {
+                    pol.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
+                }
+            }
+            else if (WorkStation.Cursor == Cursors.Arrow)
+            {
+                Polygon blRe = new Polygon();
+                blRe.Stroke = new SolidColorBrush(Colors.LightBlue);
+                blRe.StrokeThickness = 2;
+                blRe.Height = pol.Height;
+                blRe.Width = pol.Width;
+                blRe.Margin = pol.Margin;
+                blRe.Opacity = 0.5;
+                blReBool = true;
+                externalFill = pol.Fill;
+                ExternalBrush = pol.Stroke;
+                externalTl = Convert.ToInt32(pol.StrokeThickness);
+                lblHistory.Items.Add("Inherit triangle.");
+                movedPolygon = blRe;
+                WorkStation.Children.Add(movedPolygon);
             }
         }
         private void MouseBack_Click(object sender, RoutedEventArgs e)
@@ -1324,6 +1478,17 @@ namespace GrafickyEditor
         {
             WorkStation.Cursor = Cursors.Arrow;
             fillBool = true;
+            lblHistory.Items.Add("Select item to be filled.");
+        }
+        private void Background_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
+            System.Windows.Forms.DialogResult res = cd.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK)
+            {
+                WorkStation.Background = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
+            }
+            lblHistory.Items.Add("Filling backgound");
         }
         //Ukládání do jiného složky/dokončení projektu
         private void SaveDifferentWay_Click(object sender, RoutedEventArgs e)
