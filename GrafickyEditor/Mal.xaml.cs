@@ -53,6 +53,7 @@ namespace GrafickyEditor
         bool blReBool = false;
         bool blElBool = false;
         bool blPoBool = false;
+        bool holdPos = false;
         Point p1;
         Point p2;
         Brush brush = new SolidColorBrush(Colors.Black);
@@ -184,61 +185,127 @@ namespace GrafickyEditor
         {
             if (WorkStation.Cursor == Cursors.Arrow && blReBool == true)
             {
-                p2 = e.GetPosition(WorkStation);
-                WorkStation.Children.Remove(movedRect);
-                movedRect.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-                movedRect.Stroke = brush;
-                movedRect.Opacity = 1;
-                movedRect.Name = "blRe" + helpInd;
-                movedRect.Fill = externalFill;
-                movedRect.Stroke = ExternalBrush;
-                movedRect.StrokeThickness = externalTl;
-                movedRect.MouseDown += new MouseButtonEventHandler(Rec_MouseDown);
-                WorkStation.Children.Add(movedRect);
-                blReBool = false;
-                elements[index] = movedRect;
-                index++;
-                helpInd++;
-                lblHistory.Items.Add("Rectangle was successfully inherit.");
+                if (holdPos == true)
+                {
+                    p2 = e.GetPosition(WorkStation);
+                    WorkStation.Children.Remove(movedRect);
+                    movedRect.Margin = new Thickness(p2.X, p1.Y, p1.X, p1.Y);
+                    movedRect.Stroke = brush;
+                    movedRect.Opacity = 1;
+                    movedRect.Name = "blRe" + helpInd;
+                    movedRect.Fill = externalFill;
+                    movedRect.Stroke = ExternalBrush;
+                    movedRect.StrokeThickness = externalTl;
+                    movedRect.MouseDown += new MouseButtonEventHandler(Rec_MouseDown);
+                    WorkStation.Children.Add(movedRect);
+                    blReBool = false;
+                    elements[index] = movedRect;
+                    index++;
+                    helpInd++;
+                    lblHistory.Items.Add("Rectangle was successfully inherit.");
+                }
+                else
+                {
+                    p2 = e.GetPosition(WorkStation);
+                    WorkStation.Children.Remove(movedRect);
+                    movedRect.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    movedRect.Stroke = brush;
+                    movedRect.Opacity = 1;
+                    movedRect.Name = "blRe" + helpInd;
+                    movedRect.Fill = externalFill;
+                    movedRect.Stroke = ExternalBrush;
+                    movedRect.StrokeThickness = externalTl;
+                    movedRect.MouseDown += new MouseButtonEventHandler(Rec_MouseDown);
+                    WorkStation.Children.Add(movedRect);
+                    blReBool = false;
+                    elements[index] = movedRect;
+                    index++;
+                    helpInd++;
+                    lblHistory.Items.Add("Rectangle was successfully inherit.");
+                }
             }
             else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
             {
-                p2 = e.GetPosition(WorkStation);
-                WorkStation.Children.Remove(movedEllipse);
-                movedEllipse.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-                movedEllipse.Stroke = brush;
-                movedEllipse.Opacity = 1;
-                movedEllipse.Name = "blEl" + helpInd;
-                movedEllipse.Fill = externalFill;
-                movedEllipse.Stroke = ExternalBrush;
-                movedEllipse.MouseDown += new MouseButtonEventHandler(Ellipse_MouseDown);
-                movedEllipse.StrokeThickness = externalTl;
-                WorkStation.Children.Add(movedEllipse);
-                blElBool = false;
-                elements[index] = movedEllipse;
-                index++;
-                helpInd++;
-                lblHistory.Items.Add("Ellipse was successfully inherit.");
+                if (holdPos == true)
+                {
+                    p2 = e.GetPosition(WorkStation);
+                    WorkStation.Children.Remove(movedEllipse);
+                    movedEllipse.Margin = new Thickness(p2.X, p1.Y, p1.X, p1.Y);
+                    movedEllipse.Stroke = brush;
+                    movedEllipse.Opacity = 1;
+                    movedEllipse.Name = "blEl" + helpInd;
+                    movedEllipse.Fill = externalFill;
+                    movedEllipse.Stroke = ExternalBrush;
+                    movedEllipse.MouseDown += new MouseButtonEventHandler(Ellipse_MouseDown);
+                    movedEllipse.StrokeThickness = externalTl;
+                    WorkStation.Children.Add(movedEllipse);
+                    blElBool = false;
+                    elements[index] = movedEllipse;
+                    index++;
+                    helpInd++;
+                    lblHistory.Items.Add("Ellipse was successfully inherit.");
+                }
+                else
+                {
+                    p2 = e.GetPosition(WorkStation);
+                    WorkStation.Children.Remove(movedEllipse);
+                    movedEllipse.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    movedEllipse.Stroke = brush;
+                    movedEllipse.Opacity = 1;
+                    movedEllipse.Name = "blEl" + helpInd;
+                    movedEllipse.Fill = externalFill;
+                    movedEllipse.Stroke = ExternalBrush;
+                    movedEllipse.MouseDown += new MouseButtonEventHandler(Ellipse_MouseDown);
+                    movedEllipse.StrokeThickness = externalTl;
+                    WorkStation.Children.Add(movedEllipse);
+                    blElBool = false;
+                    elements[index] = movedEllipse;
+                    index++;
+                    helpInd++;
+                    lblHistory.Items.Add("Ellipse was successfully inherit.");
+                }
             }
-            else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
-            {
-                p2 = e.GetPosition(WorkStation);
-                WorkStation.Children.Remove(movedPolygon);
-                movedPolygon.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-                movedPolygon.Stroke = brush;
-                movedPolygon.Opacity = 1;
-                movedPolygon.Name = "blPo" + helpInd;
-                movedPolygon.Fill = externalFill;
-                movedPolygon.Stroke = ExternalBrush;
-                movedPolygon.MouseDown += new MouseButtonEventHandler(Pol_MouseDown);
-                movedPolygon.StrokeThickness = externalTl;
-                WorkStation.Children.Add(movedPolygon);
-                blPoBool = false;
-                elements[index] = movedPolygon;
-                index++;
-                helpInd++;
-                lblHistory.Items.Add("Triangle was successfully inherit.");
-            }
+            //else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
+            //{
+            //    if (holdPos == true)
+            //    {
+            //        p2 = e.GetPosition(WorkStation);
+            //        WorkStation.Children.Remove(movedPolygon);
+            //        movedPolygon.Margin = new Thickness(p2.X, p1.Y, p1.X, p1.Y);
+            //        movedPolygon.Stroke = brush;
+            //        movedPolygon.Opacity = 1;
+            //        movedPolygon.Name = "blPo" + helpInd;
+            //        movedPolygon.Fill = externalFill;
+            //        movedPolygon.Stroke = ExternalBrush;
+            //        movedPolygon.MouseDown += new MouseButtonEventHandler(Pol_MouseDown);
+            //        movedPolygon.StrokeThickness = externalTl;
+            //        WorkStation.Children.Add(movedPolygon);
+            //        blPoBool = false;
+            //        elements[index] = movedPolygon;
+            //        index++;
+            //        helpInd++;
+            //        lblHistory.Items.Add("Triangle was successfully inherit.");
+            //    }
+            //    else
+            //    {
+            //        p2 = e.GetPosition(WorkStation);
+            //        WorkStation.Children.Remove(movedPolygon);
+            //        movedPolygon.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+            //        movedPolygon.Stroke = brush;
+            //        movedPolygon.Opacity = 1;
+            //        movedPolygon.Name = "blPo" + helpInd;
+            //        movedPolygon.Fill = externalFill;
+            //        movedPolygon.Stroke = ExternalBrush;
+            //        movedPolygon.MouseDown += new MouseButtonEventHandler(Pol_MouseDown);
+            //        movedPolygon.StrokeThickness = externalTl;
+            //        WorkStation.Children.Add(movedPolygon);
+            //        blPoBool = false;
+            //        elements[index] = movedPolygon;
+            //        index++;
+            //        helpInd++;
+            //        lblHistory.Items.Add("Triangle was successfully inherit.");
+            //    }
+            //}
             else if (WorkStation.Cursor == Cursors.Hand)
             {
                 lblHistory.Items.Add("Element was deleted.");
@@ -545,25 +612,62 @@ namespace GrafickyEditor
         {
             if (WorkStation.Cursor == Cursors.Arrow && blReBool == true)
             {
-                p2 = e.GetPosition(WorkStation);
-                WorkStation.Children.Remove(movedRect);
-                movedRect.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-                WorkStation.Children.Add(movedRect);
+                if (holdPos == true)
+                {
+                    p2 = e.GetPosition(WorkStation);
+                    WorkStation.Children.Remove(movedRect);
+                    movedRect.Margin = new Thickness(p2.X, p1.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(movedRect);
+                }
+                else
+                {
+                    p2 = e.GetPosition(WorkStation);
+                    WorkStation.Children.Remove(movedRect);
+                    movedRect.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(movedRect);
+                }
             }
             else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
             {
-                p2 = e.GetPosition(WorkStation);
-                WorkStation.Children.Remove(movedEllipse);
-                movedEllipse.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-                WorkStation.Children.Add(movedEllipse);
+                if (holdPos == true)
+                {
+                    p2 = e.GetPosition(WorkStation);
+                    WorkStation.Children.Remove(movedEllipse);
+                    movedEllipse.Margin = new Thickness(p2.X, p1.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(movedEllipse);
+                }
+                else
+                {
+                    p2 = e.GetPosition(WorkStation);
+                    WorkStation.Children.Remove(movedEllipse);
+                    movedEllipse.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(movedEllipse);
+                }
             }
-            else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
-            {
-                p2 = e.GetPosition(WorkStation);
-                WorkStation.Children.Remove(movedPolygon);
-                movedPolygon.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-                WorkStation.Children.Add(movedPolygon);
-            }
+            //else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
+            //{
+            //    if (holdPos == true)
+            //    {
+            //        PointCollection pts = new PointCollection();
+            //        p2 = e.GetPosition(WorkStation);
+            //        pts.Add(new Point(p1.X, p2.Y));
+            //        pts.Add(new Point(p2.X, p2.Y));
+            //        pts.Add(new Point(p1.X + (p2.X - p1.X), p1.Y));
+            //        WorkStation.Children.Remove(movedPolygon);
+            //        WorkStation.Children.Add(movedPolygon);
+            //    }
+            //    else
+            //    {
+            //        PointCollection pts = new PointCollection();
+            //        p2 = e.GetPosition(WorkStation);
+            //        pts.Add(new Point(p1.X, p2.Y));
+            //        pts.Add(new Point(p2.X, p2.Y));
+            //        pts.Add(new Point(p1.X + (p2.X - p1.X), p1.Y));
+            //        WorkStation.Children.Remove(movedPolygon);
+            //        movedPolygon.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+            //        WorkStation.Children.Add(movedPolygon);
+            //    }
+            //}
             else if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == false)
             {
                 Line line = new Line();
@@ -885,23 +989,23 @@ namespace GrafickyEditor
                     pol.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
                 }
             }
-            else if (WorkStation.Cursor == Cursors.Arrow)
-            {
-                Polygon blRe = new Polygon();
-                blRe.Stroke = new SolidColorBrush(Colors.LightBlue);
-                blRe.StrokeThickness = 2;
-                blRe.Height = pol.Height;
-                blRe.Width = pol.Width;
-                blRe.Margin = pol.Margin;
-                blRe.Opacity = 0.5;
-                blReBool = true;
-                externalFill = pol.Fill;
-                ExternalBrush = pol.Stroke;
-                externalTl = Convert.ToInt32(pol.StrokeThickness);
-                lblHistory.Items.Add("Inherit triangle.");
-                movedPolygon = blRe;
-                WorkStation.Children.Add(movedPolygon);
-            }
+            //else if (WorkStation.Cursor == Cursors.Arrow)
+            //{
+            //    Polygon blRe = new Polygon();
+            //    blRe.Stroke = new SolidColorBrush(Colors.LightBlue);
+            //    blRe.StrokeThickness = 2;
+            //    blRe.Height = pol.Height;
+            //    blRe.Width = pol.Width;
+            //    blRe.Margin = pol.Margin;
+            //    blRe.Opacity = 0.5;
+            //    blReBool = true;
+            //    externalFill = pol.Fill;
+            //    ExternalBrush = pol.Stroke;
+            //    externalTl = Convert.ToInt32(pol.StrokeThickness);
+            //    lblHistory.Items.Add("Inherit triangle.");
+            //    movedPolygon = blRe;
+            //    WorkStation.Children.Add(movedPolygon);
+            //}
         }
         private void MouseBack_Click(object sender, RoutedEventArgs e)
         {
@@ -1528,6 +1632,11 @@ namespace GrafickyEditor
                 fullel = true;
                 TitleProject.Content = "Circle activated.";
             }
+            else if (e.Key == Key.LeftCtrl && blElBool == true || blPoBool == true || blReBool == true)
+            {
+                holdPos = true;
+                TitleProject.Content = "Holding positions.";
+            }
             else
             {
                 fullRect = true;
@@ -1541,6 +1650,7 @@ namespace GrafickyEditor
             {
                 fullel = false;
                 fullRect = false;
+                holdPos = false;
                 TitleProject.Content = jmeno;
             }
         }
