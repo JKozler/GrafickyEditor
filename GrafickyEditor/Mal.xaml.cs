@@ -54,8 +54,11 @@ namespace GrafickyEditor
         bool blElBool = false;
         bool blPoBool = false;
         bool holdPos = false;
+        bool highlighterBool = false;
+        bool highlighterBoolHelp = false;
         Point p1;
         Point p2;
+        Brush back = new SolidColorBrush(Colors.White);
         Brush brush = new SolidColorBrush(Colors.Black);
         Brush fill = new SolidColorBrush(Colors.White);
         Brush externalFill = null;
@@ -139,7 +142,7 @@ namespace GrafickyEditor
                 tb.Name = "tb" + p;
                 tb.FontSize = 20;
                 tb.VerticalAlignment = VerticalAlignment.Center;
-                tb.Background = new SolidColorBrush(Colors.LightGray);
+                tb.Background = back;
                 tb.Text = "TEXT";
                 tb.Margin = new Thickness(Convert.ToDouble(pa.X), Convert.ToDouble(pa.Y), 0.0, 0.0);
                 WorkStation.Children.Add(tb);
@@ -149,6 +152,12 @@ namespace GrafickyEditor
                 lblHistory.Items.Add("Textbox was added.");
                 DeleteHalf.Value = 1;
                 WorkStation.Cursor = Cursors.Arrow;
+            }
+            else if (highlighterBool == true)
+            {
+                p1 = e.GetPosition(WorkStation);
+                highlighterBoolHelp = true;
+                brush = new SolidColorBrush(Colors.Yellow);
             }
             else if (WorkStation.Cursor == Cursors.Cross)
             {
@@ -174,7 +183,7 @@ namespace GrafickyEditor
                     roRe = true;
                 }
             }
-            else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand)
+            else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand && highlighterBool != true)
             {
                 mal = true;
                 p1 = e.GetPosition(WorkStation);
@@ -310,6 +319,11 @@ namespace GrafickyEditor
             {
                 lblHistory.Items.Add("Element was deleted.");
                 mal = false;
+            }
+            else if (WorkStation.Cursor == Cursors.Pen && highlighterBoolHelp == true)
+            {
+                highlighterBoolHelp = false;
+                brush = new SolidColorBrush(Colors.Black);
             }
             else if (WorkStation.Cursor == Cursors.Cross && tr == true)
             {
@@ -644,6 +658,24 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(movedEllipse);
                 }
             }
+            else if (WorkStation.Cursor == Cursors.Pen && highlighterBoolHelp == true)
+            {
+                Line line = new Line();
+
+                p2 = e.GetPosition(WorkStation);
+                line.X1 = p1.X;
+                line.Y1 = p1.Y;
+                line.X2 = p2.X;
+                line.Y2 = p2.Y;
+                line.Opacity = 0.3;
+                p1 = p2;
+                line.Stroke = brush;
+                line.StrokeThickness = 20;
+                WorkStation.Children.Add(line);
+                elements[index] = line;
+                helpInd++;
+                index++;
+            }
             //else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
             //{
             //    if (holdPos == true)
@@ -893,6 +925,8 @@ namespace GrafickyEditor
             WorkStation.Cursor = Cursors.Pen;
             SliderTl.Maximum = 10;
             darkEff = false;
+            highlighterBool = false;
+            highlighterBoolHelp = false;
         }
 
         private void OnSliderValuChange(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -1018,6 +1052,8 @@ namespace GrafickyEditor
         {
             WorkStation.Cursor = Cursors.Hand;
             lblHistory.Items.Add("Using rubber");
+            highlighterBool = false;
+            highlighterBoolHelp = false;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -1199,6 +1235,8 @@ namespace GrafickyEditor
         private void FlavorPen_Click(object sender, RoutedEventArgs e)
         {
             darkEff = true;
+            highlighterBool = false;
+            highlighterBoolHelp = false;
             WorkStation.Cursor = Cursors.Pen;
             lblHistory.Items.Add("Dark pen activated.");
         }
@@ -1312,6 +1350,12 @@ namespace GrafickyEditor
             MainWindow main = new MainWindow();
             main.Show();
             this.Close();
+        }
+        private void HighlighterBtn_Click(object sender, RoutedEventArgs e)
+        {
+            highlighterBool = true;
+            WorkStation.Cursor = Cursors.Pen;
+            lblHistory.Items.Add("Highlighter is using.");
         }
 
         private void MinNorBtn_Click(object sender, RoutedEventArgs e)
@@ -1590,7 +1634,8 @@ namespace GrafickyEditor
             System.Windows.Forms.DialogResult res = cd.ShowDialog();
             if (res == System.Windows.Forms.DialogResult.OK)
             {
-                WorkStation.Background = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
+                back = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
+                WorkStation.Background = back;
             }
             lblHistory.Items.Add("Filling backgound");
         }
