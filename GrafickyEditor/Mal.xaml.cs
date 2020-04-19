@@ -34,6 +34,7 @@ namespace GrafickyEditor
         Rectangle helpRoundedRectangle = new Rectangle();
         Rectangle movedRect = new Rectangle();
         Line helpLine = new Line();
+        TextBox tBoxs = new TextBox();
         bool line = false;
         bool recta = false;
         bool roundedRe = false;
@@ -53,6 +54,7 @@ namespace GrafickyEditor
         bool blReBool = false;
         bool blElBool = false;
         bool blPoBool = false;
+        bool moveText = false;
         bool holdPos = false;
         bool highlighterBool = false;
         bool highlighterBoolHelp = false;
@@ -139,6 +141,7 @@ namespace GrafickyEditor
                 TextBox tb = new TextBox();
                 tb.BorderThickness = new Thickness(0);
                 tb.MouseDoubleClick += new MouseButtonEventHandler(DynamicTb_DoubleClick);
+                tb.KeyDown += new KeyEventHandler(tb_MouseDown);
                 tb.Name = "tb" + p;
                 tb.FontSize = 20;
                 tb.VerticalAlignment = VerticalAlignment.Center;
@@ -315,6 +318,17 @@ namespace GrafickyEditor
             //        lblHistory.Items.Add("Triangle was successfully inherit.");
             //    }
             //}
+            //Text move dodělat
+            else if (WorkStation.Cursor == Cursors.SizeAll && moveText == true)
+            {
+                TextBox tb = new TextBox();
+                WorkStation.Children.Remove(tBoxs);
+                tBoxs.Opacity = 1;
+                tBoxs.Margin = new Thickness(p2.X, p2.Y, 0.0, 0.0);
+                tb = tBoxs;
+                WorkStation.Children.Add(tb);
+                moveText = false;
+            }
             else if (WorkStation.Cursor == Cursors.Hand)
             {
                 lblHistory.Items.Add("Element was deleted.");
@@ -641,6 +655,15 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(movedRect);
                 }
             }
+            //Text move dodělat
+            else if (WorkStation.Cursor == Cursors.SizeAll && moveText == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(tBoxs);
+                tBoxs.Opacity = 0.5;
+                tBoxs.Margin = new Thickness(p2.X, p2.Y, 0.0, 0.0);
+                WorkStation.Children.Add(tBoxs);
+            }
             else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
             {
                 if (holdPos == true)
@@ -948,7 +971,23 @@ namespace GrafickyEditor
             }
             lblHistory.Items.Add("Uploading image...");
         }
-        
+        private void tb_MouseDown(object sender, KeyEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            TextBox tbox = new TextBox();
+            TitleProject.Content = "asd";
+            if (e.Key == Key.LeftCtrl)
+            {
+                if (WorkStation.Cursor == Cursors.SizeAll)
+                {
+                    moveText = true;
+                    tbox = tb;
+                    tBoxs = tbox;
+                    WorkStation.Children.Remove(tb);
+                }
+            }
+            
+        }
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Ellipse el = (Ellipse)sender;
@@ -1144,6 +1183,11 @@ namespace GrafickyEditor
         private void ForwaBack_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             forwBack = Convert.ToInt32(ForwaBack.Value);
+        }
+        //Text move dodělat
+        private void MovedBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WorkStation.Cursor = Cursors.SizeAll;
         }
 
         private void ForwStep_Click(object sender, RoutedEventArgs e)
