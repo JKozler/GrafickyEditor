@@ -670,7 +670,7 @@ namespace GrafickyEditor
                 line.Opacity = 0.3;
                 p1 = p2;
                 line.Stroke = brush;
-                line.StrokeThickness = 20;
+                line.StrokeThickness = 10;
                 WorkStation.Children.Add(line);
                 elements[index] = line;
                 helpInd++;

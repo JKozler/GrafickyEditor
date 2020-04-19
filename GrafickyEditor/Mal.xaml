@@ -135,7 +135,7 @@
                     <Button Margin="2" Grid.Column="15" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="ColorLens" Width="30" Height="30"/>
                     </Button>
-                    <Button Grid.Column="17" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="HighlighterBtn" Click="HighlighterBtn_Click">
+                    <Button ToolTip="Highlighter" Grid.Column="17" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="HighlighterBtn" Click="HighlighterBtn_Click">
                         <materialDesign:PackIcon Kind="Highlighter" Width="30" Height="30"/>
                     </Button>
                     <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="3" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
