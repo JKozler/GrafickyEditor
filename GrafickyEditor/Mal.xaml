@@ -139,7 +139,7 @@
                     <Button ToolTip="Highlighter" Grid.Column="17" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="HighlighterBtn" Click="HighlighterBtn_Click">
                         <materialDesign:PackIcon Kind="Highlighter" Width="30" Height="30"/>
                     </Button>
-                    <Button x:Name="MovedBtn" Click="MovedBtn_Click" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="18">
+                    <Button ToolTip="Moving with items" x:Name="MovedBtn" Click="MovedBtn_Click" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="18">
                         <materialDesign:PackIcon Kind="MoveResize" Width="30" Height="30"/>
                     </Button>
                     <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="3" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">

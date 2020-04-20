@@ -35,6 +35,7 @@ namespace GrafickyEditor
         Rectangle movedRect = new Rectangle();
         Line helpLine = new Line();
         TextBox tBoxs = new TextBox();
+        Image helpMovingImage = new Image();
         bool line = false;
         bool recta = false;
         bool roundedRe = false;
@@ -58,6 +59,7 @@ namespace GrafickyEditor
         bool holdPos = false;
         bool highlighterBool = false;
         bool highlighterBoolHelp = false;
+        bool moveImageBool = false;
         Point p1;
         Point p2;
         Brush back = new SolidColorBrush(Colors.White);
@@ -655,7 +657,7 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(movedRect);
                 }
             }
-            //Text move dodělat
+            //Text move
             else if (WorkStation.Cursor == Cursors.SizeAll && moveText == true)
             {
                 p2 = e.GetPosition(WorkStation);
@@ -663,6 +665,15 @@ namespace GrafickyEditor
                 tBoxs.Opacity = 0.5;
                 tBoxs.Margin = new Thickness(p2.X, p2.Y, 0.0, 0.0);
                 WorkStation.Children.Add(tBoxs);
+            }
+            //Image move
+            else if (WorkStation.Cursor == Cursors.SizeAll && moveImageBool == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(helpMovingImage);
+                helpMovingImage.Opacity = 0.5;
+                helpMovingImage.Margin = new Thickness(p2.X, p2.Y, 0.0, 0.0);
+                WorkStation.Children.Add(helpMovingImage);
             }
             else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
             {
@@ -967,9 +978,27 @@ namespace GrafickyEditor
                 image.Source = new BitmapImage(new Uri(open.FileName));
                 image.Width = 1680;
                 image.Height = 995;
+                image.MouseDown += new MouseButtonEventHandler(Image_MouseDown);
                 WorkStation.Children.Add(image);
             }
             lblHistory.Items.Add("Uploading image...");
+        }
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Image img = (Image)sender;
+            if (WorkStation.Cursor == Cursors.SizeAll)
+            {
+                moveImageBool = true;
+                helpMovingImage.Source = img.Source;
+                helpMovingImage.Width = img.Width;
+                helpMovingImage.Height = img.Height;
+                WorkStation.Children.Remove(img);
+                WorkStation.Children.Add(helpMovingImage);
+            }
+            else
+            {
+                lblHistory.Items.Add("If you want to move wih image, click on Moving button.");
+            }
         }
         private void tb_MouseDown(object sender, KeyEventArgs e)
         {
@@ -984,9 +1013,13 @@ namespace GrafickyEditor
                     tbox = tb;
                     tBoxs = tbox;
                     WorkStation.Children.Remove(tb);
+                    WorkStation.Children.Add(tbox);
                 }
             }
-            
+            else
+            {
+                lblHistory.Items.Add("If you want to move wih text, click on Moving button.");
+            }
         }
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
