@@ -320,7 +320,7 @@ namespace GrafickyEditor
             //        lblHistory.Items.Add("Triangle was successfully inherit.");
             //    }
             //}
-            //Text move dodělat
+            //Text move
             else if (WorkStation.Cursor == Cursors.SizeAll && moveText == true)
             {
                 TextBox tb = new TextBox();
@@ -328,8 +328,32 @@ namespace GrafickyEditor
                 tBoxs.Opacity = 1;
                 tBoxs.Margin = new Thickness(p2.X, p2.Y, 0.0, 0.0);
                 tb = tBoxs;
+                tb.Name = "tb" + helpInd;
                 WorkStation.Children.Add(tb);
                 moveText = false;
+                elements[index] = tb;
+                helpInd++;
+                index++;
+            }
+            //Image move
+            else if (WorkStation.Cursor == Cursors.SizeAll && moveImageBool == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                Image img = new Image();
+                WorkStation.Children.Remove(helpMovingImage);
+                img.Source = helpMovingImage.Source;
+                img.Width = helpMovingImage.Width;
+                img.Height = helpMovingImage.Height;
+                img.Margin = new Thickness(p2.X - (helpMovingImage.Width / 2), p2.Y - (helpMovingImage.Height / 2), p2.X + (helpMovingImage.Width / 2), p2.Y + (helpMovingImage.Height / 2));
+                img.Opacity = 1;
+                img.Name = "img" + helpInd;
+                img.MouseDown += new MouseButtonEventHandler(Image_MouseDown);
+                WorkStation.Children.Add(img);
+                lblHistory.Items.Add("Image was moved");
+                moveImageBool = false;
+                elements[index] = img;
+                helpInd++;
+                index++;
             }
             else if (WorkStation.Cursor == Cursors.Hand)
             {
@@ -672,7 +696,7 @@ namespace GrafickyEditor
                 p2 = e.GetPosition(WorkStation);
                 WorkStation.Children.Remove(helpMovingImage);
                 helpMovingImage.Opacity = 0.5;
-                helpMovingImage.Margin = new Thickness(p2.X, p2.Y, 0.0, 0.0);
+                helpMovingImage.Margin = new Thickness(p2.X - (helpMovingImage.Width / 2), p2.Y - (helpMovingImage.Height / 2), p2.X + (helpMovingImage.Width / 2), p2.Y + (helpMovingImage.Height / 2));
                 WorkStation.Children.Add(helpMovingImage);
             }
             else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
@@ -978,8 +1002,12 @@ namespace GrafickyEditor
                 image.Source = new BitmapImage(new Uri(open.FileName));
                 image.Width = 1680;
                 image.Height = 995;
+                image.Name = "img" + helpInd;
                 image.MouseDown += new MouseButtonEventHandler(Image_MouseDown);
                 WorkStation.Children.Add(image);
+                elements[index] = image;
+                helpInd++;
+                index++;
             }
             lblHistory.Items.Add("Uploading image...");
         }
@@ -988,12 +1016,14 @@ namespace GrafickyEditor
             Image img = (Image)sender;
             if (WorkStation.Cursor == Cursors.SizeAll)
             {
+                WorkStation.Children.Remove(helpMovingImage);
                 moveImageBool = true;
                 helpMovingImage.Source = img.Source;
                 helpMovingImage.Width = img.Width;
                 helpMovingImage.Height = img.Height;
                 WorkStation.Children.Remove(img);
                 WorkStation.Children.Add(helpMovingImage);
+                lblHistory.Items.Add("Only BETA version.");
             }
             else
             {
@@ -1237,7 +1267,13 @@ namespace GrafickyEditor
                     }
                     else
                     {
-                        WorkStation.Children.Add(elements[i]);
+                        try
+                        {
+                            WorkStation.Children.Add(elements[i]);
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }                    
                 }
             }
@@ -1252,7 +1288,13 @@ namespace GrafickyEditor
                     }
                     else
                     {
-                        WorkStation.Children.Add(elements[i]);
+                        try
+                        {
+                            WorkStation.Children.Add(elements[i]);
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
                 index = index + forwBack;
