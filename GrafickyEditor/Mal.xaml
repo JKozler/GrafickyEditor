@@ -114,7 +114,7 @@
                     <Button ToolTip="Mouse arrow for changing properities" Grid.Row="1" x:Name="MouseBack" Click="MouseBack_Click" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}" Grid.ColumnSpan="3">
                         <materialDesign:PackIcon Kind="ArrowUpRight" Width="20" Height="20"/>
                     </Button>
-                    <Slider x:Name="SliderTl" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="14" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
+                    <Slider x:Name="SliderTl" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="13" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
                     <Button ToolTip="Upload image" Grid.Column="4" Margin="2" x:Name="BackPic" Background="{x:Null}" BorderBrush="{x:Null}" Click="BackPic_Click">
                         <materialDesign:PackIcon Kind="Image" Width="30" Height="30"/>
                     </Button>
@@ -127,13 +127,13 @@
                     <Button ToolTip="Delete everything" x:Name="Clear" Grid.Column="7" Margin="2" Click="Clear_Click" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="Clear" Width="30" Height="30"/>
                     </Button>
-                    <Button Grid.Column="14" Margin="2" x:Name="TextBTN" Click="TextBTN_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Button ToolTip="Add text" Grid.Column="14" Margin="2" x:Name="TextBTN" Click="TextBTN_Click" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="CursorText"  Width="30" Height="30"/>
                     </Button>
                     <Button ToolTip="Fill items with color!" x:Name="Fill" Click="Fill_Click" Grid.Column="16" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="PaintBucket" Width="30" Height="30"/>
                     </Button>
-                    <Button Margin="2" Grid.Column="15" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Button ToolTip="Chenge color of line" Margin="2" Grid.Column="15" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="ColorLens" Width="30" Height="30"/>
                     </Button>
                     <Button ToolTip="Highlighter" Grid.Column="17" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="HighlighterBtn" Click="HighlighterBtn_Click">
@@ -142,7 +142,10 @@
                     <Button ToolTip="Moving with items" x:Name="MovedBtn" Click="MovedBtn_Click" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="18">
                         <materialDesign:PackIcon Kind="MoveResize" Width="30" Height="30"/>
                     </Button>
-                    <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="3" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
+                    <Button ToolTip="Dash line" Grid.Column="3" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="DashedLine" Click="DashedLine_Click">
+                        <materialDesign:PackIcon Kind="VectorLine"/>
+                    </Button>
+                    <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="4" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="#FF3B4046"/>
@@ -184,7 +187,7 @@
                                 <RowDefinition Height="11*" />
                             </Grid.RowDefinitions>
                             <!-- Skrytá část -->
-                            <Border x:Name="efectPanel" Opacity="0.9" Visibility="Hidden" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="2" Background="#FF3B4046" >
+                            <Border x:Name="efectPanel" Opacity="0.9" Visibility="Visible" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="2" Background="#FF3B4046" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -357,6 +360,28 @@
                                         </Button.Style>
                                     </Button>
                                     <Button Grid.Row="6" x:Name="PolygonBtn" Content="Triangle" Margin="10" Click="PolygonBtn_Click">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="Background" Value="White"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Border Background="{TemplateBinding Background}">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="White"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <Button Grid.Row="7" Margin="10" Content="Arrow" x:Name="ArrowBtn" Click="ArrowBtn_Click">
                                         <Button.Style>
                                             <Style TargetType="{x:Type Button}">
                                                 <Setter Property="Background" Value="White"/>

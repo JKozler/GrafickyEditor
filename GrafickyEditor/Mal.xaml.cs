@@ -34,6 +34,8 @@ namespace GrafickyEditor
         Rectangle helpRoundedRectangle = new Rectangle();
         Rectangle movedRect = new Rectangle();
         Line helpLine = new Line();
+        Line lArrwo = new Line();
+        Line pArrow = new Line();
         TextBox tBoxs = new TextBox();
         Image helpMovingImage = new Image();
         bool line = false;
@@ -60,6 +62,10 @@ namespace GrafickyEditor
         bool highlighterBool = false;
         bool highlighterBoolHelp = false;
         bool moveImageBool = false;
+        bool dashedLine = false;
+        bool helpDashedLine = false;
+        bool arrow = false;
+        bool helpArrow = false;
         Point p1;
         Point p2;
         Brush back = new SolidColorBrush(Colors.White);
@@ -80,12 +86,15 @@ namespace GrafickyEditor
         int p = 0;
         byte onoff = 0;
         byte addableBtn = 0;
+        byte dashedRecognize = 0;
         BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
+        List<TextBox> texts = new List<TextBox>();
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
         public Window1(Load load)
         {
-            InitializeComponent();            //set pro fog scene, když se zapne, tak default vypnout
+            InitializeComponent();            
+            //set pro fog scene, když se zapne, tak default vypnout
             fill.Opacity = 0;
             blur.Radius = 0;
             WorkStation.Effect = blur;
@@ -151,6 +160,7 @@ namespace GrafickyEditor
                 tb.Text = "TEXT";
                 tb.Margin = new Thickness(Convert.ToDouble(pa.X), Convert.ToDouble(pa.Y), 0.0, 0.0);
                 WorkStation.Children.Add(tb);
+                texts.Add(tb);
                 elements[index] = tb;
                 helpInd++;
                 index++;
@@ -183,12 +193,21 @@ namespace GrafickyEditor
                 {
                     tr = true;
                 }
+                else if (arrow == true)
+                {
+                    helpArrow = true;
+                }
                 else
                 {
                     roRe = true;
                 }
             }
-            else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand && highlighterBool != true)
+            else if (WorkStation.Cursor == Cursors.Pen && dashedLine == true)
+            {
+                p1 = e.GetPosition(WorkStation);
+                helpDashedLine = true;
+            }
+            else if (WorkStation.Cursor == Cursors.Pen || WorkStation.Cursor == Cursors.Hand && highlighterBool != true && dashedLine != true)
             {
                 mal = true;
                 p1 = e.GetPosition(WorkStation);
@@ -359,6 +378,12 @@ namespace GrafickyEditor
             {
                 lblHistory.Items.Add("Element was deleted.");
                 mal = false;
+            }
+            else if (WorkStation.Cursor == Cursors.Pen && helpDashedLine == true)
+            {
+                lblHistory.Items.Add("Element was deleted.");
+                helpDashedLine = false;
+                dashedRecognize = 0;
             }
             else if (WorkStation.Cursor == Cursors.Pen && highlighterBoolHelp == true)
             {
@@ -629,6 +654,33 @@ namespace GrafickyEditor
                 helpInd++;
                 index++;
             }
+            else if (WorkStation.Cursor == Cursors.Cross && helpArrow == true)
+            {
+                WorkStation.Children.Remove(helpLine);
+                WorkStation.Children.Remove(pArrow);
+                WorkStation.Children.Remove(lArrwo);
+                Line line = new Line();
+                Line line1 = new Line();
+                Line line2 = new Line();
+                p2 = e.GetPosition(WorkStation);
+                line = helpLine;
+                line1 = lArrwo;
+                line2 = pArrow;
+                line.StrokeThickness = SliderTl.Value;
+                line.Stroke = brush;
+                line1.StrokeThickness = SliderTl.Value;
+                line1.Stroke = brush;
+                line2.StrokeThickness = SliderTl.Value;
+                line2.Stroke = brush;
+                WorkStation.Children.Add(line);
+                WorkStation.Children.Add(line1);
+                WorkStation.Children.Add(line2);
+                lblHistory.Items.Add("Arrow was created.");
+                elements[index] = line;
+                helpInd++;
+                index++;
+                helpArrow = false;
+            }
             else if (WorkStation.Cursor == Cursors.Cross && li == true)
             {
                 WorkStation.Children.Remove(helpLine);
@@ -734,6 +786,35 @@ namespace GrafickyEditor
                 helpInd++;
                 index++;
             }
+            else if (WorkStation.Cursor == Cursors.Cross && helpArrow == true)
+            {
+                WorkStation.Children.Remove(helpLine);
+                WorkStation.Children.Remove(pArrow);
+                WorkStation.Children.Remove(lArrwo);
+                p2 = e.GetPosition(WorkStation);
+                lArrwo.X1 = p2.X;
+                pArrow.X1 = p2.X;
+                lArrwo.Y1 = p2.Y;
+                pArrow.Y1 = p2.Y;
+                lArrwo.X2 = p2.X - 10;
+                pArrow.X2 = p2.X - 10;
+                lArrwo.Y2 = p2.Y - 5;
+                pArrow.Y2 = p2.Y + 5;
+                helpLine.X1 = p1.X;
+                helpLine.X2 = p2.X;
+                helpLine.Y1 = p1.Y;
+                helpLine.Y2 = p2.Y;
+                lArrwo.Stroke = new SolidColorBrush(Colors.Gray);
+                pArrow.Stroke = new SolidColorBrush(Colors.Gray);
+                helpLine.Stroke = new SolidColorBrush(Colors.Gray);
+                pArrow.StrokeThickness = 2;
+                lArrwo.StrokeThickness = 2;
+                helpLine.StrokeThickness = 2;
+                WorkStation.Children.Add(pArrow);
+                WorkStation.Children.Add(lArrwo);
+                WorkStation.Children.Add(helpLine);
+
+            }
             //else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
             //{
             //    if (holdPos == true)
@@ -758,6 +839,45 @@ namespace GrafickyEditor
             //        WorkStation.Children.Add(movedPolygon);
             //    }
             //}
+            else if (WorkStation.Cursor == Cursors.Pen && helpDashedLine == true)
+            {
+                Line line = new Line();
+                p2 = e.GetPosition(WorkStation);
+                if (dashedRecognize <= 21)
+                {
+                    line.X1 = p1.X;
+                    line.Y1 = p1.Y;
+                    line.X2 = p2.X;
+                    line.Y2 = p2.Y;
+                    p1 = p2;
+                    line.Stroke = brush;
+                    line.StrokeThickness = hod;
+                    WorkStation.Children.Add(line);
+                    elements[index] = line;
+                    helpInd++;
+                    index++;
+                    dashedRecognize++;
+                }
+                else
+                {
+                    line.X1 = p1.X;
+                    line.Y1 = p1.Y;
+                    line.X2 = p2.X;
+                    line.Y2 = p2.Y;
+                    p1 = p2;
+                    line.Stroke = back;
+                    line.StrokeThickness = hod;
+                    WorkStation.Children.Add(line);
+                    elements[index] = line;
+                    helpInd++;
+                    index++;
+                    if (dashedRecognize == 41)
+                    {
+                        dashedRecognize = 0;
+                    }
+                    dashedRecognize++;
+                }
+            }
             else if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == false)
             {
                 Line line = new Line();
@@ -862,7 +982,7 @@ namespace GrafickyEditor
                 if (p1.X > p2.X && p1.Y > p2.Y)
                 {
                     helpRectangle.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-                    WorkStation.Children.Add(helpRectangle);;
+                    WorkStation.Children.Add(helpRectangle); ;
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
                 {
@@ -986,12 +1106,24 @@ namespace GrafickyEditor
             highlighterBool = false;
             highlighterBoolHelp = false;
         }
-
+        private void ArrowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            arrow = true;
+            WorkStation.Cursor = Cursors.Cross;
+            ellep = false;
+            recta = false;
+            re = false;
+            el = false;
+            line = false;
+            roundedRe = false;
+            roRe = false;
+            tr = false;
+            triangle = false;
+        }
         private void OnSliderValuChange(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             hod = Convert.ToInt32(SliderTl.Value);
         }
-
         private void BackPic_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
@@ -1398,6 +1530,7 @@ namespace GrafickyEditor
             roRe = false;
             tr = false;
             triangle = false;
+            arrow = false;
         }
 
         private void EllipseEff_Click(object sender, RoutedEventArgs e)
@@ -1410,6 +1543,7 @@ namespace GrafickyEditor
             re = false;
             li = false;
             roundedRe = false;
+            arrow = false;
             roRe = false;
             tr = false;
             triangle = false;
@@ -1428,6 +1562,7 @@ namespace GrafickyEditor
             roRe = false;
             tr = false;
             triangle = false;
+            arrow = false;
         }
         private void roundedRect_Click(object sender, RoutedEventArgs e)
         {
@@ -1441,6 +1576,7 @@ namespace GrafickyEditor
             line = false;
             roRe = false;
             tr = false;
+            arrow = false;
             triangle = false;
         }
 
@@ -1452,13 +1588,19 @@ namespace GrafickyEditor
             ellep = false;
             recta = false;
             re = false;
+            arrow = false;
             el = false;
             line = false;
             roRe = false;
             tr = false;
             triangle = true;
         }
-
+        private void DashedLine_Click(object sender, RoutedEventArgs e)
+        {
+            dashedLine = true;
+            WorkStation.Cursor = Cursors.Pen;
+            lblHistory.Items.Add("DashLine was selected.");
+        }
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
