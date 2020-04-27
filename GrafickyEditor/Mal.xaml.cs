@@ -1106,6 +1106,7 @@ namespace GrafickyEditor
             darkEff = false;
             highlighterBool = false;
             highlighterBoolHelp = false;
+            dashedLine = false;
         }
         private void ArrowBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -1646,6 +1647,7 @@ namespace GrafickyEditor
         private void DashedLine_Click(object sender, RoutedEventArgs e)
         {
             dashedLine = true;
+            SliderTl.Value = 2;
             WorkStation.Cursor = Cursors.Pen;
             lblHistory.Items.Add("DashLine was selected.");
         }
