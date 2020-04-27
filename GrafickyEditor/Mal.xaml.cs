@@ -66,6 +66,7 @@ namespace GrafickyEditor
         bool helpDashedLine = false;
         bool arrow = false;
         bool helpArrow = false;
+        bool blockText = false;
         Point p1;
         Point p2;
         Brush back = new SolidColorBrush(Colors.White);
@@ -796,10 +797,10 @@ namespace GrafickyEditor
                 pArrow.X1 = p2.X;
                 lArrwo.Y1 = p2.Y;
                 pArrow.Y1 = p2.Y;
-                lArrwo.X2 = p2.X - 10;
-                pArrow.X2 = p2.X - 10;
-                lArrwo.Y2 = p2.Y - 5;
-                pArrow.Y2 = p2.Y + 5;
+                lArrwo.X2 = p2.X - ((p2.X - p1.X) * 0.05);
+                pArrow.X2 = p2.X - ((p2.X - p1.X) * 0.05);
+                lArrwo.Y2 = p2.Y + 10;
+                pArrow.Y2 = p2.Y - 10;
                 helpLine.X1 = p1.X;
                 helpLine.X2 = p2.X;
                 helpLine.Y1 = p1.Y;
@@ -1362,7 +1363,13 @@ namespace GrafickyEditor
                     }
                     else
                     {
-                        WorkStation.Children.Add(elements[i]);
+                        try
+                        {
+                            WorkStation.Children.Add(elements[i]);
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
                 index = index - backDelet;
@@ -1379,7 +1386,7 @@ namespace GrafickyEditor
         {
             forwBack = Convert.ToInt32(ForwaBack.Value);
         }
-        //Text move dodělat
+        //Text move
         private void MovedBtn_Click(object sender, RoutedEventArgs e)
         {
             WorkStation.Cursor = Cursors.SizeAll;
@@ -1494,9 +1501,50 @@ namespace GrafickyEditor
 
         private void TextBTN_Click(object sender, RoutedEventArgs e)
         {
-            WorkStation.Cursor = Cursors.IBeam;
-            p++;
-            lblHistory.Items.Add("Adding text box.");
+            if (blockText == false)
+            {
+                WorkStation.Cursor = Cursors.IBeam;
+                p++;
+                lblHistory.Items.Add("Adding text box.");
+            }
+            else
+            {
+                MessageBox.Show("Error", "You have to enable text. - click on Disable/enable button.", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void DeletAllText_Click(object sender, RoutedEventArgs e)
+        {
+            if (blockText == false)
+            {
+                if (File.Exists("pass.txt"))
+                {
+                    foreach (var item in texts)
+                    {
+                        item.IsEnabled = false;
+                    }
+                    blockText = true;
+                }
+                else
+                {
+                    Pass pass = new Pass();
+                    pass.ShowDialog();
+                    foreach (var item in texts)
+                    {
+                        item.IsEnabled = false;
+                    }
+                    blockText = true;
+                }
+            }
+            else if (blockText == true)
+            {
+                Pass pass = new Pass();
+                pass.ShowDialog();
+                foreach (var item in texts)
+                {
+                    item.IsEnabled = true;
+                }
+                blockText = false;
+            }
         }
 
         private void fogEff_Click(object sender, RoutedEventArgs e)

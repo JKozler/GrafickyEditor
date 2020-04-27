@@ -114,7 +114,7 @@
                     <Button ToolTip="Mouse arrow for changing properities" Grid.Row="1" x:Name="MouseBack" Click="MouseBack_Click" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}" Grid.ColumnSpan="3">
                         <materialDesign:PackIcon Kind="ArrowUpRight" Width="20" Height="20"/>
                     </Button>
-                    <Slider x:Name="SliderTl" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="13" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
+                    <Slider x:Name="SliderTl" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="12" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
                     <Button ToolTip="Upload image" Grid.Column="4" Margin="2" x:Name="BackPic" Background="{x:Null}" BorderBrush="{x:Null}" Click="BackPic_Click">
                         <materialDesign:PackIcon Kind="Image" Width="30" Height="30"/>
                     </Button>
@@ -145,7 +145,10 @@
                     <Button ToolTip="Dash line" Grid.Column="3" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="DashedLine" Click="DashedLine_Click">
                         <materialDesign:PackIcon Kind="VectorLine"/>
                     </Button>
-                    <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="4" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
+                    <Button ToolTip="Disable/enable all text" Click="DeletAllText_Click" x:Name="DeletAllText" Grid.Column="4" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Kind="TextBoxRemove" Width="30" Height="30"/>
+                    </Button>
+                    <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="5" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="#FF3B4046"/>
@@ -187,7 +190,7 @@
                                 <RowDefinition Height="11*" />
                             </Grid.RowDefinitions>
                             <!-- Skrytá část -->
-                            <Border x:Name="efectPanel" Opacity="0.9" Visibility="Visible" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="2" Background="#FF3B4046" >
+                            <Border x:Name="efectPanel" Opacity="0.9" Visibility="Hidden" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="2" Background="#FF3B4046" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>

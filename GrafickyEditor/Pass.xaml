@@ -1,0 +1,29 @@
+﻿<Window x:Class="GrafickyEditor.Pass"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GrafickyEditor"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Pass" Height="200" Width="450" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="PassInfo" Content="Please write a password" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" FontSize="22" FontWeight="Bold"></Label>
+        <Border Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Margin="5" x:Name="PassTxt" Grid.Column="0"></TextBox>
+                <Button x:Name="SubmitPass" Click="SubmitPass_Click" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" >
+                    <materialDesign:PackIcon Width="40" Height="40" Kind="Send"/>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
