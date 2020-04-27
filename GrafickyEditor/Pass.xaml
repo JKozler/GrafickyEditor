@@ -6,8 +6,14 @@
         xmlns:local="clr-namespace:GrafickyEditor"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Pass" Height="200" Width="450" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Pass" Height="200" Width="450" ResizeMode="NoResize" KeyDown="Window_KeyDown" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFFFC1C1" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -19,7 +25,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Margin="5" x:Name="PassTxt" Grid.Column="0"></TextBox>
+                <TextBox Margin="5,35,5,35" x:Name="PassTxt" Grid.Column="0" FontSize="22"></TextBox>
                 <Button x:Name="SubmitPass" Click="SubmitPass_Click" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" >
                     <materialDesign:PackIcon Width="40" Height="40" Kind="Send"/>
                 </Button>

@@ -35,6 +35,10 @@ namespace GrafickyEditor
                     {
                         this.Close();
                     }
+                    else
+                    {
+                        PassInfo.Content = "Bad password.";
+                    }
                 }
                 else
                 {
@@ -45,6 +49,14 @@ namespace GrafickyEditor
                     }
                     this.Close();
                 }
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SubmitPass_Click(sender, e);
             }
         }
     }
