@@ -442,16 +442,16 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Page 1" x:Name="Page1" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="1" Content="Page 2" x:Name="Page2" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="2" Content="Page 3" x:Name="Page3" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="3" Content="Page 4" x:Name="Page4" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="4" Content="Page 5" x:Name="Page5" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="5" Content="Page 6" x:Name="Page6" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="6" Content="Page 7" x:Name="Page7" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="7" Content="Page 8" x:Name="Page8" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="8" Content="Page 9" x:Name="Page9" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
-                    <Button Grid.Column="9" Content="Page 10" x:Name="Page10" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="0" Content="0" x:Name="Page0" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="1" Content="1" x:Name="Page1" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="2" Content="2" x:Name="Page2" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="3" Content="3" x:Name="Page3" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="4" Content="4" x:Name="Page4" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="5" Content="5" x:Name="Page5" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="6" Content="6" x:Name="Page6" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="7" Content="7" x:Name="Page7" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="8" Content="8" x:Name="Page8" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
+                    <Button Grid.Column="9" Content="9" x:Name="Page9" Click="Page1_Click" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}"></Button>
                 </Grid>
             </Border>
         </Grid>

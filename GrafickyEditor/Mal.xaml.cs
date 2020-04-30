@@ -69,6 +69,7 @@ namespace GrafickyEditor
         bool blockText = false;
         Point p1;
         Point p2;
+        Pages[] pages = new Pages[10];
         Brush back = new SolidColorBrush(Colors.White);
         Brush brush = new SolidColorBrush(Colors.Black);
         Brush fill = new SolidColorBrush(Colors.White);
@@ -80,6 +81,8 @@ namespace GrafickyEditor
         int helpInd = 0;
         int backDelet;
         int forwBack;
+        int hintPage = -1;
+        int hintPageSecond = 0;
         bool darkEff = false;
         UIElement[] elements = new UIElement[10000000];
         string jmeno = "*Untiteld - GPB";
@@ -94,7 +97,12 @@ namespace GrafickyEditor
 
         public Window1(Load load)
         {
-            InitializeComponent();            
+            InitializeComponent();
+            //Pro rozběhnutí pages
+            for (int i = 0; i < pages.Length; i++)
+            {
+                pages[i] = new Pages(false);
+            }
             //set pro fog scene, když se zapne, tak default vypnout
             fill.Opacity = 0;
             blur.Radius = 0;
@@ -2018,6 +2026,70 @@ namespace GrafickyEditor
                 fullRect = false;
                 holdPos = false;
                 TitleProject.Content = jmeno;
+            }
+        }
+
+        private void Page1_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            hintPageSecond = Convert.ToInt32(btn.Content);
+            if (hintPage == -1)
+            {
+                hintPage = 0;
+                WorkStation.Children.Clear();
+                for (int i = 0; i < elements.Length; i++)
+                {
+                    pages[hintPage].Element.Add(elements[i]);
+                }
+                pages[hintPage].Checked = true;
+                hintPage = Convert.ToInt32(btn.Content);
+                for (int i = 0; i < elements.Length; i++)
+                {
+                    elements[i] = null;
+                }
+                index = 0;
+                helpInd = 0;
+            }
+            if (pages[hintPageSecond].Checked == true)
+            {
+                WorkStation.Children.Clear();
+                index = 0;
+                helpInd = 0;
+                foreach (var item in pages[hintPageSecond].Element)
+                {
+                    if (item != null)
+                    {
+                        elements[index] = item;
+                        WorkStation.Children.Add(elements[index]);
+                        index++;
+                        helpInd++;
+                    }
+                }
+            }
+            else if (pages[hintPage].Checked == false)
+            {
+                WorkStation.Children.Clear();
+                for (int i = 0; i < elements.Length; i++)
+                {
+                    pages[hintPage].Element.Add(elements[i]);
+                }
+                hintPage = Convert.ToInt32(btn.Content);
+                for (int i = 0; i < elements.Length; i++)
+                {
+                    elements[i] = null;
+                }
+                index = 0;
+                helpInd = 0;
+                pages[hintPage].Checked = true;
+            }
+        }
+        public class Pages
+        {
+            public List<UIElement> Element = new List<UIElement>();
+            public bool Checked { get; set; }
+            public Pages(bool Checked)
+            {
+                this.Checked = Checked;
             }
         }
     }
