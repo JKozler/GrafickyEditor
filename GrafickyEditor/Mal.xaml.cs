@@ -165,7 +165,7 @@ namespace GrafickyEditor
                 tb.Name = "tb" + p;
                 tb.FontSize = 20;
                 tb.VerticalAlignment = VerticalAlignment.Center;
-                tb.Background = back;
+                tb.Background = null;
                 tb.Text = "TEXT";
                 tb.Margin = new Thickness(Convert.ToDouble(pa.X), Convert.ToDouble(pa.Y), 0.0, 0.0);
                 WorkStation.Children.Add(tb);

@@ -149,7 +149,7 @@
                     <Button ToolTip="Disable/enable all text" Click="DeletAllText_Click" x:Name="DeletAllText" Grid.Column="4" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="TextBoxRemove" Width="30" Height="30"/>
                     </Button>
-                    <Button Content="Effect" Grid.Row="1" Margin="0,5,9,5" Grid.Column="5" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
+                    <Button Content="Tools" Grid.Row="1" Margin="0,5,9,5" Grid.Column="5" x:Name="Efect" Click="Efect_Click" BorderBrush="White" FontWeight="Bold">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="#FF3B4046"/>
