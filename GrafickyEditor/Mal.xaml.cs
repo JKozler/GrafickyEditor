@@ -1179,10 +1179,10 @@ namespace GrafickyEditor
                     WorkStation.Children.Remove(tb);
                     WorkStation.Children.Add(tbox);
                 }
-            }
-            else
-            {
-                lblHistory.Items.Add("If you want to move wih text, click on Moving button.");
+                else
+                {
+                    lblHistory.Items.Add("If you want to move wih text, click on Moving button.");
+                }
             }
         }
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
@@ -1572,6 +1572,8 @@ namespace GrafickyEditor
             lblHistory.Items.Add("Rectangle choose activated.");
             recta = true;
             line = false;
+            highlighterBool = false;
+            brush = new SolidColorBrush(Colors.Black);
             ellep = false;
             el = false;
             li = false;
@@ -1588,6 +1590,8 @@ namespace GrafickyEditor
             lblHistory.Items.Add("Ellipse choose activated.");
             ellep = true;
             recta = false;
+            highlighterBool = false;
+            brush = new SolidColorBrush(Colors.Black);
             line = false;
             re = false;
             li = false;
@@ -1604,6 +1608,8 @@ namespace GrafickyEditor
             lblHistory.Items.Add("Line choose activated.");
             ellep = false;
             recta = false;
+            highlighterBool = false;
+            brush = new SolidColorBrush(Colors.Black);
             re = false;
             el = false;
             line = true;
@@ -1617,6 +1623,8 @@ namespace GrafickyEditor
         {
             WorkStation.Cursor = Cursors.Cross;
             lblHistory.Items.Add("Rounded rect choose activated.");
+            highlighterBool = false;
+            brush = new SolidColorBrush(Colors.Black);
             roundedRe = true;
             ellep = false;
             recta = false;
@@ -1634,6 +1642,8 @@ namespace GrafickyEditor
             WorkStation.Cursor = Cursors.Cross;
             lblHistory.Items.Add("Triangle choose activated.");
             roundedRe = false;
+            highlighterBool = false;
+            brush = new SolidColorBrush(Colors.Black);
             ellep = false;
             recta = false;
             re = false;
