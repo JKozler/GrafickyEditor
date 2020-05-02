@@ -2042,7 +2042,6 @@ namespace GrafickyEditor
                     pages[hintPage].Element.Add(elements[i]);
                 }
                 pages[hintPage].Checked = true;
-                hintPage = Convert.ToInt32(btn.Content);
                 for (int i = 0; i < elements.Length; i++)
                 {
                     elements[i] = null;
@@ -2050,7 +2049,7 @@ namespace GrafickyEditor
                 index = 0;
                 helpInd = 0;
             }
-            if (pages[hintPageSecond].Checked == true)
+            else if (pages[hintPageSecond].Checked == true)
             {
                 WorkStation.Children.Clear();
                 index = 0;
@@ -2073,15 +2072,15 @@ namespace GrafickyEditor
                 {
                     pages[hintPage].Element.Add(elements[i]);
                 }
-                hintPage = Convert.ToInt32(btn.Content);
+                pages[hintPage].Checked = true;
                 for (int i = 0; i < elements.Length; i++)
                 {
                     elements[i] = null;
                 }
                 index = 0;
                 helpInd = 0;
-                pages[hintPage].Checked = true;
             }
+            hintPage = Convert.ToInt32(btn.Content);
         }
         public class Pages
         {
