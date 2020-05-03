@@ -417,7 +417,7 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Panel.ZIndex="1" x:Name="infoProj" Grid.Row="0" Content="Name of save file:" Foreground="Black" FontSize="9"></Label>
+                                    <Label Panel.ZIndex="1" x:Name="infoProj" Grid.Row="0" Content="Name of save file:" Foreground="Black" FontSize="16"></Label>
                                     <TextBox Grid.Row="1" Visibility="Hidden" x:Name="nameOfFile" Margin="2"></TextBox>
                                     <Button Grid.Row="2" Margin="5" x:Name="SaveSubmit"  Content="Submit" Click="SaveSubmit_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"/>
                                     <Button Grid.Row="3" Margin="5" x:Name="SaveDifferentWay"  Content="Another path? / Project is done?" Click="SaveDifferentWay_Click" Visibility="Hidden" Foreground="White" Background="Black" BorderBrush="Black"/>

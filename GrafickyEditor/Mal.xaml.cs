@@ -108,6 +108,7 @@ namespace GrafickyEditor
             blur.Radius = 0;
             WorkStation.Effect = blur;
             WorkStation.Cursor = Cursors.Arrow;
+            infoProj.Content = "Page 0";
             //jestliže si uživatel načítá projekt z 1. okna
             if (load.Nazev != "")
             {
@@ -1507,7 +1508,6 @@ namespace GrafickyEditor
             WorkStation.Cursor = Cursors.Pen;
             lblHistory.Items.Add("Dark pen activated.");
         }
-
         private void TextBTN_Click(object sender, RoutedEventArgs e)
         {
             if (blockText == false)
@@ -2033,6 +2033,7 @@ namespace GrafickyEditor
         {
             Button btn = (Button)sender;
             hintPageSecond = Convert.ToInt32(btn.Content);
+            infoProj.Content = "Page " + hintPageSecond;
             if (hintPage == -1)
             {
                 hintPage = 0;
