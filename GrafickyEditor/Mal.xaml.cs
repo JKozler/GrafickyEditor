@@ -38,7 +38,7 @@ namespace GrafickyEditor
         Line pArrow = new Line();
         TextBox tBoxs = new TextBox();
         Image helpMovingImage = new Image();
-        RichTextBox textBox = new RichTextBox();
+        
         RichTextBox textBoxHelp = new RichTextBox();
         bool line = false;
         bool recta = false;
@@ -278,7 +278,11 @@ namespace GrafickyEditor
             }
             else if (WorkStation.Cursor == Cursors.IBeam && textAreaSec == true)
             {
-                textBox = textBoxHelp;
+                RichTextBox textBox = new RichTextBox();
+                textBox.BorderThickness = textBoxHelp.BorderThickness;
+                textBox.Margin = textBoxHelp.Margin;
+                textBox.Height = textBoxHelp.Height;
+                textBox.Width = textBoxHelp.Width;
                 textBox.Background = null;
                 WorkStation.Children.Remove(textBoxHelp);
                 WorkStation.Children.Add(textBox);
