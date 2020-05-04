@@ -38,6 +38,8 @@ namespace GrafickyEditor
         Line pArrow = new Line();
         TextBox tBoxs = new TextBox();
         Image helpMovingImage = new Image();
+        RichTextBox textBox = new RichTextBox();
+        RichTextBox textBoxHelp = new RichTextBox();
         bool line = false;
         bool recta = false;
         bool roundedRe = false;
@@ -67,6 +69,8 @@ namespace GrafickyEditor
         bool arrow = false;
         bool helpArrow = false;
         bool blockText = false;
+        bool textArea = false;
+        bool textAreaSec = false;
         Point p1;
         Point p2;
         Pages[] pages = new Pages[10];
@@ -156,7 +160,7 @@ namespace GrafickyEditor
         private void WorkStation_MouseDown(object sender, MouseButtonEventArgs e)
         {
             efectPanel.Visibility = Visibility.Hidden;
-            if (WorkStation.Cursor == Cursors.IBeam)
+            if (WorkStation.Cursor == Cursors.IBeam && textArea == false)
             {
                 Point pa = e.GetPosition(WorkStation);
                 TextBox tb = new TextBox();
@@ -177,6 +181,11 @@ namespace GrafickyEditor
                 lblHistory.Items.Add("Textbox was added.");
                 DeleteHalf.Value = 1;
                 WorkStation.Cursor = Cursors.Arrow;
+            }
+            else if (WorkStation.Cursor == Cursors.IBeam && textArea == true)
+            {
+                p1 = e.GetPosition(WorkStation);
+                textAreaSec = true;
             }
             else if (highlighterBool == true)
             {
@@ -266,6 +275,21 @@ namespace GrafickyEditor
                     helpInd++;
                     lblHistory.Items.Add("Rectangle was successfully inherit.");
                 }
+            }
+            else if (WorkStation.Cursor == Cursors.IBeam && textAreaSec == true)
+            {
+                textBox = textBoxHelp;
+                textBox.Background = null;
+                WorkStation.Children.Remove(textBoxHelp);
+                WorkStation.Children.Add(textBox);
+                elements[index] = textBox;
+                //textBox.MouseDoubleClick += new MouseButtonEventHandler(DynamicTbArea_DoubleClick);
+                //textBox.KeyDown += new KeyEventHandler(tbArea_MouseDown);
+                index++;
+                helpInd++;
+                textAreaSec = false;
+                textArea = false;
+                WorkStation.Cursor = Cursors.Arrow;
             }
             else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
             {
@@ -743,6 +767,35 @@ namespace GrafickyEditor
                     WorkStation.Children.Add(movedRect);
                 }
             }
+            //Add text area
+            else if (WorkStation.Cursor == Cursors.IBeam && textAreaSec == true)
+            {
+                p2 = e.GetPosition(WorkStation);
+                WorkStation.Children.Remove(textBoxHelp);
+                textBoxHelp.Width = Math.Abs(p2.X - p1.X);
+                textBoxHelp.Height = Math.Abs(p2.Y - p1.Y);
+                textBoxHelp.BorderBrush = brush;
+                if (p1.X > p2.X && p1.Y > p2.Y)
+                {
+                    textBoxHelp.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
+                    WorkStation.Children.Add(textBoxHelp); ;
+                }
+                else if (p1.X < p2.X && p1.Y > p2.Y)
+                {
+                    textBoxHelp.Margin = new Thickness(p1.X, p2.Y, p2.X, p1.Y);
+                    WorkStation.Children.Add(textBoxHelp);
+                }
+                else if (p1.Y < p2.Y && p1.X < p2.X)
+                {
+                    textBoxHelp.Margin = new Thickness(p1.X, p1.Y, p2.X, p2.Y);
+                    WorkStation.Children.Add(textBoxHelp);
+                }
+                else if (p1.Y < p2.Y && p1.X > p2.X)
+                {
+                    textBoxHelp.Margin = new Thickness(p2.X, p1.Y, p1.X, p2.Y);
+                    WorkStation.Children.Add(textBoxHelp);
+                }
+            }
             //Text move
             else if (WorkStation.Cursor == Cursors.SizeAll && moveText == true)
             {
@@ -1194,6 +1247,27 @@ namespace GrafickyEditor
                 }
             }
         }
+        //private void tbArea_MouseDown(object sender, KeyEventArgs e)
+        //{
+        //    RichTextBox tb = (RichTextBox)sender;
+        //    RichTextBox tbox = new RichTextBox();
+        //    TitleProject.Content = "asd";
+        //    if (e.Key == Key.LeftCtrl)
+        //    {
+        //        if (WorkStation.Cursor == Cursors.SizeAll)
+        //        {
+        //            moveText = true;
+        //            tbox = tb;
+        //            tBoxs = tbox;
+        //            WorkStation.Children.Remove(tb);
+        //            WorkStation.Children.Add(tbox);
+        //        }
+        //        else
+        //        {
+        //            lblHistory.Items.Add("If you want to move wih text, click on Moving button.");
+        //        }
+        //    }
+        //}
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Ellipse el = (Ellipse)sender;
@@ -1499,7 +1573,21 @@ namespace GrafickyEditor
         {
             efectPanel.Visibility = Visibility.Visible;
         }
-
+        private void RichTxtBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (blockText == false)
+            {
+                textArea = true;
+                WorkStation.Cursor = Cursors.IBeam;
+                p++;
+                lblHistory.Items.Add("Adding text area.");
+            }
+            else
+            {
+                MessageBox.Show("Error", "You have to enable text. - click on Disable/enable button.", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            textArea = true;
+        }
         private void FlavorPen_Click(object sender, RoutedEventArgs e)
         {
             darkEff = true;
@@ -1513,6 +1601,7 @@ namespace GrafickyEditor
             if (blockText == false)
             {
                 WorkStation.Cursor = Cursors.IBeam;
+                textArea = false;
                 p++;
                 lblHistory.Items.Add("Adding text box.");
             }
@@ -1923,7 +2012,7 @@ namespace GrafickyEditor
                 AddableOne.Content = "Triangle";
                 AddableOne.Opacity = 1;
                 AddableOne.Click += new RoutedEventHandler(PolygonBtn_Click);
-                lblHistory.Items.Add("Line was added to main bar.");
+                lblHistory.Items.Add("Triangle was added to main bar.");
                 addableBtn++;
             }
             else if (addableBtn == 1)
@@ -1939,7 +2028,7 @@ namespace GrafickyEditor
                 AddableThree.Content = "Triangle";
                 AddableThree.Opacity = 1;
                 AddableThree.Click += new RoutedEventHandler(PolygonBtn_Click);
-                lblHistory.Items.Add("Line was added to main bar.");
+                lblHistory.Items.Add("Triangle was added to main bar.");
                 addableBtn++;
             }
             else if (addableBtn == 3)
@@ -2011,7 +2100,7 @@ namespace GrafickyEditor
                 holdPos = true;
                 TitleProject.Content = "Holding positions.";
             }
-            else
+            else if (e.Key == Key.LeftCtrl)
             {
                 fullRect = true;
                 TitleProject.Content = "CTRL activated.";

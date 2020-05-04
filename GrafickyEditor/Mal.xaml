@@ -21,13 +21,13 @@
             <Border Panel.ZIndex="1" x:Name="BMouseDown" Grid.Row="0" Background="#FF363941">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Label Content="*Untiteld - GPB" x:Name="TitleProject" Foreground="White" FontSize="15" Margin="0,0,1640,0" Background="{x:Null}"></Label>
-                    <Button x:Name="MinNorBtn" Click="MinNorBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                    <Button ToolTip="Minimaze" x:Name="MinNorBtn" Click="MinNorBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                         <materialDesign:PackIcon Kind="WindowMinimize" Width="30" Height="30"/>
                     </Button>
-                    <Button x:Name="LoadFirstwinBtn" Click="LoadFirstwinBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                    <Button ToolTip="Profile" x:Name="LoadFirstwinBtn" Click="LoadFirstwinBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                         <materialDesign:PackIcon Kind="Account" Width="30" Height="30"/>
                     </Button>
-                    <Button x:Name="CloseBtn" Click="CloseBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Margin="10,0">
+                    <Button ToolTip="Power button" x:Name="CloseBtn" Click="CloseBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Margin="10,0">
                         <materialDesign:PackIcon Kind="Power" Width="30" Height="30"/>
                     </Button>
                     <Grid>
@@ -70,7 +70,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="BackStep" Grid.Column="2" Margin="2" Click="BackStep_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                            <Button ToolTip="Step back" x:Name="BackStep" Grid.Column="2" Margin="2" Click="BackStep_Click" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                                 <materialDesign:PackIcon Kind="StepBackward" Width="30" Height="30"/>
                             </Button>
                             <Slider ValueChanged="DeleteHalf_ValueChanged" x:Name="DeleteHalf" Grid.Column="0" Grid.ColumnSpan="2" Margin="2" Minimum="1" Maximum="100" SmallChange="1" Value="1" Background="{x:Null}"></Slider>
@@ -83,7 +83,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="ForwStep" Grid.Column="0" Margin="2" Click="ForwStep_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Button ToolTip="Step forward" x:Name="ForwStep" Grid.Column="0" Margin="2" Click="ForwStep_Click" Background="{x:Null}" BorderBrush="{x:Null}">
                                 <materialDesign:PackIcon Kind="StepForward" Width="30" Height="30"/>
                             </Button>
                             <Slider ValueChanged="ForwaBack_ValueChanged" x:Name="ForwaBack" Grid.Column="1" Grid.ColumnSpan="2" Margin="2" Minimum="1" Maximum="100" SmallChange="1" Value="1"></Slider>
@@ -115,7 +115,7 @@
                     <Button ToolTip="Mouse arrow for changing properities" Grid.Row="1" x:Name="MouseBack" Click="MouseBack_Click" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}" Grid.ColumnSpan="3">
                         <materialDesign:PackIcon Kind="ArrowUpRight" Width="20" Height="20"/>
                     </Button>
-                    <Slider x:Name="SliderTl" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="12" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
+                    <Slider x:Name="SliderTl" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="11" Margin="2" SmallChange="1" Value="2" ValueChanged="OnSliderValuChange" Minimum="1"/>
                     <Button ToolTip="Upload image" Grid.Column="4" Margin="2" x:Name="BackPic" Background="{x:Null}" BorderBrush="{x:Null}" Click="BackPic_Click">
                         <materialDesign:PackIcon Kind="Image" Width="30" Height="30"/>
                     </Button>
@@ -134,7 +134,10 @@
                     <Button ToolTip="Fill items with color!" x:Name="Fill" Click="Fill_Click" Grid.Column="16" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="PaintBucket" Width="30" Height="30"/>
                     </Button>
-                    <Button ToolTip="Chenge color of line" Margin="2" Grid.Column="15" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Button ToolTip="Text area" Grid.Column="15" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="RichTxtBtn" Click="RichTxtBtn_Click">
+                        <materialDesign:PackIcon Kind="Textarea" Width="30" Height="30"/>
+                    </Button>
+                    <Button ToolTip="Chenge color of line" Margin="2" Grid.Row="1" Grid.Column="17" x:Name="ZmenaBarvy" Click="ZmenaBarvy_Click" Background="{x:Null}" BorderBrush="{x:Null}">
                         <materialDesign:PackIcon Kind="ColorLens" Width="30" Height="30"/>
                     </Button>
                     <Button ToolTip="Highlighter" Grid.Column="17" Background="{x:Null}" BorderBrush="{x:Null}" x:Name="HighlighterBtn" Click="HighlighterBtn_Click">
