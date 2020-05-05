@@ -38,7 +38,6 @@ namespace GrafickyEditor
         Line pArrow = new Line();
         TextBox tBoxs = new TextBox();
         Image helpMovingImage = new Image();
-        
         RichTextBox textBoxHelp = new RichTextBox();
         bool line = false;
         bool recta = false;
@@ -71,6 +70,7 @@ namespace GrafickyEditor
         bool blockText = false;
         bool textArea = false;
         bool textAreaSec = false;
+        bool savePlease = false;
         Point p1;
         Point p2;
         Pages[] pages = new Pages[10];
@@ -91,13 +91,13 @@ namespace GrafickyEditor
         UIElement[] elements = new UIElement[10000000];
         string jmeno = "*Untiteld - GPB";
         string nazev;
+        string pathSecondWay;
         int p = 0;
         byte onoff = 0;
         byte addableBtn = 0;
         byte dashedRecognize = 0;
         BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
         List<TextBox> texts = new List<TextBox>();
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
         public Window1(Load load)
         {
@@ -130,8 +130,27 @@ namespace GrafickyEditor
                 }
                 else
                 {
-                    string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug" + @"\" + load.Nazev;
-                    if (File.Exists(path))
+                    string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + load.Nazev;
+                    string paths = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + "a" + load.Nazev;
+                    if (File.Exists(paths))
+                    {
+                        jmeno = load.Nazev;
+                        nazev = load.Nazev;
+                        Image image = new Image();
+                        image.Source = new BitmapImage(new Uri(paths));
+                        image.Width = WorkStation.Width;
+                        image.Height = WorkStation.Height;
+                        WorkStation.Children.Add(image);
+                        elements[index] = image;
+                        helpInd++;
+                        index++;
+                        infoProj.Content = "You are editing " + jmeno;
+                        lblHistory.Items.Add("You load it!");
+                        TitleProject.Content = load.Nazev + " - GPB";
+                        loadPr = true;
+                        savePlease = true;
+                    }
+                    else if (File.Exists(path))
                     {
                         jmeno = load.Nazev;
                         nazev = load.Nazev;
@@ -150,7 +169,7 @@ namespace GrafickyEditor
                     }
                     else 
                     {
-                        MessageBox.Show("Mising file.", "Your file is not inside debug file or you delete your file.", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Your file is not inside debug file or you delete your file.", "Mising file.", MessageBoxButton.OK, MessageBoxImage.Error);
                         lblHistory.Items.Add("Missing file.");
                     }
                 }
@@ -1384,21 +1403,27 @@ namespace GrafickyEditor
             //dodělat
             if (loadPr == true)
             {
-                SaveFileDialog save = new SaveFileDialog();
-                save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
-                save.Filter = "Image obr(*.obr)|*.obr|PNG(*.png)|*.png|JPG(*.jpg)|*.jpg";
-                save.FileName = nazev;
-                if (save.ShowDialog() == true)
-                {
-                    FileStream fs = new FileStream(save.FileName, FileMode.Create);
-                    RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
-                        (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
-                    bmp.Render(WorkStation);
-                    BitmapEncoder encoder = new TiffBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(bmp));
-                    encoder.Save(fs);
-                    fs.Close();
-                }
+                //SaveFileDialog save = new SaveFileDialog();
+                //save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
+                //save.Filter = "Image obr(*.obr)|*.obr|PNG(*.png)|*.png|JPG(*.jpg)|*.jpg";
+                //save.FileName = nazev;
+                //if (save.ShowDialog() == true)
+                //{
+                //    FileStream fs = new FileStream(save.FileName, FileMode.Create);
+                //    RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
+                //        (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
+                //    bmp.Render(WorkStation);
+                //    BitmapEncoder encoder = new TiffBitmapEncoder();
+                //    encoder.Frames.Add(BitmapFrame.Create(bmp));
+                //    encoder.Save(fs);
+                //    fs.Close();
+                //}
+                SaveSubmit.Visibility = Visibility.Visible;
+                nameOfFile.Visibility = Visibility.Visible;
+                SaveDifferentWay.Visibility = Visibility.Visible;
+                efectPanel.Visibility = Visibility.Hidden;
+                lblHistory.Items.Add("Save file...");
+                nameOfFile.Text = nazev;
             }
             else
             {
@@ -1533,33 +1558,72 @@ namespace GrafickyEditor
         {
             if (nameOfFile.Text != null)
             {
-                string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + nameOfFile.Text + ".obr";
-                if (File.Exists(path))
+                if (loadPr == true)
                 {
-                    File.Delete(path);
+                    if (savePlease == true)
+                    {
+                        pathSecondWay = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + nazev;
+                        FileStream fs = new FileStream(pathSecondWay, FileMode.Create);
+                        RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
+                            (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
+                        bmp.Render(WorkStation);
+                        BitmapEncoder encoder = new TiffBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(bmp));
+                        encoder.Save(fs);
+                        fs.Close();
+                        SaveSubmit.Visibility = Visibility.Hidden;
+                        nameOfFile.Visibility = Visibility.Hidden;
+                        SaveDifferentWay.Visibility = Visibility.Hidden;
+                        lblHistory.Items.Add("File was saved.");
+                        TitleProject.Content = nameOfFile.Text + " - GPB";
+                    }
+                    else
+                    {
+                        pathSecondWay = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + "a" + nazev;
+                        FileStream fs = new FileStream(pathSecondWay, FileMode.Create);
+                        RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
+                            (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
+                        bmp.Render(WorkStation);
+                        BitmapEncoder encoder = new TiffBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(bmp));
+                        encoder.Save(fs);
+                        fs.Close();
+                        SaveSubmit.Visibility = Visibility.Hidden;
+                        nameOfFile.Visibility = Visibility.Hidden;
+                        SaveDifferentWay.Visibility = Visibility.Hidden;
+                        lblHistory.Items.Add("File was saved.");
+                        TitleProject.Content = nameOfFile.Text + " - GPB";
+                    }
                 }
-                FileStream fs = new FileStream(path, FileMode.Create);
-                RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
-                    (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
-                bmp.Render(WorkStation);
-                BitmapEncoder encoder = new TiffBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(bmp));
-                encoder.Save(fs);
-                fs.Close();
-                SaveSubmit.Visibility = Visibility.Hidden;
-                nameOfFile.Visibility = Visibility.Hidden;
-                SaveDifferentWay.Visibility = Visibility.Hidden;
-                Stream stream = new FileStream("saves.txt", FileMode.Append);
-                using (StreamWriter sw = new StreamWriter(stream))
+                else
                 {
-                    sw.WriteLine(nameOfFile.Text);
+                    nazev = nameOfFile.Text + ".obr";
+                    string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + nazev;
+                    FileStream fs = new FileStream(path, FileMode.Create);
+                    RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
+                        (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
+                    bmp.Render(WorkStation);
+                    BitmapEncoder encoder = new TiffBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(bmp));
+                    encoder.Save(fs);
+                    fs.Close();
+                    SaveSubmit.Visibility = Visibility.Hidden;
+                    nameOfFile.Visibility = Visibility.Hidden;
+                    SaveDifferentWay.Visibility = Visibility.Hidden;
+                    Stream stream = new FileStream("saves.txt", FileMode.Append);
+                    using (StreamWriter sw = new StreamWriter(stream))
+                    {
+                        sw.WriteLine(nameOfFile.Text);
+                    }
+                    lblHistory.Items.Add("File was saved.");
+                    TitleProject.Content = nazev+ " - GPB";
+                    loadPr = true;
+                    savePlease = true;
                 }
-                lblHistory.Items.Add("File was saved.");
-                TitleProject.Content = nameOfFile.Text + " - GPB";
             }
             else
             {
-                lblHistory.Items.Add("Write NAME!!!");
+                lblHistory.Items.Add("Please write name.");
             }
         }
 
@@ -2094,7 +2158,11 @@ namespace GrafickyEditor
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftCtrl && ellep == true)
+            if (e.Key == Key.LeftCtrl && e.Key == Key.S)
+            {
+                Save_Click(sender, e);
+            }
+            else if (e.Key == Key.LeftCtrl && ellep == true)
             {
                 fullel = true;
                 TitleProject.Content = "Circle activated.";
@@ -2127,10 +2195,10 @@ namespace GrafickyEditor
             Button btn = (Button)sender;
             hintPageSecond = Convert.ToInt32(btn.Content);
             infoProj.Content = "Page " + hintPageSecond;
+            WorkStation.Children.Clear();
             if (hintPage == -1)
             {
                 hintPage = 0;
-                WorkStation.Children.Clear();
                 for (int i = 0; i < elements.Length; i++)
                 {
                     pages[hintPage].Element.Add(elements[i]);

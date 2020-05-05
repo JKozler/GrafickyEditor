@@ -33,7 +33,15 @@ namespace GrafickyEditor
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        LastprojectLB.Items.Add(line + ".obr");
+                        if (line.Contains(".obr"))
+                        {
+                            LastprojectLB.Items.Add(line);
+                        }
+                        else
+                        {
+                            LastprojectLB.Items.Add(line + ".obr");
+                        }
+                        
                     }
                 }
             }
