@@ -132,45 +132,36 @@ namespace GrafickyEditor
                 {
                     string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + load.Nazev;
                     string paths = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + "a" + load.Nazev;
-                    if (File.Exists(paths))
+                    try
                     {
-                        jmeno = load.Nazev;
-                        nazev = load.Nazev;
-                        Image image = new Image();
-                        image.Source = new BitmapImage(new Uri(paths));
-                        image.Width = WorkStation.Width;
-                        image.Height = WorkStation.Height;
-                        WorkStation.Children.Add(image);
-                        elements[index] = image;
-                        helpInd++;
-                        index++;
-                        infoProj.Content = "You are editing " + jmeno;
-                        lblHistory.Items.Add("You load it!");
-                        TitleProject.Content = load.Nazev + " - GPB";
-                        loadPr = true;
-                        savePlease = true;
+                        if (File.Exists(path))
+                        {
+                            File.Copy(path, paths, true);
+                            jmeno = load.Nazev;
+                            nazev = load.Nazev;
+                            Image image = new Image();
+                            image.Source = new BitmapImage(new Uri(paths));
+                            image.Width = WorkStation.Width;
+                            image.Height = WorkStation.Height;
+                            WorkStation.Children.Add(image);
+                            elements[index] = image;
+                            helpInd++;
+                            index++;
+                            pages[0].Element.Add(elements[index]);
+                            infoProj.Content = "You are editing " + jmeno;
+                            lblHistory.Items.Add("You load it!");
+                            TitleProject.Content = load.Nazev + " - GPB";
+                            loadPr = true;
+                            savePlease = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Your file is not inside debug file or you delete your file.", "Mising file.", MessageBoxButton.OK, MessageBoxImage.Error);
+                            lblHistory.Items.Add("Missing file.");
+                        }
                     }
-                    else if (File.Exists(path))
+                    catch (Exception)
                     {
-                        jmeno = load.Nazev;
-                        nazev = load.Nazev;
-                        Image image = new Image();
-                        image.Source = new BitmapImage(new Uri(path));
-                        image.Width = WorkStation.Width;
-                        image.Height = WorkStation.Height;
-                        WorkStation.Children.Add(image);
-                        elements[index] = image;
-                        helpInd++;
-                        index++;
-                        infoProj.Content = "You are editing " + jmeno;
-                        lblHistory.Items.Add("You load it!");
-                        TitleProject.Content = load.Nazev + " - GPB";
-                        loadPr = true;
-                    }
-                    else 
-                    {
-                        MessageBox.Show("Your file is not inside debug file or you delete your file.", "Mising file.", MessageBoxButton.OK, MessageBoxImage.Error);
-                        lblHistory.Items.Add("Missing file.");
                     }
                 }
             }
