@@ -98,6 +98,7 @@ namespace GrafickyEditor
         byte dashedRecognize = 0;
         BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
         List<TextBox> texts = new List<TextBox>();
+        List<RichTextBox> richTextBoxes = new List<RichTextBox>();
 
         public Window1(Load load)
         {
@@ -297,6 +298,7 @@ namespace GrafickyEditor
                 WorkStation.Children.Remove(textBoxHelp);
                 WorkStation.Children.Add(textBox);
                 elements[index] = textBox;
+                richTextBoxes.Add(textBox);
                 //textBox.MouseDoubleClick += new MouseButtonEventHandler(DynamicTbArea_DoubleClick);
                 //textBox.KeyDown += new KeyEventHandler(tbArea_MouseDown);
                 index++;
@@ -792,7 +794,7 @@ namespace GrafickyEditor
                 if (p1.X > p2.X && p1.Y > p2.Y)
                 {
                     textBoxHelp.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-                    WorkStation.Children.Add(textBoxHelp); ;
+                    WorkStation.Children.Add(textBoxHelp);
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
                 {
@@ -1675,9 +1677,13 @@ namespace GrafickyEditor
             {
                 if (File.Exists("pass.txt"))
                 {
-                    foreach (var item in texts)
+                    foreach (var text in texts)
                     {
-                        item.IsEnabled = false;
+                        text.IsEnabled = false;
+                    }
+                    foreach (var rich in richTextBoxes)
+                    {
+                        rich.IsEnabled = false;
                     }
                     blockText = true;
                 }
@@ -1685,9 +1691,13 @@ namespace GrafickyEditor
                 {
                     Pass pass = new Pass();
                     pass.ShowDialog();
-                    foreach (var item in texts)
+                    foreach (var text in texts)
                     {
-                        item.IsEnabled = false;
+                        text.IsEnabled = false;
+                    }
+                    foreach (var rich in richTextBoxes)
+                    {
+                        rich.IsEnabled = false;
                     }
                     blockText = true;
                 }
@@ -1696,9 +1706,13 @@ namespace GrafickyEditor
             {
                 Pass pass = new Pass();
                 pass.ShowDialog();
-                foreach (var item in texts)
+                foreach (var text in texts)
                 {
-                    item.IsEnabled = true;
+                    text.IsEnabled = true;
+                }
+                foreach (var rich in richTextBoxes)
+                {
+                    rich.IsEnabled = true;
                 }
                 blockText = false;
             }
