@@ -2149,7 +2149,7 @@ namespace GrafickyEditor
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftCtrl && e.Key == Key.S)
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 Save_Click(sender, e);
             }
