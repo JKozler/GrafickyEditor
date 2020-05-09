@@ -99,6 +99,7 @@ namespace GrafickyEditor
         BlurEffect blur = new BlurEffect { KernelType = KernelType.Gaussian };
         List<TextBox> texts = new List<TextBox>();
         List<RichTextBox> richTextBoxes = new List<RichTextBox>();
+        List<Line> guma = new List<Line>();
 
         public Window1(Load load)
         {
@@ -1168,10 +1169,11 @@ namespace GrafickyEditor
                 line.X2 = p2.X;
                 line.Y2 = p2.Y;
                 p1 = p2;
-                line.Stroke = new SolidColorBrush(Colors.White);
+                line.Stroke = back;
                 line.StrokeThickness = hod;
                 WorkStation.Children.Add(line);
                 elements[index] = line;
+                guma.Add(line);
                 helpInd++;
                 index++;
             }
@@ -2127,6 +2129,10 @@ namespace GrafickyEditor
             {
                 back = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
                 WorkStation.Background = back;
+                foreach (var item in guma)
+                {
+                    item.Stroke = back;
+                }
             }
             lblHistory.Items.Add("Filling backgound");
         }
