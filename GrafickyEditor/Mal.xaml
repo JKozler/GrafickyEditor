@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GrafickyEditor"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="GPB" Height="450" Width="800" WindowState="Maximized" ResizeMode="NoResize"  Icon="text5.ico" WindowStyle="None" KeyDown="OnKeyDown" KeyUp="OnKeyUp">
+        Title="GPB" Height="450" Width="800" WindowState="Maximized" ResizeMode="NoResize" Icon="text5.ico" WindowStyle="None" KeyDown="OnKeyDown" KeyUp="OnKeyUp">
     <Window.Effect>
         <DropShadowEffect/>
     </Window.Effect>

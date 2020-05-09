@@ -2160,7 +2160,7 @@ namespace GrafickyEditor
             nameOfFile.Visibility = Visibility.Hidden;
             lblHistory.Items.Add("File was saved by " + nameOfFile.Text + ".");
         }
-
+        //Klávesové zkratky
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
