@@ -100,6 +100,7 @@ namespace GrafickyEditor
         List<TextBox> texts = new List<TextBox>();
         List<RichTextBox> richTextBoxes = new List<RichTextBox>();
         List<Line> guma = new List<Line>();
+        System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
 
         public Window1(Load load)
         {
@@ -247,7 +248,7 @@ namespace GrafickyEditor
         //Pokud uživatel pustí tlačítko myši nahoru, tak.....
         private void WorkStation_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (WorkStation.Cursor == Cursors.Arrow && blReBool == true)
+            if (WorkStation.Cursor == Cursors.Arrow || WorkStation.Cursor == Cursors.SizeAll && blReBool == true)
             {
                 if (holdPos == true)
                 {
@@ -301,14 +302,14 @@ namespace GrafickyEditor
                 elements[index] = textBox;
                 richTextBoxes.Add(textBox);
                 //textBox.MouseDoubleClick += new MouseButtonEventHandler(DynamicTbArea_DoubleClick);
-                //textBox.KeyDown += new KeyEventHandler(tbArea_MouseDown);
+                //textBox.MouseDown += new MouseButtonEventHandler(tbArea_MouseDown);
                 index++;
                 helpInd++;
                 textAreaSec = false;
                 textArea = false;
                 WorkStation.Cursor = Cursors.Arrow;
             }
-            else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
+            else if (WorkStation.Cursor == Cursors.Arrow || WorkStation.Cursor == Cursors.SizeAll && blElBool == true)
             {
                 if (holdPos == true)
                 {
@@ -767,7 +768,7 @@ namespace GrafickyEditor
         //Když uživatel hýbe myší na WorkStation tak...
         private void WorkStation_MouseMove(object sender, MouseEventArgs e)
         {
-            if (WorkStation.Cursor == Cursors.Arrow && blReBool == true)
+            if (WorkStation.Cursor == Cursors.Arrow || WorkStation.Cursor == Cursors.SizeAll && blReBool == true)
             {
                 if (holdPos == true)
                 {
@@ -831,7 +832,7 @@ namespace GrafickyEditor
                 helpMovingImage.Margin = new Thickness(p2.X - (helpMovingImage.Width / 2), p2.Y - (helpMovingImage.Height / 2), p2.X + (helpMovingImage.Width / 2), p2.Y + (helpMovingImage.Height / 2));
                 WorkStation.Children.Add(helpMovingImage);
             }
-            else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true)
+            else if (WorkStation.Cursor == Cursors.Arrow || WorkStation.Cursor == Cursors.SizeAll && blElBool == true)
             {
                 if (holdPos == true)
                 {
@@ -1298,6 +1299,24 @@ namespace GrafickyEditor
                     el.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
                 }
             }
+            else if (WorkStation.Cursor == Cursors.SizeAll)
+            {
+                Ellipse blRe = new Ellipse();
+                blRe.Stroke = new SolidColorBrush(Colors.LightBlue);
+                blRe.StrokeThickness = 2;
+                blRe.Height = el.Height;
+                blRe.Width = el.Width;
+                blRe.Margin = el.Margin;
+                blRe.Opacity = 0.5;
+                blElBool = true;
+                externalFill = el.Fill;
+                ExternalBrush = el.Stroke;
+                externalTl = Convert.ToInt32(el.StrokeThickness);
+                lblHistory.Items.Add("Moving with ellipse.");
+                movedEllipse = blRe;
+                WorkStation.Children.Add(movedEllipse);
+                WorkStation.Children.Remove(el);
+            }
             else if (WorkStation.Cursor == Cursors.Arrow)
             {
                 Ellipse blRe = new Ellipse();
@@ -1327,6 +1346,26 @@ namespace GrafickyEditor
                 {
                     rec.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
                 }
+            }
+            else if (WorkStation.Cursor == Cursors.SizeAll)
+            {
+                Rectangle blRe = new Rectangle();
+                blRe.Stroke = new SolidColorBrush(Colors.Gray);
+                blRe.StrokeThickness = 2;
+                blRe.Height = rec.Height;
+                blRe.RadiusX = rec.RadiusX;
+                blRe.RadiusY = rec.RadiusY;
+                blRe.Width = rec.Width;
+                blRe.Margin = rec.Margin;
+                blRe.Opacity = 0.5;
+                blReBool = true;
+                externalFill = rec.Fill;
+                ExternalBrush = rec.Stroke;
+                externalTl = Convert.ToInt32(rec.StrokeThickness);
+                lblHistory.Items.Add("Moving with rectangle.");
+                movedRect = blRe;
+                WorkStation.Children.Add(movedRect);
+                WorkStation.Children.Remove(rec);
             }
             else if (WorkStation.Cursor == Cursors.Arrow)
             {
@@ -2123,7 +2162,6 @@ namespace GrafickyEditor
         }
         private void Background_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
             System.Windows.Forms.DialogResult res = cd.ShowDialog();
             if (res == System.Windows.Forms.DialogResult.OK)
             {
