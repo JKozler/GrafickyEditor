@@ -2292,15 +2292,24 @@ namespace GrafickyEditor
                 helpInd = 0;
             }
             hintPage = Convert.ToInt32(btn.Content);
-        }
-        public class Pages
-        {
-            public List<UIElement> Element = new List<UIElement>();
-            public bool Checked { get; set; }
-            public Pages(bool Checked)
-            {
-                this.Checked = Checked;
             }
         }
+    public class Pages
+    {
+        public List<UIElement> Element = new List<UIElement>();
+        public bool Checked { get; set; }
+        public bool CheckIfCheck(int numberOfElement)
+        {
+            if (numberOfElement == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        public Pages(bool Checked)
+        {
+            this.Checked = Checked;
+        }
+        public Pages() {}
     }
 }

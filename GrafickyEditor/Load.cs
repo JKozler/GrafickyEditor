@@ -15,6 +15,14 @@ namespace GrafickyEditor
     {
         public string Nazev { get; set; }
         public DateTime Zmena { get; set; }
+        public string ObrCheck(string s)
+        {
+            if (s.Contains(".obr"))
+            {
+                return s;
+            }
+            return s + ".obr";
+        }
         public Load(string Nazev, DateTime Zmena)
         {
             this.Nazev = Nazev;
