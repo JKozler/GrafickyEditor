@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GrafickyEditor;
+using System.IO;
 
 namespace UnitTestProject
 {
@@ -9,10 +10,15 @@ namespace UnitTestProject
     {
         Load load;
         Pages pages;
+        Password pass;
+        string newPath = @"E:\VS2019WPF\GrafickyEditor\UnitTestProject\bin\Debug\pass.txt";
+        string passPath = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\pass.txt";
         public UnitTest1()
         {
             load = new Load();
             pages = new Pages();
+            pass = new Password();
+            File.Copy(passPath, newPath, true);
         }
         [TestMethod]
         public void Control_If_Name_Contains_Obr()
@@ -37,6 +43,17 @@ namespace UnitTestProject
 
             //Assert
             Assert.IsTrue(s == result);
+        }
+        public void Control_If_Password_Is_Right()
+        {
+            //Arrange
+            string s = "Mala";
+
+            //Act
+            bool result = pass.ControlPass(s);
+
+            //Assert
+            Assert.IsFalse(result);
         }
     }
 }

@@ -60,4 +60,16 @@ namespace GrafickyEditor
             }
         }
     }
+    public class Password
+    {
+        public string Pass { get; set; }
+        public bool ControlPass(string pa)
+        {
+            if (pa == File.ReadLines("pass.txt").First())
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 }
