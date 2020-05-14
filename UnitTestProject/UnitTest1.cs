@@ -32,6 +32,7 @@ namespace UnitTestProject
             //Assert
             Assert.IsTrue((s + ".obr") == result);
         }
+        [TestMethod]
         public void Control_If_Checked_Contains_Elements()
         {
             //Arrange
@@ -44,6 +45,7 @@ namespace UnitTestProject
             //Assert
             Assert.IsTrue(s == result);
         }
+        [TestMethod]
         public void Control_If_Password_Is_Right()
         {
             //Arrange
