@@ -350,47 +350,6 @@ namespace GrafickyEditor
                     lblHistory.Items.Add("Ellipse was successfully inherit.");
                 }
             }
-            //else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
-            //{
-            //    if (holdPos == true)
-            //    {
-            //        p2 = e.GetPosition(WorkStation);
-            //        WorkStation.Children.Remove(movedPolygon);
-            //        movedPolygon.Margin = new Thickness(p2.X, p1.Y, p1.X, p1.Y);
-            //        movedPolygon.Stroke = brush;
-            //        movedPolygon.Opacity = 1;
-            //        movedPolygon.Name = "blPo" + helpInd;
-            //        movedPolygon.Fill = externalFill;
-            //        movedPolygon.Stroke = ExternalBrush;
-            //        movedPolygon.MouseDown += new MouseButtonEventHandler(Pol_MouseDown);
-            //        movedPolygon.StrokeThickness = externalTl;
-            //        WorkStation.Children.Add(movedPolygon);
-            //        blPoBool = false;
-            //        elements[index] = movedPolygon;
-            //        index++;
-            //        helpInd++;
-            //        lblHistory.Items.Add("Triangle was successfully inherit.");
-            //    }
-            //    else
-            //    {
-            //        p2 = e.GetPosition(WorkStation);
-            //        WorkStation.Children.Remove(movedPolygon);
-            //        movedPolygon.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-            //        movedPolygon.Stroke = brush;
-            //        movedPolygon.Opacity = 1;
-            //        movedPolygon.Name = "blPo" + helpInd;
-            //        movedPolygon.Fill = externalFill;
-            //        movedPolygon.Stroke = ExternalBrush;
-            //        movedPolygon.MouseDown += new MouseButtonEventHandler(Pol_MouseDown);
-            //        movedPolygon.StrokeThickness = externalTl;
-            //        WorkStation.Children.Add(movedPolygon);
-            //        blPoBool = false;
-            //        elements[index] = movedPolygon;
-            //        index++;
-            //        helpInd++;
-            //        lblHistory.Items.Add("Triangle was successfully inherit.");
-            //    }
-            //}
             //Text move
             else if (WorkStation.Cursor == Cursors.SizeAll && moveText == true)
             {
@@ -896,30 +855,6 @@ namespace GrafickyEditor
                 WorkStation.Children.Add(helpLine);
 
             }
-            //else if (WorkStation.Cursor == Cursors.Arrow && blPoBool == true)
-            //{
-            //    if (holdPos == true)
-            //    {
-            //        PointCollection pts = new PointCollection();
-            //        p2 = e.GetPosition(WorkStation);
-            //        pts.Add(new Point(p1.X, p2.Y));
-            //        pts.Add(new Point(p2.X, p2.Y));
-            //        pts.Add(new Point(p1.X + (p2.X - p1.X), p1.Y));
-            //        WorkStation.Children.Remove(movedPolygon);
-            //        WorkStation.Children.Add(movedPolygon);
-            //    }
-            //    else
-            //    {
-            //        PointCollection pts = new PointCollection();
-            //        p2 = e.GetPosition(WorkStation);
-            //        pts.Add(new Point(p1.X, p2.Y));
-            //        pts.Add(new Point(p2.X, p2.Y));
-            //        pts.Add(new Point(p1.X + (p2.X - p1.X), p1.Y));
-            //        WorkStation.Children.Remove(movedPolygon);
-            //        movedPolygon.Margin = new Thickness(p2.X, p2.Y, p1.X, p1.Y);
-            //        WorkStation.Children.Add(movedPolygon);
-            //    }
-            //}
             else if (WorkStation.Cursor == Cursors.Pen && helpDashedLine == true)
             {
                 Line line = new Line();
@@ -1266,27 +1201,6 @@ namespace GrafickyEditor
                 }
             }
         }
-        //private void tbArea_MouseDown(object sender, KeyEventArgs e)
-        //{
-        //    RichTextBox tb = (RichTextBox)sender;
-        //    RichTextBox tbox = new RichTextBox();
-        //    TitleProject.Content = "asd";
-        //    if (e.Key == Key.LeftCtrl)
-        //    {
-        //        if (WorkStation.Cursor == Cursors.SizeAll)
-        //        {
-        //            moveText = true;
-        //            tbox = tb;
-        //            tBoxs = tbox;
-        //            WorkStation.Children.Remove(tb);
-        //            WorkStation.Children.Add(tbox);
-        //        }
-        //        else
-        //        {
-        //            lblHistory.Items.Add("If you want to move wih text, click on Moving button.");
-        //        }
-        //    }
-        //}
         private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Ellipse el = (Ellipse)sender;
@@ -1399,23 +1313,6 @@ namespace GrafickyEditor
                     pol.Fill = new SolidColorBrush(Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B));
                 }
             }
-            //else if (WorkStation.Cursor == Cursors.Arrow)
-            //{
-            //    Polygon blRe = new Polygon();
-            //    blRe.Stroke = new SolidColorBrush(Colors.LightBlue);
-            //    blRe.StrokeThickness = 2;
-            //    blRe.Height = pol.Height;
-            //    blRe.Width = pol.Width;
-            //    blRe.Margin = pol.Margin;
-            //    blRe.Opacity = 0.5;
-            //    blReBool = true;
-            //    externalFill = pol.Fill;
-            //    ExternalBrush = pol.Stroke;
-            //    externalTl = Convert.ToInt32(pol.StrokeThickness);
-            //    lblHistory.Items.Add("Inherit triangle.");
-            //    movedPolygon = blRe;
-            //    WorkStation.Children.Add(movedPolygon);
-            //}
         }
         private void MouseBack_Click(object sender, RoutedEventArgs e)
         {
@@ -1437,21 +1334,6 @@ namespace GrafickyEditor
             //dodělat
             if (loadPr == true)
             {
-                //SaveFileDialog save = new SaveFileDialog();
-                //save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
-                //save.Filter = "Image obr(*.obr)|*.obr|PNG(*.png)|*.png|JPG(*.jpg)|*.jpg";
-                //save.FileName = nazev;
-                //if (save.ShowDialog() == true)
-                //{
-                //    FileStream fs = new FileStream(save.FileName, FileMode.Create);
-                //    RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
-                //        (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
-                //    bmp.Render(WorkStation);
-                //    BitmapEncoder encoder = new TiffBitmapEncoder();
-                //    encoder.Frames.Add(BitmapFrame.Create(bmp));
-                //    encoder.Save(fs);
-                //    fs.Close();
-                //}
                 SaveSubmit.Visibility = Visibility.Visible;
                 nameOfFile.Visibility = Visibility.Visible;
                 SaveDifferentWay.Visibility = Visibility.Visible;
@@ -1957,22 +1839,7 @@ namespace GrafickyEditor
 
         private void FGUp_Click(object sender, RoutedEventArgs e)
         {
-            //if (addableBtn == 0)
-            //{
-            //    AddableOne.Content = "Fog scene";
-            //    AddableOne.Opacity = 1;
-            //    AddableOne.Click += new RoutedEventHandler(fogEff_Click);
-            //    lblHistory.Items.Add("Fog scene was added to main bar.");
-            //    addableBtn++;
-            //}
-            //else if (addableBtn == 1)
-            //{
-            //    AddableTwo.Content = "Fog scene";
-            //    AddableTwo.Opacity = 1;
-            //    AddableTwo.Click += new RoutedEventHandler(fogEff_Click);
-            //    lblHistory.Items.Add("Fog scene was added to main bar.");
-            //    addableBtn--;
-            //}
+            //dodělat
         }
 
         private void ReUp_Click(object sender, RoutedEventArgs e)
