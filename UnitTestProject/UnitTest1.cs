@@ -8,6 +8,7 @@ namespace UnitTestProject
     [TestClass]
     public class UnitTest1
     {
+        //opravit
         Load load;
         Pages pages;
         Password pass;
