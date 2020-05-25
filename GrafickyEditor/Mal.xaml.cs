@@ -1172,6 +1172,11 @@ namespace GrafickyEditor
                 helpMovingImage.Width = img.Width;
                 helpMovingImage.Height = img.Height;
                 WorkStation.Children.Remove(img);
+                int i = Array.IndexOf(elements, img);
+                for (int y = i; y < elements.Length - 1; y++)
+                {
+                    elements[y] = elements[y + 1];
+                }
                 WorkStation.Children.Add(helpMovingImage);
                 lblHistory.Items.Add("Only BETA version.");
             }
@@ -1229,6 +1234,11 @@ namespace GrafickyEditor
                 lblHistory.Items.Add("Moving with ellipse.");
                 movedEllipse = blRe;
                 WorkStation.Children.Add(movedEllipse);
+                int i = Array.IndexOf(elements, el);
+                for (int y = i; y < elements.Length - 1; y++)
+                {
+                    elements[y] = elements[y + 1];
+                }
                 WorkStation.Children.Remove(el);
             }
             else if (WorkStation.Cursor == Cursors.Arrow)
@@ -1279,6 +1289,11 @@ namespace GrafickyEditor
                 lblHistory.Items.Add("Moving with rectangle.");
                 movedRect = blRe;
                 WorkStation.Children.Add(movedRect);
+                int i = Array.IndexOf(elements, rec);
+                for (int y = i; y < elements.Length - 1; y++)
+                {
+                    elements[y] = elements[y+1];
+                }
                 WorkStation.Children.Remove(rec);
             }
             else if (WorkStation.Cursor == Cursors.Arrow)
