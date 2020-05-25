@@ -1517,7 +1517,7 @@ namespace GrafickyEditor
                     if (File.Exists(path)){}
                     else
                     {
-                        DirectoryInfo directory = Directory.CreateDirectory(path);
+                        DirectoryInfo di = Directory.CreateDirectory(path);
                     }
                     nazev = nameOfFile.Text + ".obr";
                     string full = path + nazev;

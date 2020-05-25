@@ -26,6 +26,7 @@ namespace GrafickyEditor
         public MainWindow()
         {
             InitializeComponent();
+            Load l = new Load();
             if (File.Exists("saves.txt"))
             {
                 using (StreamReader sr = new StreamReader("saves.txt"))
@@ -33,15 +34,8 @@ namespace GrafickyEditor
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        if (line.Contains(".obr"))
-                        {
-                            LastprojectLB.Items.Add(line);
-                        }
-                        else
-                        {
-                            LastprojectLB.Items.Add(line + ".obr");
-                        }
-                        
+                        string g = l.ObrCheck(line);
+                        LastprojectLB.Items.Add(g);
                     }
                 }
             }
