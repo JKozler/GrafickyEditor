@@ -133,8 +133,8 @@ namespace GrafickyEditor
                 }
                 else
                 {
-                    string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + load.Nazev;
-                    string paths = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + "a" + load.Nazev;
+                    string path = @"C:\OBR\GrafickyEditor\GrafickyEditor\Project\Debug\" + load.Nazev;
+                    string paths = @"C:\OBR\GrafickyEditor\GrafickyEditor\Project\Debug\" + "a" + load.Nazev;
                     try
                     {
                         if (File.Exists(path))
@@ -1478,7 +1478,7 @@ namespace GrafickyEditor
                 {
                     if (savePlease == true)
                     {
-                        pathSecondWay = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + nazev;
+                        pathSecondWay = @"C:\OBR\GrafickyEditor\GrafickyEditor\Project\Debug\" + nazev;
                         FileStream fs = new FileStream(pathSecondWay, FileMode.Create);
                         RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
                             (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
@@ -1495,7 +1495,7 @@ namespace GrafickyEditor
                     }
                     else
                     {
-                        pathSecondWay = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + "a" + nazev;
+                        pathSecondWay = @"C:\OBR\GrafickyEditor\GrafickyEditor\Project\Debug\" + "a" + nazev;
                         FileStream fs = new FileStream(pathSecondWay, FileMode.Create);
                         RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
                             (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
@@ -1513,9 +1513,15 @@ namespace GrafickyEditor
                 }
                 else
                 {
+                    string path = @"C:\OBR\GrafickyEditor\GrafickyEditor\Project\Debug\";
+                    if (File.Exists(path)){}
+                    else
+                    {
+                        DirectoryInfo directory = Directory.CreateDirectory(path);
+                    }
                     nazev = nameOfFile.Text + ".obr";
-                    string path = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\" + nazev;
-                    FileStream fs = new FileStream(path, FileMode.Create);
+                    string full = path + nazev;
+                    FileStream fs = new FileStream(full, FileMode.Create);
                     RenderTargetBitmap bmp = new RenderTargetBitmap((int)WorkStation.ActualWidth,
                         (int)WorkStation.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
                     bmp.Render(WorkStation);
