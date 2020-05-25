@@ -248,7 +248,7 @@ namespace GrafickyEditor
         //Pokud uživatel pustí tlačítko myši nahoru, tak.....
         private void WorkStation_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (WorkStation.Cursor == Cursors.Arrow || WorkStation.Cursor == Cursors.SizeAll && blReBool == true)
+            if (WorkStation.Cursor == Cursors.Arrow && blReBool == true || WorkStation.Cursor == Cursors.SizeAll && blReBool == true)
             {
                 if (holdPos == true)
                 {
@@ -309,7 +309,7 @@ namespace GrafickyEditor
                 textArea = false;
                 WorkStation.Cursor = Cursors.Arrow;
             }
-            else if (WorkStation.Cursor == Cursors.Arrow || WorkStation.Cursor == Cursors.SizeAll && blElBool == true)
+            else if (WorkStation.Cursor == Cursors.Arrow & blElBool == true || WorkStation.Cursor == Cursors.SizeAll && blElBool == true)
             {
                 if (holdPos == true)
                 {
@@ -727,7 +727,7 @@ namespace GrafickyEditor
         //Když uživatel hýbe myší na WorkStation tak...
         private void WorkStation_MouseMove(object sender, MouseEventArgs e)
         {
-            if (WorkStation.Cursor == Cursors.Arrow || WorkStation.Cursor == Cursors.SizeAll && blReBool == true)
+            if (WorkStation.Cursor == Cursors.Arrow && blReBool == true || WorkStation.Cursor == Cursors.SizeAll && blReBool == true)
             {
                 if (holdPos == true)
                 {
@@ -791,7 +791,7 @@ namespace GrafickyEditor
                 helpMovingImage.Margin = new Thickness(p2.X - (helpMovingImage.Width / 2), p2.Y - (helpMovingImage.Height / 2), p2.X + (helpMovingImage.Width / 2), p2.Y + (helpMovingImage.Height / 2));
                 WorkStation.Children.Add(helpMovingImage);
             }
-            else if (WorkStation.Cursor == Cursors.Arrow || WorkStation.Cursor == Cursors.SizeAll && blElBool == true)
+            else if (WorkStation.Cursor == Cursors.Arrow && blElBool == true || WorkStation.Cursor == Cursors.SizeAll && blElBool == true)
             {
                 if (holdPos == true)
                 {
@@ -1325,8 +1325,10 @@ namespace GrafickyEditor
         {
             WorkStation.Cursor = Cursors.Hand;
             lblHistory.Items.Add("Using rubber");
+                        darkEff = false;
             highlighterBool = false;
             highlighterBoolHelp = false;
+            dashedLine = false;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -2098,6 +2100,41 @@ namespace GrafickyEditor
             {
                 fullRect = true;
                 TitleProject.Content = "CTRL activated.";
+            }
+            else if (e.Key == Key.Escape)
+            {
+                line = false;
+                recta = false;
+                roundedRe = false;
+                roRe = false;
+                ellep = false;
+                fullRect = false;
+                mal = false;
+                li = false;
+                el = false;
+                re = false;
+                dark = false;
+                fullel = false;
+                triangle = false;
+                tr = false;
+                loadPr = false;
+                fillBool = false;
+                blReBool = false;
+                blElBool = false;
+                blPoBool = false;
+                moveText = false;
+                holdPos = false;
+                highlighterBool = false;
+                highlighterBoolHelp = false;
+                moveImageBool = false;
+                dashedLine = false;
+                helpDashedLine = false;
+                arrow = false;
+                helpArrow = false;
+                blockText = false;
+                textArea = false;
+                textAreaSec = false;
+                savePlease = false;
             }
         }
 

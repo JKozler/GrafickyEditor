@@ -20,7 +20,7 @@
             </Grid.RowDefinitions>
             <Border Panel.ZIndex="1" x:Name="BMouseDown" Grid.Row="0" Background="#FF363941">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Label Content="*Untiteld - GPB" x:Name="TitleProject" Foreground="White" FontSize="15" Margin="0,0,1640,0" Background="{x:Null}"></Label>
+                    <Label Content="*Untiteld - GPB" x:Name="TitleProject" Foreground="White" FontSize="15" Margin="0,0,890,0" Background="{x:Null}"></Label>
                     <Button ToolTip="Minimaze" x:Name="MinNorBtn" Click="MinNorBtn_Click" Width="40" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                         <materialDesign:PackIcon Kind="WindowMinimize" Width="30" Height="30"/>
                     </Button>
