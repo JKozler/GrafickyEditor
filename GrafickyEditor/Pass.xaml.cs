@@ -20,6 +20,7 @@ namespace GrafickyEditor
     /// </summary>
     public partial class Pass : Window
     {
+        Password password = new Password();
         public Pass()
         {
             InitializeComponent();
@@ -31,14 +32,10 @@ namespace GrafickyEditor
             {
                 if (File.Exists("pass.txt"))
                 {
-                    if (PassTxt.Text == File.ReadLines("pass.txt").First())
-                    {
+                    if (password.ControlPass(PassTxt.Text))
                         this.Close();
-                    }
                     else
-                    {
                         PassInfo.Content = "Bad password.";
-                    }
                 }
                 else
                 {

@@ -12,14 +12,11 @@ namespace UnitTestProject
         Load load;
         Pages pages;
         Password pass;
-        string newPath = @"E:\VS2019WPF\GrafickyEditor\UnitTestProject\bin\Debug\pass.txt";
-        string passPath = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug\pass.txt";
         public UnitTest1()
         {
             load = new Load();
             pages = new Pages();
             pass = new Password();
-            File.Copy(passPath, newPath, true);
         }
         [TestMethod]
         public void Control_If_Name_Contains_Obr()
