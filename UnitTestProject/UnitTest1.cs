@@ -31,17 +31,16 @@ namespace UnitTestProject
             Assert.IsTrue((s + ".obr") == result);
         }
         [TestMethod]
-        public void Control_If_Checked_Contains_Elements()
+        public void Control_If_Can_Be_Save()
         {
             //Arrange
-            int i = 0;
-            bool s = false;
+            string s = "example";
 
             //Act
-            bool result = pages.CheckIfCheck(i);
+            bool result = pages.CheckIfCanBeSaveByName(s);
 
             //Assert
-            Assert.IsTrue(s == result);
+            Assert.IsFalse(result);
         }
         [TestMethod]
         public void Control_If_Password_Is_Right()

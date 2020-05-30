@@ -163,8 +163,9 @@ namespace GrafickyEditor
                             lblHistory.Items.Add("Missing file.");
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        MessageBox.Show(ex.ToString(), "Error");
                     }
                 }
             }
@@ -1348,7 +1349,6 @@ namespace GrafickyEditor
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            //dodělat
             if (loadPr == true)
             {
                 SaveSubmit.Visibility = Visibility.Visible;
@@ -1413,8 +1413,9 @@ namespace GrafickyEditor
                         {
                             WorkStation.Children.Add(elements[i]);
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            MessageBox.Show(ex.ToString(), "Error");
                         }
                     }
                 }
@@ -1456,8 +1457,9 @@ namespace GrafickyEditor
                         {
                             WorkStation.Children.Add(elements[i]);
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            MessageBox.Show(ex.ToString(), "Error");
                         }
                     }                    
                 }
@@ -1477,8 +1479,9 @@ namespace GrafickyEditor
                         {
                             WorkStation.Children.Add(elements[i]);
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            MessageBox.Show(ex.ToString(), "Error");
                         }
                     }
                 }
@@ -1591,7 +1594,7 @@ namespace GrafickyEditor
             }
             else
             {
-                MessageBox.Show("Error", "You have to enable text. - click on Disable/enable button.", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("You have to enable text. - click on Disable/enable button.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             textArea = true;
         }
@@ -1614,7 +1617,7 @@ namespace GrafickyEditor
             }
             else
             {
-                MessageBox.Show("Error", "You have to enable text. - click on Disable/enable button.", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("You have to enable text. - click on Disable/enable button.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void DeletAllText_Click(object sender, RoutedEventArgs e)
@@ -2164,7 +2167,7 @@ namespace GrafickyEditor
             }
         }
 
-        private void Page1_Click(object sender, RoutedEventArgs e)
+        public void Page1_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
             hintPageSecond = Convert.ToInt32(btn.Content);
@@ -2223,13 +2226,24 @@ namespace GrafickyEditor
     {
         public List<UIElement> Element = new List<UIElement>();
         public bool Checked { get; set; }
-        public bool CheckIfCheck(int numberOfElement)
+        public bool CheckIfCanBeSaveByName(string nameOfFile)
         {
-            if (numberOfElement == 0)
+            SaveFileDialog save = new SaveFileDialog();
+            save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
+            save.Filter = "Image obr(*.obr) | *.obr | Image jpeg(*.jpg) | *.jpg | Image png(*.png) | *.png | Image PNG(*PNG) | *PNG";
+            if (nameOfFile != null)
             {
-                return false;
+                save.FileName = nameOfFile;
             }
-            return true;
+            else
+            {
+                save.FileName = "name.obr";
+            }
+            if (save.ShowDialog() == true)
+            {
+                return true;
+            }
+            return false;
         }
         public Pages(bool Checked)
         {
