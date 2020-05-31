@@ -1,5 +1,5 @@
 # GrafickyEditor
-MVOP projekt (3. rocnik)
+MVOP projekt (3. ročník)
 
 Jak na to?
 1) Stáhnout a zapnout program
