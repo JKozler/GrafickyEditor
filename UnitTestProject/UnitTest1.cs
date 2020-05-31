@@ -34,13 +34,13 @@ namespace UnitTestProject
         public void Control_If_Can_Be_Save()
         {
             //Arrange
-            string s = "example";
+            string s = "";
 
             //Act
             bool result = pages.CheckIfCanBeSaveByName(s);
 
             //Assert
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
         [TestMethod]
         public void Control_If_Password_Is_Right()

@@ -2072,7 +2072,7 @@ namespace GrafickyEditor
         {
             SaveFileDialog save = new SaveFileDialog();
             save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
-            save.Filter = "Image obr(*.obr) | *.obr | Image jpeg(*.jpg) | *.jpg | Image png(*.png) | *.png | Image PNG(*PNG) | *PNG";
+            save.Filter = "Image obr(*.obr) | *.obr | Image jpeg(*.jpg) | *.jpg | Image png(*.png) | *.png";
             if (nameOfFile != null)
             {
                 save.FileName = nameOfFile.Text;
@@ -2228,18 +2228,24 @@ namespace GrafickyEditor
         public bool Checked { get; set; }
         public bool CheckIfCanBeSaveByName(string nameOfFile)
         {
+            //Stejná metoda jako je v kódu nad ním, ale tato slouží pro testování
             SaveFileDialog save = new SaveFileDialog();
             save.InitialDirectory = @"E:\VS2019WPF\GrafickyEditor\GrafickyEditor\bin\Debug";
-            save.Filter = "Image obr(*.obr) | *.obr | Image jpeg(*.jpg) | *.jpg | Image png(*.png) | *.png | Image PNG(*PNG) | *PNG";
+            save.Filter = "Image obr(*.obr) | *.obr | Image jpeg(*.jpg) | *.jpg | Image png(*.png) | *.png";
             if (nameOfFile != null)
             {
-                save.FileName = nameOfFile;
+                if (nameOfFile.Contains(".obr"))
+                {
+                    save.FileName = nameOfFile;
+                }
+                else
+                    save.FileName = nameOfFile + ".obr";
             }
             else
             {
                 save.FileName = "name.obr";
             }
-            if (save.ShowDialog() == true)
+            if (save.FileName == nameOfFile + ".obr" || save.FileName == nameOfFile + ".png" || save.FileName == nameOfFile + ".jpg")
             {
                 return true;
             }
