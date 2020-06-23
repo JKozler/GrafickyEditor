@@ -16,7 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
-
+using System.Runtime.InteropServices;
 
 namespace GrafickyEditor
 {
@@ -82,13 +82,32 @@ namespace GrafickyEditor
         int externalTl = 0;
         int hod = 2;
         int index = 0;
+        int index1 = 0;
+        int index2 = 0;
+        int index3 = 0;
+        int index4 = 0;
+        int index5 = 0;
+        int index6 = 0;
+        int index7 = 0;
+        int index8 = 0;
+        int index9 = 0;
+        int index10 = 0;
         int helpInd = 0;
         int backDelet;
         int forwBack;
-        int hintPage = -1;
-        int hintPageSecond = 0;
+        int hintPage = 0;
         bool darkEff = false;
         UIElement[] elements = new UIElement[10000000];
+        UIElement[] elements0 = new UIElement[10000000];
+        UIElement[] elements1 = new UIElement[10000000];
+        UIElement[] elements2 = new UIElement[10000000];
+        UIElement[] elements3 = new UIElement[10000000];
+        UIElement[] elements4 = new UIElement[10000000];
+        UIElement[] elements5 = new UIElement[10000000];
+        UIElement[] elements6 = new UIElement[10000000];
+        UIElement[] elements7 = new UIElement[10000000];
+        UIElement[] elements8 = new UIElement[10000000];
+        UIElement[] elements9 = new UIElement[10000000];
         string jmeno = "*Untiteld - GPB";
         string nazev;
         string pathSecondWay;
@@ -156,6 +175,7 @@ namespace GrafickyEditor
                             TitleProject.Content = load.Nazev + " - GPB";
                             loadPr = true;
                             savePlease = true;
+                            PagesUpload(hintPage, image);
                         }
                         else
                         {
@@ -195,6 +215,7 @@ namespace GrafickyEditor
                 lblHistory.Items.Add("Textbox was added.");
                 DeleteHalf.Value = 1;
                 WorkStation.Cursor = Cursors.Arrow;
+                PagesUpload(hintPage, tb);
             }
             else if (WorkStation.Cursor == Cursors.IBeam && textArea == true)
             {
@@ -269,6 +290,7 @@ namespace GrafickyEditor
                     index++;
                     helpInd++;
                     lblHistory.Items.Add("Rectangle was successfully inherit.");
+                    PagesUpload(hintPage, movedRect);
                 }
                 else
                 {
@@ -288,6 +310,7 @@ namespace GrafickyEditor
                     index++;
                     helpInd++;
                     lblHistory.Items.Add("Rectangle was successfully inherit.");
+                    PagesUpload(hintPage, movedRect);
                 }
             }
             else if (WorkStation.Cursor == Cursors.IBeam && textAreaSec == true)
@@ -309,6 +332,7 @@ namespace GrafickyEditor
                 textAreaSec = false;
                 textArea = false;
                 WorkStation.Cursor = Cursors.Arrow;
+                PagesUpload(hintPage, textBox);
             }
             else if (WorkStation.Cursor == Cursors.Arrow & blElBool == true || WorkStation.Cursor == Cursors.SizeAll && blElBool == true)
             {
@@ -330,6 +354,7 @@ namespace GrafickyEditor
                     index++;
                     helpInd++;
                     lblHistory.Items.Add("Ellipse was successfully inherit.");
+                    PagesUpload(hintPage, movedEllipse);
                 }
                 else
                 {
@@ -349,6 +374,7 @@ namespace GrafickyEditor
                     index++;
                     helpInd++;
                     lblHistory.Items.Add("Ellipse was successfully inherit.");
+                    PagesUpload(hintPage, movedEllipse);
                 }
             }
             //Text move
@@ -365,6 +391,7 @@ namespace GrafickyEditor
                 elements[index] = tb;
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, tb);
             }
             //Image move
             else if (WorkStation.Cursor == Cursors.SizeAll && moveImageBool == true)
@@ -385,6 +412,7 @@ namespace GrafickyEditor
                 elements[index] = img;
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, img);
             }
             else if (WorkStation.Cursor == Cursors.Hand)
             {
@@ -422,6 +450,7 @@ namespace GrafickyEditor
                 WorkStation.Children.Add(pol);
                 lblHistory.Items.Add("Triangle was created.");
                 tr = false;
+                PagesUpload(hintPage, pol);
             }
             else if (WorkStation.Cursor == Cursors.Cross && re == true && fullRect == true)
             {
@@ -443,6 +472,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
                 {
@@ -452,6 +482,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.Y < p2.Y && p1.X < p2.X)
                 {
@@ -461,6 +492,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.Y < p2.Y && p1.X > p2.X)
                 {
@@ -470,6 +502,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 re = false;
             }
@@ -493,6 +526,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
                 {
@@ -502,6 +536,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.Y < p2.Y && p1.X < p2.X)
                 {
@@ -511,6 +546,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.Y < p2.Y && p1.X > p2.X)
                 {
@@ -520,6 +556,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 re = false;
             }
@@ -545,6 +582,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
                 {
@@ -554,6 +592,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.Y < p2.Y && p1.X < p2.X)
                 {
@@ -563,6 +602,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.Y < p2.Y && p1.X > p2.X)
                 {
@@ -572,6 +612,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 roRe = false;
             }
@@ -597,6 +638,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.X < p2.X && p1.Y > p2.Y)
                 {
@@ -606,6 +648,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.Y < p2.Y && p1.X < p2.X)
                 {
@@ -615,6 +658,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 else if (p1.Y < p2.Y && p1.X > p2.X)
                 {
@@ -624,6 +668,7 @@ namespace GrafickyEditor
                     elements[index] = rec;
                     helpInd++;
                     index++;
+                    PagesUpload(hintPage, rec);
                 }
                 roRe = false;
             }
@@ -645,6 +690,7 @@ namespace GrafickyEditor
                 elements[index] = ellipse;
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, ellipse);
             }
             else if (WorkStation.Cursor == Cursors.Cross && el == true)
             {
@@ -665,6 +711,7 @@ namespace GrafickyEditor
                 elements[index] = ellipse;
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, ellipse);
             }
             else if (WorkStation.Cursor == Cursors.Cross && helpArrow == true)
             {
@@ -692,6 +739,7 @@ namespace GrafickyEditor
                 helpInd++;
                 index++;
                 helpArrow = false;
+                PagesUpload(hintPage, line);
             }
             else if (WorkStation.Cursor == Cursors.Cross && li == true)
             {
@@ -710,6 +758,7 @@ namespace GrafickyEditor
                 helpInd++;
                 index++;
                 li = false;
+                PagesUpload(hintPage, line);
             }
             else if (WorkStation.Cursor != Cursors.Arrow)
             {
@@ -826,6 +875,7 @@ namespace GrafickyEditor
                 elements[index] = line;
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, line);
             }
             else if (WorkStation.Cursor == Cursors.Cross && helpArrow == true)
             {
@@ -874,6 +924,7 @@ namespace GrafickyEditor
                     helpInd++;
                     index++;
                     dashedRecognize++;
+                    PagesUpload(hintPage, line);
                 }
                 else
                 {
@@ -893,6 +944,7 @@ namespace GrafickyEditor
                         dashedRecognize = 0;
                     }
                     dashedRecognize++;
+                    PagesUpload(hintPage, line);
                 }
             }
             else if (mal == true && WorkStation.Cursor == Cursors.Pen && darkEff == false)
@@ -911,6 +963,7 @@ namespace GrafickyEditor
                 elements[index] = line;
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, line);
             }
             else if (WorkStation.Cursor == Cursors.Cross && tr == true)
             {
@@ -1095,6 +1148,7 @@ namespace GrafickyEditor
                 elements[index] = line;
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, line);
             }
             else if (mal == true && WorkStation.Cursor == Cursors.Hand)
             {
@@ -1113,6 +1167,7 @@ namespace GrafickyEditor
                 guma.Add(line);
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, line);
             }
         }
 
@@ -1159,6 +1214,7 @@ namespace GrafickyEditor
                 elements[index] = image;
                 helpInd++;
                 index++;
+                PagesUpload(hintPage, image);
             }
             lblHistory.Items.Add("Uploading image...");
         }
@@ -1173,10 +1229,16 @@ namespace GrafickyEditor
                 helpMovingImage.Width = img.Width;
                 helpMovingImage.Height = img.Height;
                 WorkStation.Children.Remove(img);
+                UIElement[] uIElement = SearchElement(hintPage);
                 int i = Array.IndexOf(elements, img);
+                int k = Array.IndexOf(uIElement, img);
                 for (int y = i; y < elements.Length - 1; y++)
                 {
                     elements[y] = elements[y + 1];
+                }
+                for (int y = k; y < uIElement.Length - 1; y++)
+                {
+                    uIElement[y] = uIElement[y + 1];
                 }
                 WorkStation.Children.Add(helpMovingImage);
                 lblHistory.Items.Add("Only BETA version.");
@@ -1234,11 +1296,17 @@ namespace GrafickyEditor
                 externalTl = Convert.ToInt32(el.StrokeThickness);
                 lblHistory.Items.Add("Moving with ellipse.");
                 movedEllipse = blRe;
+                UIElement[] iElement = SearchElement(hintPage);
                 WorkStation.Children.Add(movedEllipse);
                 int i = Array.IndexOf(elements, el);
                 for (int y = i; y < elements.Length - 1; y++)
                 {
                     elements[y] = elements[y + 1];
+                }
+                int k = Array.IndexOf(iElement, el);
+                for (int y = k; y < iElement.Length - 1; y++)
+                {
+                    iElement[y] = iElement[y + 1];
                 }
                 WorkStation.Children.Remove(el);
             }
@@ -1290,10 +1358,16 @@ namespace GrafickyEditor
                 lblHistory.Items.Add("Moving with rectangle.");
                 movedRect = blRe;
                 WorkStation.Children.Add(movedRect);
+                UIElement[] iElement = SearchElement(hintPage);
                 int i = Array.IndexOf(elements, rec);
                 for (int y = i; y < elements.Length - 1; y++)
                 {
                     elements[y] = elements[y+1];
+                }
+                int k = Array.IndexOf(iElement, rec);
+                for (int y = k; y < iElement.Length - 1; y++)
+                {
+                    iElement[y] = iElement[y + 1];
                 }
                 WorkStation.Children.Remove(rec);
             }
@@ -2167,61 +2241,202 @@ namespace GrafickyEditor
             }
         }
 
-        public void Page1_Click(object sender, RoutedEventArgs e)
+        public void Page1_Click(object sender, RoutedEventArgs e) 
         {
             Button btn = (Button)sender;
-            hintPageSecond = Convert.ToInt32(btn.Content);
-            infoProj.Content = "Page " + hintPageSecond;
-            WorkStation.Children.Clear();
-            if (hintPage == -1)
-            {
-                hintPage = 0;
-                for (int i = 0; i < elements.Length; i++)
-                {
-                    pages[hintPage].Element.Add(elements[i]);
-                }
-                pages[hintPage].Checked = true;
-                for (int i = 0; i < elements.Length; i++)
-                {
-                    elements[i] = null;
-                }
-                index = 0;
-                helpInd = 0;
-            }
-            else if (pages[hintPageSecond].Checked == true)
-            {
-                WorkStation.Children.Clear();
-                index = 0;
-                helpInd = 0;
-                foreach (var item in pages[hintPageSecond].Element)
-                {
-                    if (item != null)
-                    {
-                        elements[index] = item;
-                        WorkStation.Children.Add(elements[index]);
-                        index++;
-                        helpInd++;
-                    }
-                }
-            }
-            else if (pages[hintPage].Checked == false)
-            {
-                WorkStation.Children.Clear();
-                for (int i = 0; i < elements.Length; i++)
-                {
-                    pages[hintPage].Element.Add(elements[i]);
-                }
-                pages[hintPage].Checked = true;
-                for (int i = 0; i < elements.Length; i++)
-                {
-                    elements[i] = null;
-                }
-                index = 0;
-                helpInd = 0;
-            }
             hintPage = Convert.ToInt32(btn.Content);
+            infoProj.Content = "Page " + hintPage;
+            WorkStation.Children.Clear();
+            if (hintPage == 0)
+            {
+                for (int i = 0; i < elements0.Length - 1; i++)
+                {
+                    if (elements0[i] != null)
+                    {
+                        WorkStation.Children.Add(elements0[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 1)
+            {
+                for (int i = 0; i < elements1.Length - 1; i++)
+                {
+                    if (elements1[i] != null)
+                    {
+                        WorkStation.Children.Add(elements1[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 2)
+            {
+                for (int i = 0; i < elements2.Length - 1; i++)
+                {
+                    if (elements2[i] != null)
+                    {
+                        WorkStation.Children.Add(elements2[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 3)
+            {
+                for (int i = 0; i < elements3.Length - 1; i++)
+                {
+                    if (elements3[i] != null)
+                    {
+                        WorkStation.Children.Add(elements3[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 4)
+            {
+                for (int i = 0; i < elements4.Length - 1; i++)
+                {
+                    if (elements4[i] != null)
+                    {
+                        WorkStation.Children.Add(elements4[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 5)
+            {
+                for (int i = 0; i < elements5.Length - 1; i++)
+                {
+                    if (elements5[i] != null)
+                    {
+                        WorkStation.Children.Add(elements5[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 6)
+            {
+                for (int i = 0; i < elements6.Length - 1; i++)
+                {
+                    if (elements6[i] != null)
+                    {
+                        WorkStation.Children.Add(elements6[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 7)
+            {
+                for (int i = 0; i < elements7.Length - 1; i++)
+                {
+                    if (elements7[i] != null)
+                    {
+                        WorkStation.Children.Add(elements7[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 8)
+            {
+                for (int i = 0; i < elements8.Length - 1; i++)
+                {
+                    if (elements8[i] != null)
+                    {
+                        WorkStation.Children.Add(elements8[i]);
+                    }
+                    else { }
+                }
+            }
+            else if (hintPage == 9)
+            {
+                for (int i = 0; i < elements9.Length - 1; i++)
+                {
+                    if (elements9[i] != null)
+                    {
+                        WorkStation.Children.Add(elements9[i]);
+                    }
+                    else { }
+                }
             }
         }
+
+        public void PagesUpload(int hint, UIElement element)
+        {
+            if (hint == 0)
+            {
+                elements0[index1] = element;
+                index1++;
+            }
+            else if (hint == 1)
+            {
+                elements1[index2] = element;
+                index2++;
+            }
+            else if (hint == 2)
+            {
+                elements2[index3] = element;
+                index3++;
+            }
+            else if (hint == 3)
+            {
+                elements3[index4] = element;
+                index4++;
+            }
+            else if (hint == 4)
+            {
+                elements4[index5] = element;
+                index5++;
+            }
+            else if (hint == 5)
+            {
+                elements5[index6] = element;
+                index6++;
+            }
+            else if (hint == 6)
+            {
+                elements6[index7] = element;
+                index7++;
+            }
+            else if (hint == 7)
+            {
+                elements7[index8] = element;
+                index8++;
+            }
+            else if (hint == 8)
+            {
+                elements8[index9] = element;
+                index9++;
+            }
+            else if (hint == 9)
+            {
+                elements9[index10] = element;
+                index10++;
+            }
+        }
+
+        public UIElement[] SearchElement(int hint)
+        {
+            if (hint == 0)
+                return elements0;
+            else if (hint == 1)
+                return elements1;
+            else if (hint == 2)
+                return elements2;
+            else if (hint == 3)
+                return elements3;
+            else if (hint == 4)
+                return elements4;
+            else if (hint == 5)
+                return elements5;
+            else if (hint == 6)
+                return elements6;
+            else if (hint == 7)
+                return elements7;
+            else if (hint == 8)
+                return elements8;
+
+            return elements9;
+        }
+    }
     public class Pages
     {
         public List<UIElement> Element = new List<UIElement>();
